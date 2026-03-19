@@ -217,6 +217,14 @@
     pointer-events: none;
   }
 
+  .page-note-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 40;
+    overflow: hidden;
+  }
+
   /* NEW: decorative hero sparkle layer */
   .hero-sparkle-layer,
   .hero-note-layer {
@@ -1298,9 +1306,15 @@
 
   .sample-listen-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.2rem;
     margin-top: 2rem;
+  }
+
+  @media (max-width: 1100px) {
+    .sample-listen-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   .sample-instrument-card {
@@ -1529,6 +1543,7 @@
     .section { padding: 3rem 1.2rem; }
     .section-full { padding: 3rem 1.2rem; }
     .concert-grid { grid-template-columns: 1fr; }
+    .sample-listen-grid { grid-template-columns: 1fr; }
     .instrument-detail-panel { grid-template-columns: 1fr; }
     .instrument-card {
       min-height: 220px;
@@ -1540,6 +1555,8 @@
 <body>
 
 <div class="pso-foundation">
+
+  <div class="page-note-layer" aria-hidden="true"></div>
 
   <!-- TOPBAR -->
   <div class="pso-topbar">
@@ -1888,7 +1905,7 @@
           <h3>Violin</h3>
           <p>Bright, singing, and agile. The violin often carries melody and shimmer across the orchestra.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/violin.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/violin.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -1898,7 +1915,7 @@
           <h3>Viola</h3>
           <p>Warm and mellow. The viola deepens the middle texture and adds rich inner color.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/viola.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/viola.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -1908,7 +1925,7 @@
           <h3>Cello</h3>
           <p>Resonant and expressive. The cello can sound noble, lyrical, intimate, or dramatic.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/cello.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/cello.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -1918,7 +1935,7 @@
           <h3>Flute</h3>
           <p>Clear and floating. The flute brings air, light, and sparkle to the ensemble.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/flute.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/flute.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -1928,7 +1945,7 @@
           <h3>Clarinet</h3>
           <p>Smooth and flexible. The clarinet can sound dark and velvety or light and playful.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/clarinet.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/clarinet.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -1938,7 +1955,7 @@
           <h3>Trumpet</h3>
           <p>Brilliant and commanding. The trumpet adds brilliance, fanfare, and energy.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/trumpet.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/trumpet.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -1948,7 +1965,7 @@
           <h3>French Horn</h3>
           <p>Round and noble. The horn bridges brass warmth with lyrical orchestral blend.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/french-horn.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/french-horn.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -1958,7 +1975,7 @@
           <h3>Timpani</h3>
           <p>Deep and ceremonial. Timpani shape momentum and power in major symphonic moments.</p>
           <div class="sample-instrument-actions">
-            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orcestra/timpani.mp3">Play Sample</button>
+            <button class="sample-play-sample-btn" type="button" data-audio="/assets/audio/poway-orchestra/timpani.mp3">Play Sample</button>
             <button class="sample-stop-sample-btn" type="button">Stop</button>
           </div>
         </article>
@@ -2334,13 +2351,17 @@
   var musicianSectionCopy = root.querySelector('[data-musician-section-copy]');
   var musicianMemberGroups = root.querySelector('[data-musician-member-groups]');
   var musicianGallery = root.querySelector('[data-musician-gallery]');
+  var pageNoteLayer = root.querySelector('.page-note-layer');
   var heroSparkleLayer = root.querySelector('.hero-sparkle-layer');
-  var heroNoteLayer = root.querySelector('.hero-note-layer');
   var selectedFamily = null;
   var audioContext;
   var audioReady = false;
   var previewCooldown = new WeakMap();
-  var lastHeroNoteTime = 0;
+  var lastFloatingNoteTime = 0;
+
+  if (pageNoteLayer && pageNoteLayer.parentNode !== document.body) {
+    document.body.appendChild(pageNoteLayer);
+  }
 
   var rosterImageSrc = "{{ '/images/capstone/powayorchestra.jpg' | relative_url }}";
   var galleryPositionsByFamily = {
@@ -2788,25 +2809,24 @@
     }
   }
 
-  /* NEW: interactive floating music notes in hero */
-  function spawnHeroNote(x, y) {
-    if (!heroNoteLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* NEW: interactive floating music notes across the full experience */
+  function spawnFloatingNote(x, y) {
+    if (!pageNoteLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var now = Date.now();
-    if (now - lastHeroNoteTime < 140) return;
-    lastHeroNoteTime = now;
+    if (now - lastFloatingNoteTime < 140) return;
+    lastFloatingNoteTime = now;
 
-    var rect = homeSection.getBoundingClientRect();
     var note = document.createElement('span');
     var notes = ['♪', '♫', '♩', '♬'];
     note.className = 'music-note-pop';
     note.textContent = notes[Math.floor(Math.random() * notes.length)];
-    note.style.left = (x - rect.left) + 'px';
-    note.style.top = (y - rect.top) + 'px';
+    note.style.left = x + 'px';
+    note.style.top = y + 'px';
     note.style.fontSize = (16 + Math.random() * 12) + 'px';
     note.style.animationDuration = (1.5 + Math.random() * 0.7) + 's';
 
-    heroNoteLayer.appendChild(note);
+    pageNoteLayer.appendChild(note);
 
     window.setTimeout(function () {
       if (note.parentNode) note.parentNode.removeChild(note);
@@ -2836,16 +2856,14 @@
     });
   });
 
-  if (homeSection) {
-    homeSection.addEventListener('pointermove', function (event) {
-      spawnHeroNote(event.clientX, event.clientY);
-    });
+  document.addEventListener('pointermove', function (event) {
+    spawnFloatingNote(event.clientX, event.clientY);
+  }, { passive: true });
 
-    homeSection.addEventListener('touchstart', function (event) {
-      var touch = event.touches && event.touches[0];
-      if (touch) spawnHeroNote(touch.clientX, touch.clientY);
-    }, { passive: true });
-  }
+  document.addEventListener('touchstart', function (event) {
+    var touch = event.touches && event.touches[0];
+    if (touch) spawnFloatingNote(touch.clientX, touch.clientY);
+  }, { passive: true });
 
   if (detailPlayers) {
     detailPlayers.addEventListener('click', function (event) {
