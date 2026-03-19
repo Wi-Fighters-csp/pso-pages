@@ -411,7 +411,7 @@ function nextStep(){
     generateProfile(); // stay here until generated, then jump to step 6
     return;
   } else if (currentStep === 6){
-    window.location.href = '/cs-portfolio-quest/resume/submodule_6/';
+    window.location.href = '{{ '/cs-portfolio-quest/resume/submodule_6/' | relative_url }}';
     return;
   }
   if (currentStep < 6) goToStep(currentStep + 1);

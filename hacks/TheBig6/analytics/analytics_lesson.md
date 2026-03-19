@@ -736,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
           parts.pop();
           window.location.href = parts.join('/') + '/';
         } else {
-          window.location.href = '/';
+          window.location.href = '{{ '/' | relative_url }}';
         }
       });
     });
