@@ -789,7 +789,7 @@ audio {
       Listen to authentic game-day sounds from the Padres' home stadium — cheers, announcers, and that unmistakable Petco Park energy.
     </p>
     <audio controls>
-      <source src="/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3" type="audio/mpeg">
+      <source src="{{ '/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3' | relative_url }}" type="audio/mpeg">
      
     </audio>
     <p class="source-text">Source: Baseball crowd cheer sound effect</p>
@@ -862,7 +862,7 @@ setTimeout(function(){
     <div class="audio-demo">
       <h3>Your Working Audio Player:</h3>
       <audio controls id="resultAudio">
-        <source src="/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3" type="audio/mpeg">
+        <source src="{{ '/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3' | relative_url }}" type="audio/mpeg">
       </audio>
       <p style="color: #1e3a5f; margin-top: 20px; font-size: 1.1em;">⚾ Petco Park Game Day Atmosphere</p>
     </div>
@@ -1360,7 +1360,7 @@ body {
     <div class="audio-player">
       <p style="color: #fff; font-weight: 600; margin-bottom: 10px;">🏟️ Petco Park Game Day Atmosphere</p>
       <audio controls id="finalAudio">
-        <source src="/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3" type="audio/mpeg">
+        <source src="{{ '/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3' | relative_url }}" type="audio/mpeg">
       </audio>
     </div>
     <p style="margin-top: 25px;">The Padres faithful are cheering you on! 🎊</p>

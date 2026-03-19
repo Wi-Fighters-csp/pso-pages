@@ -207,9 +207,9 @@ Review your completed work and instructor assessment. If you received a passing 
       <h3 style="margin-top: 0;">Additional Work Required</h3>
       <p>Please review the instructor comments above and complete the recommended revisions before resubmission.</p>
       <div class="button-group">
-        <a href="/plagiarism/2" class="iridescent text-white py-2 px-4 rounded-lg font-semibold transition text-center">Return to C2 Session</a>
-        <a href="/plagiarism/3" class="iridescent text-white py-2 px-4 rounded-lg font-semibold transition text-center">Return to C3 Session</a>
-        <a href="/plagiarism/4" class="iridescent text-white py-2 px-4 rounded-lg font-semibold transition text-center">Return to C4 Session</a>
+        <a href="{{ '/plagiarism/2' | relative_url }}" class="iridescent text-white py-2 px-4 rounded-lg font-semibold transition text-center">Return to C2 Session</a>
+        <a href="{{ '/plagiarism/3' | relative_url }}" class="iridescent text-white py-2 px-4 rounded-lg font-semibold transition text-center">Return to C3 Session</a>
+        <a href="{{ '/plagiarism/4' | relative_url }}" class="iridescent text-white py-2 px-4 rounded-lg font-semibold transition text-center">Return to C4 Session</a>
       </div>
     </div>
   </div>

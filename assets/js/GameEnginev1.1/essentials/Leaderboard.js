@@ -1,4 +1,4 @@
-import { javaURI, fetchOptions } from '/assets/js/api/config.js';
+import { javaURI, fetchOptions } from '../../api/config.js';
 
 export default class Leaderboard {
     constructor(gameControl = null, options = {}) {

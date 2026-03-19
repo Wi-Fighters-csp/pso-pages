@@ -143,7 +143,7 @@ permalink: /dashboard/help/analytics
 
 ---
 
-<a href="/dashboard" class="inline-block mb-4 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold no-underline">
+<a href="{{ '/dashboard' | relative_url }}" class="inline-block mb-4 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold no-underline">
   ← Back to Dashboard
 </a>
 

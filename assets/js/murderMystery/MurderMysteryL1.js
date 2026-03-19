@@ -1,6 +1,6 @@
-import GameEnvBackground from '/assets/js/GameEnginev1/essentials/GameEnvBackground.js';
-import Player from '/assets/js/GameEnginev1/essentials/Player.js';
-import Npc from '/assets/js/GameEnginev1/essentials/Npc.js';
+import GameEnvBackground from '../GameEnginev1/essentials/GameEnvBackground.js';
+import Player from '../GameEnginev1/essentials/Player.js';
+import Npc from '../GameEnginev1/essentials/Npc.js';
 
 class MurderMysteryL1 {
   static friendlyName = "Level 1: The Docks";

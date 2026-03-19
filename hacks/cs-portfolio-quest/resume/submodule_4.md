@@ -94,7 +94,7 @@ date: 2025-10-21
     <button id="prevBtn" class="px-3 py-2 border rounded" disabled>Previous</button>
     <button
       id="nextModuleBtnNav"
-      data-href="/cs-portfolio-quest/resume/submodule_5/"
+      data-href="{{ '/cs-portfolio-quest/resume/submodule_5/' | relative_url }}"
       class="px-3 py-2 border rounded hidden bg-red-600 text-white disabled:opacity-60"
       disabled
     >Next Module →</button>

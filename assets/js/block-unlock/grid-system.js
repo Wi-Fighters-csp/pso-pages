@@ -1,5 +1,5 @@
 // CHANGES v1.5: Fixed level completion to detect ADJACENT tiles (touching), not same position. Enhanced reset debugging.
-import { Tile } from "/assets/js/block-unlock/tile.js";
+import { Tile } from './tile.js';
 
 export class Grid {
     static currentGridData = null;

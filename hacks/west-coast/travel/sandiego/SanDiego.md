@@ -1072,7 +1072,7 @@ body {
       <div class="audio-player">
         <p>🎵 Your Working Audio Player:</p>
         <audio controls>
-          <source src="/hacks/west-coast/travel/sandiego/funny-organ-intro-outro-5008.mp3" type="audio/mpeg">
+          <source src="{{ '/hacks/west-coast/travel/sandiego/funny-organ-intro-outro-5008.mp3' | relative_url }}" type="audio/mpeg">
         </audio>
       </div>
       <p>You've successfully created an audio player!</p>
@@ -1125,7 +1125,7 @@ body {
       <h3>🌊 Beach Sounds Example</h3>
       <p>Listen to the soothing sounds of waves crashing on the shores of La Jolla Beach:</p>
       <audio controls>
-        <source src="/hacks/west-coast/travel/sandiego/gentle-ocean-waves-3-300839.mp3" type="audio/mpeg">
+        <source src="{{ '/hacks/west-coast/travel/sandiego/gentle-ocean-waves-3-300839.mp3' | relative_url }}" type="audio/mpeg">
       </audio>
       <p class="source-text">Sample ocean waves audio</p>
     </div>
@@ -1241,7 +1241,7 @@ body {
       <h3>⚾ Petco Park Atmosphere</h3>
       <p>Listen to authentic game-day sounds from the Padres' home stadium:</p>
       <audio controls>
-        <source src="/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3" type="audio/mpeg">
+        <source src="{{ '/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3' | relative_url }}" type="audio/mpeg">
       </audio>
       <p class="source-text">Baseball crowd cheer sound effect</p>
     </div>
@@ -1298,7 +1298,7 @@ body {
       <div class="audio-player">
         <p>⚾ Petco Park Game Day Atmosphere</p>
         <audio controls>
-          <source src="/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3" type="audio/mpeg">
+          <source src="{{ '/hacks/west-coast/travel/sandiego/applause-cheer-236786.mp3' | relative_url }}" type="audio/mpeg">
         </audio>
       </div>
       <p>The Padres faithful are cheering you on! 🎊</p>
@@ -1359,7 +1359,7 @@ body {
       <h3>🦁 San Diego Zoo Lion Roar</h3>
       <p>Listen to the powerful roar of the king of the jungle:</p>
       <audio controls>
-        <source src="/hacks/west-coast/travel/sandiego/tiger-roar-wildlife-sfx-376158.mp3" type="audio/mpeg">
+        <source src="{{ '/hacks/west-coast/travel/sandiego/tiger-roar-wildlife-sfx-376158.mp3' | relative_url }}" type="audio/mpeg">
       </audio>
       <p class="source-text">Lion roar and wildlife sounds</p>
     </div>

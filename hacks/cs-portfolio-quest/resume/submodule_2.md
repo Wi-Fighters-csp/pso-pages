@@ -192,7 +192,7 @@ date: 2025-10-21
     <button id="nextBtn" class="px-3 py-2 border rounded">Next</button>
     <button
       id="nextModuleBtnNav"
-      data-href="/cs-portfolio-quest/resume/submodule_3/"
+      data-href="{{ '/cs-portfolio-quest/resume/submodule_3/' | relative_url }}"
       class="px-3 py-2 border rounded hidden disabled:opacity-50"
       disabled
     >Next Module →</button>

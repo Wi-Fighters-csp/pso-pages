@@ -844,4 +844,4 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
-<script src="/assets/js/lesson-completion-bigsix.js"></script>
+<script src="{{ '/assets/js/lesson-completion-bigsix.js' | relative_url }}"></script>

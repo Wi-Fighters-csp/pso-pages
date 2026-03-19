@@ -10,4 +10,4 @@ permalink: /navigation/section/cwgu
   window.location.href = "/navigation/courses/cwgu";
 </script>
 
-<p>Redirecting to <a href="/navigation/courses/cwgu">WGU D299</a>...</p>
+<p>Redirecting to <a href="{{ '/navigation/courses/cwgu' | relative_url }}">WGU D299</a>...</p>

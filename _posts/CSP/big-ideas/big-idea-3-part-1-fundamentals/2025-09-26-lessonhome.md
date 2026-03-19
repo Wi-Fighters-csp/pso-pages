@@ -123,7 +123,7 @@ comments: False
             <div class="tooltip-title">${number} - ${lesson.title}</div>
             <ul class="tooltip-list">
                 ${lesson.subpages.map(sp => {
-                    return `<li><a href="/csp/big-idea-3/${lesson.title.toLowerCase().replace(/\s+/g, '-')}/p3/${sp.toLowerCase().replace(/\s+/g, '-')}"">${sp}</a></li>`;
+                    return `<li><a href="{{ '/csp/big-idea-3/' | relative_url }}${lesson.title.toLowerCase().replace(/\s+/g, '-')}/p3/${sp.toLowerCase().replace(/\s+/g, '-')}"">${sp}</a></li>`;
                 }).join('')}
             </ul>
             `;

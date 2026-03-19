@@ -374,15 +374,15 @@ body {
   <h3 style="color: white; margin-bottom: 1rem;">🚀 Pong Mastery Series</h3>
   
   <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap;">
-    <a href="/jupyter/notebook/python" style="background: rgba(255,255,255,0.3); color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.5);">
+    <a href="{{ '/jupyter/notebook/python' | relative_url }}" style="background: rgba(255,255,255,0.3); color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.5);">
       🎯 Part 1: Debugging (Current)
     </a>
     <span style="color: rgba(255,255,255,0.6);">→</span>
-    <a href="/pages/p2Lesson" style="background: rgba(255,255,255,0.1); color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
+    <a href="{{ '/pages/p2Lesson' | relative_url }}" style="background: rgba(255,255,255,0.1); color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
       📝 Part 2: Coding
     </a>
     <span style="color: rgba(255,255,255,0.6);">→</span>
-    <a href="/pages/lessonp3" style="background: rgba(255,255,255,0.1); color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
+    <a href="{{ '/pages/lessonp3' | relative_url }}" style="background: rgba(255,255,255,0.1); color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
       🎮 Part 3: Advanced
     </a>
   </div>
@@ -392,10 +392,10 @@ body {
 
 <div style="text-align: center; margin: 2rem 0;">
   <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-    <a href="/pages/p2Lesson" style="display: inline-block; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 1rem 2rem; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3); border: 3px solid rgba(255,255,255,0.2);">
+    <a href="{{ '/pages/p2Lesson' | relative_url }}" style="display: inline-block; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 1rem 2rem; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3); border: 3px solid rgba(255,255,255,0.2);">
       📝 Start Part 2: Coding
     </a>
-    <a href="/pages/lessonp3" style="display: inline-block; background: linear-gradient(135deg, #e74c3c, #f39c12); color: white; padding: 1rem 2rem; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3); border: 3px solid rgba(255,255,255,0.2);">
+    <a href="{{ '/pages/lessonp3' | relative_url }}" style="display: inline-block; background: linear-gradient(135deg, #e74c3c, #f39c12); color: white; padding: 1rem 2rem; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3); border: 3px solid rgba(255,255,255,0.2);">
       🎮 Start Part 3: Advanced
     </a>
   </div>
@@ -518,7 +518,7 @@ body {
     <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 10px; backdrop-filter: blur(10px);">
       <h3 style="color: white; margin-bottom: 1rem;">📝 Part 2: Coding Implementation</h3>
       <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">Dive into the actual code implementation and build your Pong game from scratch!</p>
-      <a href="/p2Lesson" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
+      <a href="{{ '/p2Lesson' | relative_url }}" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
         🚀 Start Coding →
       </a>
     </div>
@@ -526,7 +526,7 @@ body {
     <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 10px; backdrop-filter: blur(10px);">
       <h3 style="color: white; margin-bottom: 1rem;">🎮 Part 3: Advanced Features</h3>
       <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">Add power-ups, AI opponents, and advanced game mechanics to your Pong game!</p>
-      <a href="/lessonp3" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
+      <a href="{{ '/lessonp3' | relative_url }}" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
         🎯 Advanced Features →
       </a>
     </div>

@@ -1,3 +1,5 @@
+import { baseurl } from '../api/config.js';
+
 /**
  * Adds Previous/Next level navigation buttons to the footer
  * @param {Game} gameInstance - The game instance to control
@@ -136,7 +138,7 @@ export function addLevelNavigationButtons(gameInstance) {
     homeButton.onclick = function() {
         console.log("Home button clicked");
         console.log("Returning to home...");
-        window.location.href = "/gamify/mansionGame";
+        window.location.href = `${baseurl}/gamify/mansionGame`;
     };
 
     // Create Info button (right of Home)
