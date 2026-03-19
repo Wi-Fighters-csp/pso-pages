@@ -7,6 +7,7 @@
 <style>
   :root {
     --navy:       #0c1a2e;
+    --navy-dark:  #08111f;
     --navy-mid:   #14273f;
     --navy-light: #1e3a5a;
     --gold:       #c8a84b;
@@ -114,7 +115,7 @@
     text-decoration: none;
     padding: 0.45rem 0.85rem;
     border-radius: 2px;
-    transition: color 0.2s, background 0.2s;
+    transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
     white-space: nowrap;
     color: var(--cream);
     background: transparent;
@@ -122,7 +123,11 @@
     cursor: pointer;
   }
 
-  .top-nav-link:hover { color: var(--gold-light); border-color: var(--border); }
+  .top-nav-link:hover {
+    color: var(--gold-light);
+    border-color: var(--border);
+    transform: translateY(-1px);
+  }
 
   .top-nav-link.btn-primary {
     background: var(--gold);
@@ -194,6 +199,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    isolation: isolate;
   }
 
   .hero::before {
@@ -209,6 +215,86 @@
         rgba(200,168,75,0.04) 40px
       );
     pointer-events: none;
+  }
+
+  /* NEW: decorative hero sparkle layer */
+  .hero-sparkle-layer,
+  .hero-note-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-sparkle {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(226,201,122,0.9) 35%, rgba(226,201,122,0) 75%);
+    opacity: 0.6;
+    animation: sparkleFloat linear infinite;
+    filter: blur(0.2px);
+  }
+
+  .hero-sparkle::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.85), transparent);
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 0.8;
+  }
+
+  @keyframes sparkleFloat {
+    0% {
+      transform: translateY(16px) scale(0.85);
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.65;
+    }
+    85% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(-90px) scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  /* NEW: floating notes on mouse move */
+  .music-note-pop {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    color: rgba(226,201,122,0.9);
+    text-shadow: 0 0 12px rgba(226,201,122,0.25);
+    animation: noteRise 1.8s ease-out forwards;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  @keyframes noteRise {
+    0% {
+      transform: translate(-50%, -10%) scale(0.9) rotate(0deg);
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.95;
+    }
+    100% {
+      transform: translate(-50%, -150%) scale(1.15) rotate(-10deg);
+      opacity: 0;
+    }
   }
 
   .hero-eyebrow {
@@ -267,6 +353,7 @@
     border: 1px solid rgba(200,168,75,0.28);
     box-shadow: 0 24px 60px rgba(0,0,0,0.34);
     position: relative;
+    z-index: 2;
   }
 
   .hero-photo-shell::after {
@@ -315,9 +402,10 @@
     text-decoration: none;
     padding: 0.75rem 1.8rem;
     border-radius: 2px;
-    transition: all 0.2s;
+    transition: all 0.2s, box-shadow 0.25s ease, transform 0.25s ease;
     cursor: pointer;
     border: 1px solid transparent;
+    position: relative;
   }
 
   .btn-primary {
@@ -342,6 +430,13 @@
     border-color: var(--gold);
     color: var(--gold-light);
     background: rgba(200,168,75,0.06);
+  }
+
+  /* NEW: hero button polish only */
+  .hero .btn:hover,
+  .hero .btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.22), 0 0 18px rgba(226,201,122,0.1);
   }
 
   /* ── SECTIONS ─────────────────────────────────────── */
@@ -1367,7 +1462,9 @@
 
   @media (prefers-reduced-motion: reduce) {
     .motion-reveal,
-    .instrument-card {
+    .instrument-card,
+    .hero-sparkle,
+    .music-note-pop {
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
@@ -1378,6 +1475,11 @@
     .concert-photo {
       transform: none !important;
       transition: none !important;
+    }
+
+    .hero-sparkle-layer,
+    .hero-note-layer {
+      display: none !important;
     }
   }
 
@@ -1510,24 +1612,29 @@
 
   <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
   <section class="hero" id="home">
-    <p class="hero-eyebrow">Poway Center for the Performing Arts · Est. 2004</p>
-    <h1>Poway Symphony Orchestra</h1>
-    <p class="hero-subtitle">John LoPiccolo, Conductor and Music Director</p>
-    <div class="hero-rule"></div>
-    <p class="hero-description">
-      For over 20 years, the semi-professional Poway Symphony Orchestra has brought
-      world-class symphonic music to San Diego's North County Inland communities.
-      About 67 musicians perform three inspiring concerts each season at the
-      Poway Center for the Performing Arts.
-    </p>
-    <div class="hero-actions">
-      <a href="#concerts" class="btn btn-primary">2025–2026 Season</a>
-      <a href="#tickets"  class="btn btn-secondary">Buy Tickets</a>
-      <a href="{{ '/capstone/powayorchestra/signin/' | relative_url }}" class="btn btn-secondary" data-allow-navigation="true">Member Sign In</a>
-      <a href="#donate"   class="btn btn-secondary cta-reveal" data-reveal="donate,contact">Donate</a>
-    </div>
-    <div class="hero-photo-shell">
-      <img src="/images/capstone/powaysymphonyorchestra/orch.jpg" alt="Poway Symphony Orchestra performing on stage" class="hero-photo">
+    <div class="hero-sparkle-layer" aria-hidden="true"></div>
+    <div class="hero-note-layer" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Poway Center for the Performing Arts · Est. 2004</p>
+      <h1>Poway Symphony Orchestra</h1>
+      <p class="hero-subtitle">John LoPiccolo, Conductor and Music Director</p>
+      <div class="hero-rule"></div>
+      <p class="hero-description">
+        For over 20 years, the semi-professional Poway Symphony Orchestra has brought
+        world-class symphonic music to San Diego's North County Inland communities.
+        About 67 musicians perform three inspiring concerts each season at the
+        Poway Center for the Performing Arts.
+      </p>
+      <div class="hero-actions">
+        <a href="#concerts" class="btn btn-primary">2025–2026 Season</a>
+        <a href="#tickets"  class="btn btn-secondary">Buy Tickets</a>
+        <a href="{{ '/capstone/powayorchestra/signin/' | relative_url }}" class="btn btn-secondary" data-allow-navigation="true">Member Sign In</a>
+        <a href="#donate"   class="btn btn-secondary cta-reveal" data-reveal="donate,contact">Donate</a>
+      </div>
+      <div class="hero-photo-shell">
+        <img src="/images/capstone/powaysymphonyorchestra/orch.jpg" alt="Poway Symphony Orchestra performing on stage" class="hero-photo">
+      </div>
     </div>
   </section>
 
@@ -2227,10 +2334,13 @@
   var musicianSectionCopy = root.querySelector('[data-musician-section-copy]');
   var musicianMemberGroups = root.querySelector('[data-musician-member-groups]');
   var musicianGallery = root.querySelector('[data-musician-gallery]');
+  var heroSparkleLayer = root.querySelector('.hero-sparkle-layer');
+  var heroNoteLayer = root.querySelector('.hero-note-layer');
   var selectedFamily = null;
   var audioContext;
   var audioReady = false;
   var previewCooldown = new WeakMap();
+  var lastHeroNoteTime = 0;
 
   var rosterImageSrc = "{{ '/images/capstone/powayorchestra.jpg' | relative_url }}";
   var galleryPositionsByFamily = {
@@ -2606,7 +2716,8 @@
       .split(',')
       .map(function (note) { return note.trim(); })
       .filter(Boolean)
-      .map(noteToFrequency);
+      .map(noteToFrequency)
+      .filter(Boolean);
 
     if (!frequencies.length) return;
 
@@ -2655,6 +2766,53 @@
     return 440 * Math.pow(2, distance / 12);
   }
 
+  /* NEW: hero sparkles */
+  function createHeroSparkles() {
+    if (!heroSparkleLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var sparkleCount = window.innerWidth < 700 ? 10 : 18;
+    heroSparkleLayer.innerHTML = '';
+
+    for (var i = 0; i < sparkleCount; i++) {
+      var sparkle = document.createElement('span');
+      sparkle.className = 'hero-sparkle';
+      sparkle.style.left = (Math.random() * 100) + '%';
+      sparkle.style.top = (15 + Math.random() * 70) + '%';
+      sparkle.style.animationDuration = (4.5 + Math.random() * 4.5) + 's';
+      sparkle.style.animationDelay = (Math.random() * 6) + 's';
+      sparkle.style.opacity = (0.35 + Math.random() * 0.4).toFixed(2);
+      var size = 4 + Math.random() * 5;
+      sparkle.style.width = size + 'px';
+      sparkle.style.height = size + 'px';
+      heroSparkleLayer.appendChild(sparkle);
+    }
+  }
+
+  /* NEW: interactive floating music notes in hero */
+  function spawnHeroNote(x, y) {
+    if (!heroNoteLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var now = Date.now();
+    if (now - lastHeroNoteTime < 140) return;
+    lastHeroNoteTime = now;
+
+    var rect = homeSection.getBoundingClientRect();
+    var note = document.createElement('span');
+    var notes = ['♪', '♫', '♩', '♬'];
+    note.className = 'music-note-pop';
+    note.textContent = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = (x - rect.left) + 'px';
+    note.style.top = (y - rect.top) + 'px';
+    note.style.fontSize = (16 + Math.random() * 12) + 'px';
+    note.style.animationDuration = (1.5 + Math.random() * 0.7) + 's';
+
+    heroNoteLayer.appendChild(note);
+
+    window.setTimeout(function () {
+      if (note.parentNode) note.parentNode.removeChild(note);
+    }, 2200);
+  }
+
   ['pointerdown', 'keydown', 'touchstart'].forEach(function (eventName) {
     root.addEventListener(eventName, function () {
       ensureAudio();
@@ -2677,6 +2835,17 @@
       playInstrumentPreview(card);
     });
   });
+
+  if (homeSection) {
+    homeSection.addEventListener('pointermove', function (event) {
+      spawnHeroNote(event.clientX, event.clientY);
+    });
+
+    homeSection.addEventListener('touchstart', function (event) {
+      var touch = event.touches && event.touches[0];
+      if (touch) spawnHeroNote(touch.clientX, touch.clientY);
+    }, { passive: true });
+  }
 
   if (detailPlayers) {
     detailPlayers.addEventListener('click', function (event) {
@@ -2776,6 +2945,9 @@
     resetInstrumentPanel();
   }
 
+  createHeroSparkles();
+  window.addEventListener('resize', createHeroSparkles);
+
   var currentAudio = null;
   var currentButton = null;
 
@@ -2852,3 +3024,5 @@
   }
 })();
 </script>
+</body>
+</html>
