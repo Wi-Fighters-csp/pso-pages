@@ -780,7 +780,7 @@ date: 2025-10-24
     document.getElementById('btn-next').addEventListener('click', showSignal);
     
     document.getElementById('return-mission-btn').addEventListener('click', () => {
-      window.location.href = '/digital-famine/end';
+      window.location.href = '{{ '/digital-famine/end' | relative_url }}';
     });
 
     updateMeters();

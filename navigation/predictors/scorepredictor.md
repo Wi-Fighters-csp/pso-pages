@@ -30,7 +30,7 @@ sticky_rank: 1
                                 Communication & Collaboration • Integrity • Organization
                             </small>
                         </div>
-                        <a href="/grade-predictor" class="btn btn-primary btn-lg">
+                        <a href="{{ '/grade-predictor' | relative_url }}" class="btn btn-primary btn-lg">
                             Start Grade Predictor <i class="fas fa-arrow-right ms-2"></i>
                         </a>
                     </div>
@@ -55,7 +55,7 @@ sticky_rank: 1
                                 Time Management • Test Preparation
                             </small>
                         </div>
-                        <a href="/exam-predictor" class="btn btn-primary btn-lg">
+                        <a href="{{ '/exam-predictor' | relative_url }}" class="btn btn-primary btn-lg">
                             Start Exam Predictor <i class="fas fa-arrow-right ms-2"></i>
                         </a>
                     </div>

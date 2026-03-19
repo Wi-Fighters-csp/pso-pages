@@ -3,6 +3,7 @@ import GameEnvBackground from '../GameEnginev1.5/GameEnvBackground.js';
 import Player from '../GameEnginev1.5/Player.js';
 import Npc from '../GameEnginev1.5/Npc.js';
 import DialogueSystem from '../GameEnginev2/features/DialogueSystem.js';
+import { baseurl } from '../api/config.js';
 import { initPlanetNavigation } from './planetNavigation.js';
 
 class GameLevelHomePage {
@@ -272,7 +273,7 @@ class GameLevelHomePage {
                 localStorage.setItem('planetProgression', JSON.stringify(this.progression));
                 this.debugProgress();
                 dialogueSystem.closeDialogue();
-                window.location.href = '/digital-famine/cybersecurity-game/';
+                window.location.href = `${baseurl}/digital-famine/cybersecurity-game/`;
               },
               primary: true
             }]);
@@ -331,7 +332,7 @@ class GameLevelHomePage {
                 this.progression.medialit = true;
                 localStorage.setItem('planetProgression', JSON.stringify(this.progression));
                 dialogueSystem.closeDialogue();
-                window.location.href = '/digital-famine/media-lit/';
+                window.location.href = `${baseurl}/digital-famine/media-lit/`;
               },
               primary: true
             }]);
@@ -390,7 +391,7 @@ class GameLevelHomePage {
                 this.progression.ai = true;
                 localStorage.setItem('planetProgression', JSON.stringify(this.progression));
                 dialogueSystem.closeDialogue();
-                window.location.href = '/digital-famine/ai/';
+                window.location.href = `${baseurl}/digital-famine/ai/`;
               },
               primary: true
             }]);
@@ -430,7 +431,7 @@ class GameLevelHomePage {
                 this.progression.microblog = true;
                 localStorage.setItem('planetProgression', JSON.stringify(this.progression));
                 dialogueSystem.closeDialogue();
-                window.location.href = '/digital-famine/microblog/';
+                window.location.href = `${baseurl}/digital-famine/microblog/`;
               },
               primary: true
             }]);
@@ -481,7 +482,7 @@ class GameLevelHomePage {
           dialogueSystem.showDialogue("Do you want to return to Earth?", "", sprite_src_home);
           dialogueSystem.addButtons([{
               text: "Travel",
-              action: () => window.location.href = '/digital-famine/end/',
+              action: () => window.location.href = `${baseurl}/digital-famine/end/`,
               primary: true
             }]);
         }.bind(this)

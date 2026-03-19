@@ -293,7 +293,7 @@ function finishQuiz() {
   const percent = (score / (questions.length * 5)) * 100;
   const quizContent = document.getElementById("quiz-content");
   if (percent >= 80) {
-    quizContent.innerHTML = `<h2>🎉 Quiz Complete! Score: ${percent}%</h2><p>Great job, Agent! You’ve unlocked the Vault.</p><a href="/digital-famine/cybersecurity-game/vault/final-vault/" class="next-btn">Enter the Vault</a>`;
+    quizContent.innerHTML = `<h2>🎉 Quiz Complete! Score: ${percent}%</h2><p>Great job, Agent! You’ve unlocked the Vault.</p><a href="{{ '/digital-famine/cybersecurity-game/vault/final-vault/' | relative_url }}" class="next-btn">Enter the Vault</a>`;
   } else {
     quizContent.innerHTML = `<h2>❌ Score: ${percent}%</h2><p>You need at least 80% to unlock the Vault.</p><button class="retry-btn" onclick="restartQuiz()">Retry Quiz</button>`;
   }

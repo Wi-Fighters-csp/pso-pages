@@ -12,15 +12,15 @@ permalink: /gamify/murderMystery
 <script type="module">
 
     // Adventure Game assets locations
-    import Game from "/assets/js/GameEnginev1/essentials/Game.js";
-    import MurderMysteryL0 from "/assets/js/murderMystery/MurderMysteryL0.js";
-    import MurderMysteryL1 from "/assets/js/murderMystery/MurderMysteryL1.js";
-    import MurderMysteryL2 from "/assets/js/murderMystery/murderMysteryL2.js";
-    import MurderMysteryL3 from "/assets/js/murderMystery/MurderMysteryL3.js";
-    import MurderMysteryL4 from "/assets/js/murderMystery/MurderMysteryL4.js";
-    import MurderMysteryL5 from "/assets/js/murderMystery/MurderMysteryL5.js";
-    import MurderMysteryL6 from "/assets/js/murderMystery/MurderMysteryL6.js";
-    import { pythonURI, javaURI, fetchOptions } from '/assets/js/api/config.js';
+    import Game from "{{ '/assets/js/GameEnginev1/essentials/Game.js' | relative_url }}";
+    import MurderMysteryL0 from "{{ '/assets/js/murderMystery/MurderMysteryL0.js' | relative_url }}";
+    import MurderMysteryL1 from "{{ '/assets/js/murderMystery/MurderMysteryL1.js' | relative_url }}";
+    import MurderMysteryL2 from "{{ '/assets/js/murderMystery/murderMysteryL2.js' | relative_url }}";
+    import MurderMysteryL3 from "{{ '/assets/js/murderMystery/MurderMysteryL3.js' | relative_url }}";
+    import MurderMysteryL4 from "{{ '/assets/js/murderMystery/MurderMysteryL4.js' | relative_url }}";
+    import MurderMysteryL5 from "{{ '/assets/js/murderMystery/MurderMysteryL5.js' | relative_url }}";
+    import MurderMysteryL6 from "{{ '/assets/js/murderMystery/MurderMysteryL6.js' | relative_url }}";
+    import { pythonURI, javaURI, fetchOptions } from "{{ '/assets/js/api/config.js' | relative_url }}";
 
     const gameLevelClasses = [MurderMysteryL0, MurderMysteryL1, MurderMysteryL2, MurderMysteryL3, MurderMysteryL4, MurderMysteryL5, MurderMysteryL6];
 

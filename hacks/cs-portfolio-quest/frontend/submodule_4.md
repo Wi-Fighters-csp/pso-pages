@@ -302,7 +302,7 @@ Yes. Use Tailwind for component utilities and Sass for global styles, theme vari
 
 **Form Submission Handler**
 ```javascript
-import { javaURI } from '/assets/js/api/config.js';
+import { javaURI } from "{{ '/assets/js/api/config.js' | relative_url }}";
 
 document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submitBtn");
@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script type="module">
-  import { javaURI } from '/assets/js/api/config.js';
+  import { javaURI } from "{{ '/assets/js/api/config.js' | relative_url }}";
 
   document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = document.getElementById("submitBtn");

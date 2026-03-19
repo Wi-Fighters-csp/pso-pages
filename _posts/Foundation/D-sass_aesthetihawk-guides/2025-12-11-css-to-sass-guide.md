@@ -139,7 +139,7 @@ Search your project for any `<link>` tags loading the old CSS:
 
 ```html
 <!-- DELETE THIS LINE if you find it -->
-<link rel="stylesheet" href="/assets/css/leaderboard.css">
+<link rel="stylesheet" href="{{ '/assets/css/leaderboard.css' | relative_url }}">
 ```
 
 SASS automatically includes your styles - no manual linking needed!

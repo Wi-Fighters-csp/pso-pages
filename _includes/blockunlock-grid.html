@@ -59,9 +59,9 @@
 
 <div id="grid-container"></div>
 
-<script type="module" src="/assets/js/block-unlock/tile.js"></script>
-<script type="module" src="/assets/js/block-unlock/grid-system.js"></script>
-<script type="module" src="/assets/js/block-unlock/level-system.js"></script>
+<script type="module" src="{{ '/assets/js/block-unlock/tile.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/js/block-unlock/grid-system.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/js/block-unlock/level-system.js' | relative_url }}"></script>
 
 <script>
 // Close tutorial overlay - must run before module script
@@ -99,9 +99,9 @@ document.addEventListener('keydown', (e) => {
 </script>
 
 <script type="module">
-import { Grid } from "/assets/js/block-unlock/grid-system.js";
-import { Tile } from "/assets/js/block-unlock/tile.js";
-import { LevelLoader } from "/assets/js/block-unlock/level-system.js";
+import { Grid } from "{{ '/assets/js/block-unlock/grid-system.js' | relative_url }}";
+import { Tile } from "{{ '/assets/js/block-unlock/tile.js' | relative_url }}";
+import { LevelLoader } from "{{ '/assets/js/block-unlock/level-system.js' | relative_url }}";
 
 let container = document.getElementById("grid-container");
 const BASE_CELL_SIZE = 60;

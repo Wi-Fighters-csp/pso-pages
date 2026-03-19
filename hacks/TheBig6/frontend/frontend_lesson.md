@@ -1132,11 +1132,11 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         try{if(document.referrer&&new URL(document.referrer).origin===location.origin){history.back();return;}}catch(err){}
         var p=location.pathname.replace(/\/$/,'').split('/');
-        if(p.length>1){p.pop();window.location.href=p.join('/')+'/';}else{window.location.href='/';}
+        if(p.length>1){p.pop();window.location.href=p.join('/')+'/';}else{window.location.href='{{ '/' | relative_url }}';}
       });
     });
   });
 })();
 </script>
 
-<script src="/assets/js/lesson-completion-bigsix.js"></script>
+<script src="{{ '/assets/js/lesson-completion-bigsix.js' | relative_url }}"></script>

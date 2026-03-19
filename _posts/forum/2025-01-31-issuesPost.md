@@ -186,7 +186,7 @@ title: Issues Post
                 });
             };
             setTimeout(function() {
-                window.location.href = "/pages/studentIssue";
+                window.location.href = "{{ '/pages/studentIssue' | relative_url }}";
             }, 3000);
         });
     </script>

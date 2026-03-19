@@ -692,7 +692,7 @@ setTimeout(function(){
     <div class="audio-demo">
       <h3>Your Working Audio Player:</h3>
       <audio controls id="resultAudio">
-        <source src="/hacks/west-coast/travel/sandiego/gentle-ocean-waves-3-300839.mp3" type="audio/mpeg">
+        <source src="{{ '/hacks/west-coast/travel/sandiego/gentle-ocean-waves-3-300839.mp3' | relative_url }}" type="audio/mpeg">
       </audio>
       <p style="color: #1e3a5f; margin-top: 20px; font-size: 1.1em;">🌊 La Jolla Beach Ocean Waves</p>
     </div>

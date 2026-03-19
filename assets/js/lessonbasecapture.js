@@ -1,5 +1,5 @@
 // -------------------- API CONFIG LOADER --------------------
-import { javaURI, fetchOptions } from '/assets/js/api/config.js';
+import { baseurl, javaURI, fetchOptions } from './api/config.js';
 async function getApiConfig() {
   return { javaURI, fetchOptions };
 }
@@ -343,7 +343,7 @@ function showLoginMessage(feature) {
   message.style.boxShadow = "0 2px 10px rgba(0,0,0,0.3)";
   message.innerHTML = `
     🔒 Please log in to save your ${feature} progress
-    <a href="/login" style="color:white; margin-left:1rem; text-decoration:underline;">Go to Login</a>
+    <a href="${baseurl}/login" style="color:white; margin-left:1rem; text-decoration:underline;">Go to Login</a>
   `;
   document.body.appendChild(message);
   setTimeout(() => message.remove(), 4000);

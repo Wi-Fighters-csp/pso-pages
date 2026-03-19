@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Create and add overlay
             const overlay = document.createElement('div');
             overlay.className = 'quest-locked-overlay';
-            overlay.innerHTML = '<img src="/images/locked-overlay.svg" alt="Locked" style="width: 100%; height: 100%; object-fit: cover;">';
+            overlay.innerHTML = '<img src="{{ '/images/locked-overlay.svg' | relative_url }}" alt="Locked" style="width: 100%; height: 100%; object-fit: cover;">';
             card.insertBefore(overlay, card.firstChild);
             
             const level = index + 1;

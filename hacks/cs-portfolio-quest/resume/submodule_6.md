@@ -312,7 +312,7 @@ date: 2025-10-29
       <button id="nextBtn" class="px-3 py-2 border rounded">Continue →</button>
       <button
         id="nextModuleBtnNav"
-        data-href="/cs-portfolio-quest/resume/"
+        data-href="{{ '/cs-portfolio-quest/resume/' | relative_url }}"
         class="px-3 py-2 border rounded hidden bg-red-600 text-white disabled:opacity-60"
         disabled
       >Back to homepage →</button>

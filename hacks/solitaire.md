@@ -418,7 +418,7 @@ permalink: /solitaire/
 </div>
 
 <!-- Single module entry point -->
-<script type="module" src="/assets/js/solitaire/main.js"></script>
+<script type="module" src="{{ '/assets/js/solitaire/main.js' | relative_url }}"></script>
 
 <style>
 /* Headings */

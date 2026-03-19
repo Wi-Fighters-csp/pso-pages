@@ -565,7 +565,7 @@ The **frontend’s job** in this system is to:
 </section>
 
 <script type="module">
-  import { javaURI } from '/assets/js/api/config.js';
+  import { javaURI } from "{{ '/assets/js/api/config.js' | relative_url }}";
 
   document.addEventListener("DOMContentLoaded", () => {
     /* -------------------- Editor Setup (Quill + marked) -------------------- */

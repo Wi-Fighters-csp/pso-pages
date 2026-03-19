@@ -837,11 +837,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch(err) {}
         var p = location.pathname.replace(/\/$/, '').split('/');
         if (p.length > 1) { p.pop(); window.location.href = p.join('/') + '/'; }
-        else { window.location.href = '/'; }
+        else { window.location.href = '{{ '/' | relative_url }}'; }
       });
     });
   });
 })();
 </script>
 
-<script src="/assets/js/lesson-completion-bigsix.js"></script>
+<script src="{{ '/assets/js/lesson-completion-bigsix.js' | relative_url }}"></script>

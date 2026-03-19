@@ -194,7 +194,7 @@ title: Blogs Post
             };
             //wait 3 seconds then send them back
             setTimeout(function() {
-                window.location.href = "/pages/studentBlogs/";
+                window.location.href = "{{ '/pages/studentBlogs/' | relative_url }}";
             }, 3000);
         });
     </script>

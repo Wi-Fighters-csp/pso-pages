@@ -70,7 +70,7 @@ permalink: /cookie-clicker-game/
       <div id="lesson-info" class="relative z-10 text-center bg-yellow-200/70 px-6 py-3 rounded-lg shadow border border-yellow-400">
           <span class="font-semibold text-brown-800">Add your own feature:</span>
           <!-- Link to documentation -->
-          <a href="/cookie-clicker-game-docs/" target="_blank" class="text-blue-600 hover:underline ml-2">
+          <a href="{{ '/cookie-clicker-game-docs/' | relative_url }}" target="_blank" class="text-blue-600 hover:underline ml-2">
               Click here
           </a>
       </div>

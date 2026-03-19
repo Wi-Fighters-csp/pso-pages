@@ -5,6 +5,8 @@
  * @module endModuleProgression
  */
 
+import { baseurl } from '../api/config.js';
+
 const STORAGE_KEY = 'digitalFamine_endModuleProgress';
 
 /**
@@ -583,7 +585,7 @@ function blockContent() {
             ${state.completed.length} / 5 modules completed
           </p>
         </div>
-        <button onclick="window.location.href='/digital-famine/end/'" style="
+        <button onclick="window.location.href='${baseurl}/digital-famine/end/'" style="
           background: linear-gradient(135deg, #7dd3fc, #a78bfa);
           color: white;
           border: none;
@@ -694,7 +696,7 @@ export function addModuleFooterControls() {
   `;
   homeBtn.onmouseover = () => homeBtn.style.transform = 'scale(1.05)';
   homeBtn.onmouseout = () => homeBtn.style.transform = 'scale(1)';
-  homeBtn.onclick = () => window.location.href = '/digital-famine/end/';
+  homeBtn.onclick = () => window.location.href = `${baseurl}/digital-famine/end/`;
   
   // Progress indicator
   const progressDiv = document.createElement('div');
