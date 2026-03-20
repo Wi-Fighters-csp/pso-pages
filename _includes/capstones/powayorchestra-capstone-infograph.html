@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poway Symphony Orchestra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy:       #0c1a2e;
@@ -25,7 +25,7 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Source Serif 4', Georgia, serif;
     background: var(--navy);
     color: var(--cream);
     font-size: 18px;
@@ -339,6 +339,8 @@
   }
 
   .hero-description {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
     max-width: 860px;
     margin: 0 auto 2.5rem;
     font-size: 1.1rem;
@@ -477,12 +479,47 @@
   }
 
   .section-intro {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
     text-align: center;
     max-width: 660px;
     margin: 0 auto 3rem;
     color: rgba(250,246,239,0.75);
     font-size: 1.05rem;
     line-height: 1.75;
+  }
+
+  .hero-description,
+  .section-intro,
+  .concert-card p,
+  .program-list li,
+  .ticket-option p,
+  .ticket-notes li,
+  .donate-tier-desc,
+  .donate-impact-card p,
+  .conductor-card p,
+  .musicians-highlights li,
+  .conductor-contact,
+  .instrument-discovery-intro,
+  .instrument-card p,
+  .instrument-detail-copy,
+  .instrument-detail-meta p,
+  .instrument-audio-hint,
+  .musician-roster-header p,
+  .musician-roster-empty p,
+  .musician-roster-detail-header p,
+  .musician-member-group li,
+  .musician-roster-note,
+  .news-card p,
+  .sample-instrument-card p,
+  .contact-block p,
+  .contact-block a,
+  .media-featured p,
+  .media-archive-panel > p,
+  .media-card-body p,
+  .media-placeholder p {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
   }
 
   .section-cta-row {
@@ -698,10 +735,11 @@
 
   .ticket-notes li {
     font-family: 'Jost', sans-serif;
-    font-size: 0.82rem;
-    color: rgba(250,246,239,0.55);
+    font-size: 0.98rem;
+    color: rgba(250,246,239,0.78);
     letter-spacing: 0.04em;
-    padding: 0.3rem 0;
+    line-height: 1.65;
+    padding: 0.45rem 0;
     padding-left: 1.2rem;
     position: relative;
   }
@@ -1299,34 +1337,6 @@
     padding-top: 0;
   }
 
-  .musician-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-  }
-
-  .musician-gallery-card {
-    margin: 0;
-    border: 1px solid rgba(226,201,122,0.16);
-    border-radius: 5px;
-    overflow: hidden;
-    background: rgba(8, 19, 38, 0.56);
-  }
-
-  .musician-gallery-card img {
-    display: block;
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
-  }
-
-  .musician-gallery-card figcaption {
-    padding: 0.8rem 0.9rem 1rem;
-    color: rgba(250,246,239,0.76);
-    line-height: 1.6;
-    font-size: 0.93rem;
-  }
-
   .musician-roster-note {
     margin-top: 1rem;
     color: rgba(250,246,239,0.64);
@@ -1879,7 +1889,8 @@
         <div class="top-nav-dropdown">
           <a href="#about"      class="top-nav-dropdown-link">Our Story</a>
           <a href="#conductor"  class="top-nav-dropdown-link">Conductor</a>
-          <a href="#musicians"  class="top-nav-dropdown-link">Musicians</a>
+          <a href="#musician-info"  class="top-nav-dropdown-link">Musicians</a>
+          <a href="#join-orchestra" class="top-nav-dropdown-link">Join the Orchestra</a>
         </div>
       </div>
 
@@ -1893,25 +1904,8 @@
         </div>
       </div>
 
-      <div class="top-nav-item has-submenu">
-        <a href="#support" class="top-nav-link">Support <span class="top-nav-caret">&#9662;</span></a>
-        <div class="top-nav-dropdown">
-          <a href="#donate"     class="top-nav-dropdown-link cta-reveal" data-reveal="donate,contact">Donate</a>
-          <a href="#donate"     class="top-nav-dropdown-link cta-reveal" data-reveal="donate,contact">Sponsorship</a>
-          <a href="#donate"     class="top-nav-dropdown-link cta-reveal" data-reveal="donate,contact">Volunteer</a>
-        </div>
-      </div>
-
       <div class="top-nav-item">
-        <a href="#conductor" class="top-nav-link">Conductor</a>
-      </div>
-
-      <div class="top-nav-item has-submenu">
-        <a href="#musician-info" class="top-nav-link">Musicians <span class="top-nav-caret">&#9662;</span></a>
-        <div class="top-nav-dropdown">
-          <a href="#join-orchestra" class="top-nav-dropdown-link">Join the Orchestra</a>
-          <a href="#musician-info" class="top-nav-dropdown-link">Musician Info</a>
-        </div>
+        <a href="#donate" class="top-nav-link cta-reveal" data-reveal="donate,contact">Support</a>
       </div>
 
       <div class="top-nav-actions">
@@ -2630,18 +2624,17 @@
 
             <div class="musician-roster-grid">
               <div class="musician-roster-empty" data-musician-roster-empty>
-                <p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra and see a small gallery for the selected section.</p>
+                <p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra.</p>
               </div>
 
               <div class="musician-roster-detail is-hidden" data-musician-roster-detail>
                 <div class="musician-roster-detail-header">
                   <p class="instrument-detail-subheading">Selected Section</p>
                   <h4 data-musician-section-title>Select a section</h4>
-                  <p data-musician-section-copy>Pick a section chip to load players and images.</p>
+                  <p data-musician-section-copy>Pick a section chip to load the current players.</p>
                 </div>
 
                 <div class="musician-member-groups" data-musician-member-groups></div>
-                <div class="musician-gallery" data-musician-gallery></div>
               </div>
             </div>
 
@@ -2768,7 +2761,6 @@
   var musicianSectionTitle = root.querySelector('[data-musician-section-title]');
   var musicianSectionCopy = root.querySelector('[data-musician-section-copy]');
   var musicianMemberGroups = root.querySelector('[data-musician-member-groups]');
-  var musicianGallery = root.querySelector('[data-musician-gallery]');
   var pageNoteLayer = root.querySelector('.page-note-layer');
   var heroSparkleLayer = root.querySelector('.hero-sparkle-layer');
   var selectedFamily = null;
@@ -2783,13 +2775,6 @@
     document.body.appendChild(pageNoteLayer);
   }
 
-  var rosterImageSrc = "{{ '/images/capstone/powayorchestra.jpg' | relative_url }}";
-  var galleryPositionsByFamily = {
-    strings: ['18% center', '35% center', '50% center'],
-    brass: ['62% center', '74% center', '86% center'],
-    woodwinds: ['44% center', '54% center', '64% center'],
-    percussion: ['78% center', '86% center', '94% center']
-  };
   var musicianFamilyDetails = {
     strings: {
       sections: [
@@ -2958,19 +2943,6 @@
     }).join('');
   }
 
-  function buildGallery(sectionTitle, familyKey) {
-    var positions = galleryPositionsByFamily[familyKey] || ['center center', 'center center', 'center center'];
-    var captions = [
-      sectionTitle + ' on stage during a Poway Symphony Orchestra performance.',
-      sectionTitle + ' contributing color and balance inside the full ensemble.',
-      sectionTitle + ' supporting the musical shape of Dvořák in America.'
-    ];
-
-    return captions.map(function (caption, index) {
-      return '<figure class="musician-gallery-card"><img src="' + rosterImageSrc + '" alt="' + caption + '" style="object-position:' + positions[index % positions.length] + ';"><figcaption>' + caption + '</figcaption></figure>';
-    }).join('');
-  }
-
   function resetSectionButtons() {
     if (!detailPlayers) return;
     Array.prototype.forEach.call(detailPlayers.querySelectorAll('.musician-section-chip'), function (button) {
@@ -3017,10 +2989,6 @@
     if (musicianMemberGroups) {
       musicianMemberGroups.innerHTML = makeMemberGroups(section.groups);
     }
-
-    if (musicianGallery) {
-      musicianGallery.innerHTML = buildGallery(section.title, selectedFamily);
-    }
   }
 
   function resetInstrumentPanel() {
@@ -3066,15 +3034,11 @@
     }
 
     if (musicianSectionCopy) {
-      musicianSectionCopy.textContent = 'Pick a section chip to load players and images.';
+      musicianSectionCopy.textContent = 'Pick a section chip to load the current players.';
     }
 
     if (musicianMemberGroups) {
       musicianMemberGroups.innerHTML = '';
-    }
-
-    if (musicianGallery) {
-      musicianGallery.innerHTML = '';
     }
   }
 
@@ -3107,7 +3071,7 @@
     }
 
     if (musicianRosterCopy) {
-      musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America. Choose a ' + (card.dataset.title || 'selected') + ' section below to see the players and images.';
+      musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America. Choose a ' + (card.dataset.title || 'selected') + ' section below to see the players.';
     }
 
     if (musicianRosterEmpty) {
@@ -3120,10 +3084,6 @@
 
     if (musicianMemberGroups) {
       musicianMemberGroups.innerHTML = '';
-    }
-
-    if (musicianGallery) {
-      musicianGallery.innerHTML = '';
     }
   }
 
@@ -3168,6 +3128,11 @@
       currentHoverAudio = audio;
       currentHoverCard = card;
     }).catch(function () {});
+  }
+
+  function stopAllSectionAudio() {
+    stopHoverPreview();
+    stopCurrentAudio();
   }
 
   function setActiveMedia(card, shouldAutoplay) {
@@ -3301,6 +3266,7 @@
   }
 
   function showHome() {
+    stopAllSectionAudio();
     hideAllTopics();
     homeOnlySections.forEach(function (s) { s.classList.remove('is-hidden'); });
     if (homeSection) {
@@ -3310,6 +3276,7 @@
   }
 
   function showTopics(ids) {
+    stopAllSectionAudio();
     hideAllTopics();
     homeOnlySections.forEach(function (s) { s.classList.add('is-hidden'); });
     if (homeSection) homeSection.classList.add('is-hidden');
@@ -3328,6 +3295,7 @@
   }
 
   function showBlank() {
+    stopAllSectionAudio();
     hideAllTopics();
     homeOnlySections.forEach(function (s) { s.classList.add('is-hidden'); });
     if (homeSection) homeSection.classList.add('is-hidden');
