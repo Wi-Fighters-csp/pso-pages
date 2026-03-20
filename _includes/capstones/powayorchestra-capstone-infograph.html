@@ -606,12 +606,255 @@
     margin-top: 0.4rem;
   }
 
+  .home-performance {
+    padding: 2.75rem 2rem 3rem;
+    background:
+      linear-gradient(180deg, rgba(20,39,63,0.96), rgba(8,17,31,0.94)),
+      var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .home-performance-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .home-performance-shell {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(200,168,75,0.22);
+    background: rgba(8,17,31,0.96);
+    box-shadow: 0 18px 42px rgba(0,0,0,0.28);
+  }
+
+  .home-performance-shell::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%;
+  }
+
+  .home-performance-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .home-performance-copy {
+    border: 1px solid rgba(200,168,75,0.18);
+    border-radius: 18px;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .home-performance-copy h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1.12;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .home-performance-copy p {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    color: rgba(250,246,239,0.82);
+    font-size: 1.03rem;
+    line-height: 1.72;
+    margin-bottom: 1.2rem;
+  }
+
+  .home-performance-copy .media-kicker {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 900px) {
+    .home-performance-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
   /* ── CONCERT CARDS ─────────────────────────────────── */
   .concert-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
+  }
+
+  .season-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0 2.2rem;
+  }
+
+  .season-calendar-month {
+    border: 1px solid rgba(200,168,75,0.18);
+    border-radius: 12px;
+    padding: 1.2rem;
+    background:
+      linear-gradient(135deg, rgba(200,168,75,0.08), transparent 55%),
+      var(--navy-mid);
+    box-shadow: 0 16px 34px rgba(0,0,0,0.18);
+  }
+
+  .season-calendar-month-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .season-calendar-label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .season-calendar-month h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.28rem;
+    color: var(--white);
+    margin: 0;
+  }
+
+  .season-calendar-month-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    white-space: nowrap;
+  }
+
+  .season-calendar-weekdays,
+  .season-calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .season-calendar-weekdays {
+    margin-bottom: 0.45rem;
+  }
+
+  .season-calendar-weekday {
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(250,246,239,0.52);
+  }
+
+  .season-calendar-day {
+    min-height: 56px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 0.4rem;
+    background: rgba(8,17,31,0.42);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .season-calendar-day.is-empty {
+    background: rgba(255,255,255,0.02);
+    border-style: dashed;
+  }
+
+  .season-calendar-day-number {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    color: rgba(250,246,239,0.76);
+  }
+
+  .season-calendar-day.has-event {
+    border-color: rgba(200,168,75,0.42);
+    background: linear-gradient(180deg, rgba(200,168,75,0.18), rgba(20,39,63,0.82));
+    box-shadow: 0 0 0 1px rgba(200,168,75,0.12);
+  }
+
+  .season-calendar-day.has-event .season-calendar-day-number {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .season-calendar-event-chip {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    background: rgba(8,17,31,0.55);
+    color: var(--gold-light);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .season-calendar-event-title {
+    font-size: 0.74rem;
+    line-height: 1.3;
+    color: var(--white);
+  }
+
+  .season-calendar-summary {
+    margin-top: 0.95rem;
+    padding-top: 0.95rem;
+    border-top: 1px solid rgba(200,168,75,0.16);
+  }
+
+  .season-calendar-date {
+    color: var(--gold-light);
+    font-size: 0.95rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .season-calendar-summary p {
+    color: rgba(250,246,239,0.78);
+    font-size: 0.96rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .season-calendar-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin: 0 0 2rem;
+  }
+
+  .season-calendar-meta-item {
+    border-left: 3px solid rgba(200,168,75,0.45);
+    padding: 0.2rem 0 0.2rem 0.85rem;
+  }
+
+  .season-calendar-meta-item strong {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.2rem;
+  }
+
+  .season-calendar-meta-item span {
+    color: rgba(250,246,239,0.8);
+    font-size: 0.98rem;
+    line-height: 1.55;
   }
 
   .concert-card {
@@ -699,6 +942,47 @@
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.2rem;
     margin: 2rem 0;
+  }
+
+  .ticket-next-performance {
+    margin: 2rem 0 1.4rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(200,168,75,0.28);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(200,168,75,0.08), transparent 52%),
+      var(--navy-mid);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+  }
+
+  .ticket-next-performance-label {
+    display: inline-block;
+    margin-bottom: 0.7rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .ticket-next-performance h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.45rem;
+  }
+
+  .ticket-next-performance-meta {
+    color: var(--gold-light);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .ticket-next-performance p {
+    color: rgba(250,246,239,0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
   }
 
   .ticket-option {
@@ -1986,6 +2270,32 @@
     </div>
   </div>
 
+  <section class="home-performance home-only" id="home-performance">
+    <div class="home-performance-inner">
+      <div class="home-performance-shell">
+        <iframe
+          class="home-performance-frame"
+          data-home-performance-player
+          src="https://www.youtube-nocookie.com/embed/npmu4m4iGeY?rel=0&enablejsapi=1"
+          title="Poway Symphony Orchestra featured performance"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="home-performance-copy">
+        <p class="media-kicker">Watch The Orchestra</p>
+        <h2>Featured Performance: Egmont Overture, Op. 84</h2>
+        <p>
+          Watch the Poway Symphony Orchestra perform Beethoven's Egmont Overture directly on the home page.
+          It offers visitors an immediate sense of the ensemble's sound, precision, and concert-stage presence.
+        </p>
+        <a href="#media" class="btn btn-secondary">More Performances</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ ABOUT ══════════════════════════════════════════════════════════ -->
   <section class="reveal-topic is-hidden" id="about">
     <div class="section">
@@ -2059,6 +2369,217 @@
         15498 Espola Road, Poway CA 92064. Free parking available.
       </p>
 
+      <div class="season-calendar-meta">
+        <div class="season-calendar-meta-item">
+          <strong>Venue</strong>
+          <span>Poway Center for the Performing Arts</span>
+        </div>
+        <div class="season-calendar-meta-item">
+          <strong>Concert Time</strong>
+          <span>Sundays at 4:00 PM</span>
+        </div>
+        <div class="season-calendar-meta-item">
+          <strong>Season Pattern</strong>
+          <span>Three concerts per season with Monday evening rehearsals</span>
+        </div>
+        <div class="season-calendar-meta-item">
+          <strong>Ensemble</strong>
+          <span>Approximately 65–67 musicians led by John LoPiccolo</span>
+        </div>
+      </div>
+
+      <div class="season-calendar-grid">
+        <article class="season-calendar-month">
+          <div class="season-calendar-month-header">
+            <div>
+              <span class="season-calendar-label">Fall Concert</span>
+              <h3>Dvořák in America</h3>
+            </div>
+            <div class="season-calendar-month-name">November 2025</div>
+          </div>
+          <div class="season-calendar-weekdays">
+            <span class="season-calendar-weekday">Sun</span>
+            <span class="season-calendar-weekday">Mon</span>
+            <span class="season-calendar-weekday">Tue</span>
+            <span class="season-calendar-weekday">Wed</span>
+            <span class="season-calendar-weekday">Thu</span>
+            <span class="season-calendar-weekday">Fri</span>
+            <span class="season-calendar-weekday">Sat</span>
+          </div>
+          <div class="season-calendar-days">
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
+            <div class="season-calendar-day has-event">
+              <span class="season-calendar-day-number">16</span>
+              <span class="season-calendar-event-chip">4:00 PM</span>
+              <span class="season-calendar-event-title">Dvořák in America</span>
+            </div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">22</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
+          </div>
+          <div class="season-calendar-summary">
+            <p class="season-calendar-date">Sunday, November 16, 2025</p>
+            <p>Dvořák's Symphony No. 9 “From the New World” and the Dvořák Cello Concerto with featured soloist.</p>
+          </div>
+        </article>
+
+        <article class="season-calendar-month">
+          <div class="season-calendar-month-header">
+            <div>
+              <span class="season-calendar-label">Spring Concert</span>
+              <h3>Mendelssohn Classics</h3>
+            </div>
+            <div class="season-calendar-month-name">March 2026</div>
+          </div>
+          <div class="season-calendar-weekdays">
+            <span class="season-calendar-weekday">Sun</span>
+            <span class="season-calendar-weekday">Mon</span>
+            <span class="season-calendar-weekday">Tue</span>
+            <span class="season-calendar-weekday">Wed</span>
+            <span class="season-calendar-weekday">Thu</span>
+            <span class="season-calendar-weekday">Fri</span>
+            <span class="season-calendar-weekday">Sat</span>
+          </div>
+          <div class="season-calendar-days">
+            <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">16</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
+            <div class="season-calendar-day has-event">
+              <span class="season-calendar-day-number">22</span>
+              <span class="season-calendar-event-chip">4:00 PM</span>
+              <span class="season-calendar-event-title">Mendelssohn Classics</span>
+            </div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">31</span></div>
+          </div>
+          <div class="season-calendar-summary">
+            <p class="season-calendar-date">Sunday, March 22, 2026</p>
+            <p>Mendelssohn's “Reformation” Symphony, Violin Concerto, and Beethoven's Overture to Fidelio.</p>
+          </div>
+        </article>
+
+        <article class="season-calendar-month">
+          <div class="season-calendar-month-header">
+            <div>
+              <span class="season-calendar-label">Late Spring Concert</span>
+              <h3>An American Celebration</h3>
+            </div>
+            <div class="season-calendar-month-name">May 2026</div>
+          </div>
+          <div class="season-calendar-weekdays">
+            <span class="season-calendar-weekday">Sun</span>
+            <span class="season-calendar-weekday">Mon</span>
+            <span class="season-calendar-weekday">Tue</span>
+            <span class="season-calendar-weekday">Wed</span>
+            <span class="season-calendar-weekday">Thu</span>
+            <span class="season-calendar-weekday">Fri</span>
+            <span class="season-calendar-weekday">Sat</span>
+          </div>
+          <div class="season-calendar-days">
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day is-empty"></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">16</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">22</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
+            <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
+            <div class="season-calendar-day has-event">
+              <span class="season-calendar-day-number">31</span>
+              <span class="season-calendar-event-chip">4:00 PM</span>
+              <span class="season-calendar-event-title">An American Celebration</span>
+            </div>
+          </div>
+          <div class="season-calendar-summary">
+            <p class="season-calendar-date">Sunday, May 31, 2026</p>
+            <p>A patriotic late-season program featuring American voices and a festive orchestral close.</p>
+          </div>
+        </article>
+      </div>
+
       <div class="concert-grid">
 
         <!-- Concert 1 -->
@@ -2085,12 +2606,13 @@
           <p class="concert-date">Sunday, March 22, 2026 · 4:00 PM</p>
           <p>
             Elegance, drama, and Romantic-era brilliance. Features the beloved Violin
-            Concerto in E Minor with guest violinist YuEun Gemma Kim, plus the bold
-            "Reformation" Symphony.
+            Concerto in E Minor with guest violinist YuEun Gemma Kim, Beethoven's
+            Overture to Fidelio, and the bold "Reformation" Symphony.
           </p>
           <ul class="program-list">
             <li>Mendelssohn: Symphony No. 5 ("Reformation")</li>
             <li>Mendelssohn: Violin Concerto in E Minor — YuEun Gemma Kim, soloist</li>
+            <li>Beethoven: Overture to Fidelio</li>
           </ul>
           <a href="#tickets" class="btn btn-primary" style="margin-top:0.5rem">Buy Tickets</a>
         </div>
@@ -2134,6 +2656,17 @@
         Season subscriptions for 2025–2026 are no longer available — watch for
         2026–2027 announcements later this year.
       </p>
+
+      <div class="ticket-next-performance">
+        <span class="ticket-next-performance-label">Next Upcoming Performance</span>
+        <h3>Mendelssohn Classics</h3>
+        <p class="ticket-next-performance-meta">Sunday, March 22, 2026 · 4:00 PM · Poway Center for the Performing Arts</p>
+        <p>
+          Featuring Mendelssohn's Violin Concerto in E Minor with guest violinist YuEun Gemma Kim,
+          alongside the powerful "Reformation" Symphony.
+        </p>
+      </div>
+
       <figure class="section-photo">
         <img src="{{ '/images/capstone/powaysymphonyorchestra/orch8.jpg' | relative_url }}" alt="Audience view inside the Poway Center for the Performing Arts">
       </figure>
@@ -2187,7 +2720,7 @@
             <iframe
               class="media-player-frame"
               data-media-player
-              src="https://www.youtube-nocookie.com/embed/npmu4m4iGeY?rel=0"
+              src="https://www.youtube-nocookie.com/embed/npmu4m4iGeY?rel=0&enablejsapi=1"
               title="Poway Symphony Orchestra video player"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -2591,22 +3124,12 @@
             <p class="instrument-detail-copy" data-instrument-copy>
               Nothing is selected yet. Hover over a family card to preview its sound, then click the one you want to explore to see the musicians and instruments in that section.
             </p>
-            <p class="instrument-detail-subheading">What Happens After You Click</p>
-            <div class="instrument-chip-list" data-instrument-players>
-              <span class="instrument-chip">Section players</span>
-              <span class="instrument-chip">Featured instruments</span>
-              <span class="instrument-chip">Family overview</span>
-            </div>
+            <p class="instrument-detail-subheading">See the mucisians under the following section</p>
+            <div class="instrument-chip-list" data-instrument-players></div>
           </div>
 
           <div class="instrument-detail-meta">
-            <p class="instrument-detail-subheading">Try One Of These</p>
-            <div class="instrument-chip-list" data-instrument-list>
-              <span class="instrument-chip">Strings</span>
-              <span class="instrument-chip">Brass</span>
-              <span class="instrument-chip">Woodwinds</span>
-              <span class="instrument-chip">Percussion</span>
-            </div>
+            <div class="instrument-chip-list" data-instrument-list></div>
             <p data-instrument-meta>
               Each family has its own role in the orchestra, from carrying the melody to building rhythm and dramatic impact.
             </p>
@@ -2744,6 +3267,7 @@
   var instrumentCards  = Array.prototype.slice.call(root.querySelectorAll('.instrument-card'));
   var mediaCards       = Array.prototype.slice.call(root.querySelectorAll('.media-video-card[data-video-id]'));
   var mediaPlayer      = root.querySelector('[data-media-player]');
+  var mediaPlayers     = Array.prototype.slice.call(root.querySelectorAll('iframe[data-media-player], iframe[data-home-performance-player]'));
   var mediaTitle       = root.querySelector('[data-media-title]');
   var mediaComposer    = root.querySelector('[data-media-composer]');
   var mediaCopy        = root.querySelector('[data-media-copy]');
@@ -3005,11 +3529,11 @@
     if (detailHint) detailHint.textContent = 'Audio previews usually begin after the page receives one click, tap, or key press.';
 
     if (detailPlayers) {
-      detailPlayers.innerHTML = makeChips(['Section players', 'Featured instruments', 'Family overview']);
+      detailPlayers.innerHTML = '';
     }
 
     if (detailList) {
-      detailList.innerHTML = makeChips(['Strings', 'Brass', 'Woodwinds', 'Percussion']);
+      detailList.innerHTML = '';
     }
 
     if (musicianRoster) {
@@ -3107,6 +3631,9 @@
     var audioPath = card.getAttribute('data-hover-audio');
     if (!audioPath) return;
 
+    stopCurrentAudio();
+    stopMediaPlayback();
+
     var last = previewCooldown.get(card) || 0;
     if (Date.now() - last < 500) return;
     previewCooldown.set(card, Date.now());
@@ -3130,9 +3657,26 @@
     }).catch(function () {});
   }
 
+  function stopMediaPlayback() {
+    mediaPlayers.forEach(function (player) {
+      if (!player || !player.contentWindow) return;
+
+      try {
+        player.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'pauseVideo',
+          args: []
+        }), '*');
+      } catch (error) {
+        // Ignore cross-frame timing errors when the player is not ready yet.
+      }
+    });
+  }
+
   function stopAllSectionAudio() {
     stopHoverPreview();
     stopCurrentAudio();
+    stopMediaPlayback();
   }
 
   function setActiveMedia(card, shouldAutoplay) {
@@ -3141,7 +3685,10 @@
     var videoId = card.dataset.videoId;
     if (!videoId) return;
 
-    var embedUrl = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0' + (shouldAutoplay ? '&autoplay=1' : '');
+    stopHoverPreview();
+    stopCurrentAudio();
+
+    var embedUrl = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0&enablejsapi=1' + (shouldAutoplay ? '&autoplay=1' : '');
     mediaPlayer.src = embedUrl;
     mediaPlayer.title = (card.dataset.videoTitle || 'Poway Symphony Orchestra video') + ' video player';
 
@@ -3388,6 +3935,8 @@
         return;
       }
 
+  stopHoverPreview();
+  stopMediaPlayback();
       stopCurrentAudio();
 
       var audio = new Audio(audioPath);
