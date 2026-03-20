@@ -1438,28 +1438,261 @@
     margin-top: 2rem;
   }
 
-  /* ── MEDIA (video placeholder) ──────────────────── */
-  .media-placeholder {
-    background: var(--navy-mid);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 3.5rem 2rem;
-    text-align: center;
-    max-width: 560px;
-    margin: 0 auto 2rem;
+  /* ── MEDIA ──────────────────────────────────────── */
+  .media-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.9fr);
+    gap: 1.5rem;
+    align-items: stretch;
+    margin: 2.2rem 0 1.75rem;
   }
 
-  .media-placeholder .media-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: var(--gold);
+  .media-featured {
+    position: relative;
+    border: 1px solid rgba(200,168,75,0.24);
+    border-radius: 18px;
+    min-height: 420px;
+    background:
+      linear-gradient(180deg, rgba(20,39,63,0.98), rgba(8,17,31,0.96)),
+      linear-gradient(135deg, rgba(226,201,122,0.14), rgba(12,26,46,0.25));
+    box-shadow: 0 28px 60px rgba(0,0,0,0.28);
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .media-photo {
-    height: 300px;
-    border-radius: 4px;
-    margin-bottom: 1.25rem;
-    border: 1px solid rgba(200,168,75,0.18);
+  .media-featured::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(115deg, rgba(255,255,255,0.07), transparent 42%),
+      radial-gradient(circle at top right, rgba(226,201,122,0.24), transparent 34%);
+    pointer-events: none;
+  }
+
+  .media-featured-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 0.35rem 0.4rem 0.55rem;
+  }
+
+  .media-player-shell {
+    position: relative;
+    z-index: 1;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(200,168,75,0.2);
+    background: rgba(8,17,31,0.92);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  .media-player-shell::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%;
+  }
+
+  .media-player-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .media-kicker,
+  .media-card-kicker {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .media-featured h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 2.4vw, 2.7rem);
+    line-height: 1.05;
+    color: var(--white);
+    max-width: 16ch;
+  }
+
+  .media-featured p {
+    max-width: 34rem;
+    color: rgba(250,246,239,0.86);
+  }
+
+  .media-selected-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+  }
+
+  .media-selected-composer {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .media-featured-actions,
+  .media-gallery-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .media-featured-stat {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.42rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(8,17,31,0.52);
+    color: rgba(250,246,239,0.88);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+  }
+
+  .media-archive-panel {
+    border: 1px solid rgba(200,168,75,0.2);
+    border-radius: 18px;
+    padding: 1.4rem;
+    background:
+      linear-gradient(180deg, rgba(20,39,63,0.96), rgba(8,17,31,0.94)),
+      var(--navy-mid);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+
+  .media-archive-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold-pale);
+    margin-bottom: 0.45rem;
+  }
+
+  .media-archive-panel > p {
+    color: rgba(250,246,239,0.72);
+    margin-bottom: 1.2rem;
+  }
+
+  .media-video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .media-video-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(200,168,75,0.15);
+    text-decoration: none;
+    background: rgba(255,255,255,0.02);
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    width: 100%;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    appearance: none;
+  }
+
+  .media-video-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(226,201,122,0.45);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.26);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .media-video-card.is-selected {
+    border-color: rgba(226,201,122,0.72);
+    box-shadow: 0 0 0 1px rgba(226,201,122,0.28), 0 18px 36px rgba(0,0,0,0.22);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .media-video-card.is-wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .media-thumb-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--navy-dark);
+  }
+
+  .media-thumb-wrap::after {
+    content: 'Play';
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    padding: 0.35rem 0.72rem;
+    border-radius: 999px;
+    background: rgba(8,17,31,0.78);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: var(--white);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .media-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .media-video-card:hover .media-thumb {
+    transform: scale(1.05);
+  }
+
+  .media-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1rem 1rem 1.1rem;
+    min-height: 100%;
+  }
+
+  .media-card-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    line-height: 1.15;
+    color: var(--gold-pale);
+  }
+
+  .media-card-body p {
+    color: rgba(250,246,239,0.72);
+    font-size: 0.98rem;
+  }
+
+  .media-card-link {
+    margin-top: auto;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .media-card-link::after {
+    content: ' ->';
   }
 
   @keyframes instrument-card-reveal {
@@ -1545,6 +1778,10 @@
     .concert-grid { grid-template-columns: 1fr; }
     .sample-listen-grid { grid-template-columns: 1fr; }
     .instrument-detail-panel { grid-template-columns: 1fr; }
+    .media-showcase { grid-template-columns: 1fr; }
+    .media-featured { min-height: 360px; }
+    .media-video-grid { grid-template-columns: 1fr; }
+    .media-video-card.is-wide { grid-template-columns: 1fr; }
     .instrument-card {
       min-height: 220px;
       padding-right: 5.6rem;
@@ -1873,16 +2110,111 @@
       <h2>Videos &amp; Recordings</h2>
       <div class="section-divider"></div>
       <p class="section-intro">
-        Relive past performances or hear the orchestra for the first time. Full concert
-        recordings and audio highlights from previous seasons are available on our
-        YouTube channel.
+        Relive past performances or hear the orchestra for the first time. Explore a curated
+        watch list of recent recordings, orchestral overtures, and featured pieces from the
+        Poway Symphony Orchestra archive.
       </p>
-      <div class="media-placeholder">
-        <img src="{{ '/images/capstone/powaysymphonyorchestra/orch2.webp' | relative_url }}" alt="Orchestra rehearsal or performance view" class="media-photo">
-        <div class="media-icon">▶</div>
-        <p>Watch full concerts, highlights, and behind-the-scenes content on the
-        Poway Symphony Orchestra YouTube channel.</p>
+
+      <div class="media-showcase">
+        <article class="media-featured">
+          <div class="media-player-shell">
+            <iframe
+              class="media-player-frame"
+              data-media-player
+              src="https://www.youtube-nocookie.com/embed/npmu4m4iGeY?rel=0"
+              title="Poway Symphony Orchestra video player"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="media-featured-content">
+            <p class="media-kicker">Featured Performance</p>
+            <div class="media-selected-meta">
+              <span class="media-selected-composer" data-media-composer>Beethoven</span>
+              <span class="media-featured-stat">5 highlighted performances</span>
+            </div>
+            <h3 data-media-title>Egmont Overture, Op. 84</h3>
+            <p data-media-copy>
+              Start with Beethoven and move into a short listening path that shows the orchestra's range,
+              from bold overtures to lyrical and ceremonial works.
+            </p>
+            <div class="media-featured-actions">
+              <a href="https://youtu.be/npmu4m4iGeY?si=KfbMu4sxntbkvEX6" class="btn btn-primary" target="_blank" rel="noopener" data-media-external>Open on YouTube</a>
+              <a href="https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ" class="btn btn-secondary" target="_blank" rel="noopener">Visit YouTube Channel</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="media-archive-panel">
+          <h3>From the Archive</h3>
+          <p>Browse a quick set of orchestra recordings and open any performance in a new tab.</p>
+
+          <div class="media-video-grid">
+            <button type="button" class="media-video-card is-wide is-selected" data-video-id="npmu4m4iGeY" data-video-title="Egmont Overture, Op. 84" data-video-composer="Beethoven" data-video-copy="A dramatic concert opener with a strong sense of forward motion and orchestral weight." data-video-url="https://youtu.be/npmu4m4iGeY?si=KfbMu4sxntbkvEX6">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/npmu4m4iGeY/hqdefault.jpg" alt="Egmont Overture video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Beethoven</p>
+                <h4>Egmont Overture, Op. 84</h4>
+                <p>A dramatic concert opener with a strong sense of forward motion and orchestral weight.</p>
+                <span class="media-card-link">Play On This Page</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="k8lqgMhu0q4" data-video-title="Le Corsaire Overture" data-video-composer="Berlioz" data-video-copy="Fast-moving and colorful, with a bright, kinetic orchestral sound." data-video-url="https://youtu.be/k8lqgMhu0q4?si=BoB8hENMbaYUaZQR">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/k8lqgMhu0q4/hqdefault.jpg" alt="Le Corsaire Overture video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Berlioz</p>
+                <h4>Le Corsaire Overture</h4>
+                <p>Fast-moving and colorful, with a bright, kinetic orchestral sound.</p>
+                <span class="media-card-link">Play On This Page</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="zKgv4HCshOA" data-video-title="Sarabande in D minor" data-video-composer="J.S. Bach" data-video-copy="A more inward and lyrical selection that highlights phrasing, balance, and texture." data-video-url="https://youtu.be/zKgv4HCshOA?si=wDL1NZ6HYXAp31wV">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/zKgv4HCshOA/hqdefault.jpg" alt="Sarabande in D minor video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">J.S. Bach</p>
+                <h4>Sarabande in D minor</h4>
+                <p>A more inward and lyrical selection that highlights phrasing, balance, and texture.</p>
+                <span class="media-card-link">Play On This Page</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="GQ1dKdT9yXk" data-video-title="Festive Overture" data-video-composer="Shostakovich" data-video-copy="Brilliant brass, quick energy, and a celebratory concert-hall finish." data-video-url="https://youtu.be/GQ1dKdT9yXk?si=m7fWQoj6SdQ6UR7Q">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/GQ1dKdT9yXk/hqdefault.jpg" alt="Festive Overture video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Shostakovich</p>
+                <h4>Festive Overture</h4>
+                <p>Brilliant brass, quick energy, and a celebratory concert-hall finish.</p>
+                <span class="media-card-link">Play On This Page</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="yGQPgauT7LU" data-video-title="Polonaise from Eugene Onegin" data-video-composer="Tchaikovsky" data-video-copy="A ceremonial, dance-driven showcase with grandeur and sweep." data-video-url="https://youtu.be/yGQPgauT7LU?si=5w2JHv7WT5iGp6Ao">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/yGQPgauT7LU/hqdefault.jpg" alt="Polonaise from Eugene Onegin video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Tchaikovsky</p>
+                <h4>Polonaise from Eugene Onegin</h4>
+                <p>A ceremonial, dance-driven showcase with grandeur and sweep.</p>
+                <span class="media-card-link">Play On This Page</span>
+              </div>
+            </button>
+          </div>
+        </aside>
       </div>
+
       <div class="section-cta-row">
         <a href="https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ" class="btn btn-primary" target="_blank" rel="noopener">Watch on YouTube</a>
         <a href="#concerts" class="btn btn-secondary">Upcoming Concerts</a>
@@ -2337,6 +2669,12 @@
   var topicSections    = root.querySelectorAll('.reveal-topic');
   var ctaButtons       = root.querySelectorAll('.cta-reveal');
   var instrumentCards  = Array.prototype.slice.call(root.querySelectorAll('.instrument-card'));
+  var mediaCards       = Array.prototype.slice.call(root.querySelectorAll('.media-video-card[data-video-id]'));
+  var mediaPlayer      = root.querySelector('[data-media-player]');
+  var mediaTitle       = root.querySelector('[data-media-title]');
+  var mediaComposer    = root.querySelector('[data-media-composer]');
+  var mediaCopy        = root.querySelector('[data-media-copy]');
+  var mediaExternal    = root.querySelector('[data-media-external]');
   var detailTitle      = root.querySelector('[data-instrument-title]');
   var detailCopy       = root.querySelector('[data-instrument-copy]');
   var detailPlayers    = root.querySelector('[data-instrument-players]');
@@ -2787,6 +3125,38 @@
     return 440 * Math.pow(2, distance / 12);
   }
 
+  function setActiveMedia(card, shouldAutoplay) {
+    if (!card || !mediaPlayer) return;
+
+    var videoId = card.dataset.videoId;
+    if (!videoId) return;
+
+    var embedUrl = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0' + (shouldAutoplay ? '&autoplay=1' : '');
+    mediaPlayer.src = embedUrl;
+    mediaPlayer.title = (card.dataset.videoTitle || 'Poway Symphony Orchestra video') + ' video player';
+
+    if (mediaTitle) {
+      mediaTitle.textContent = card.dataset.videoTitle || '';
+    }
+
+    if (mediaComposer) {
+      mediaComposer.textContent = card.dataset.videoComposer || '';
+    }
+
+    if (mediaCopy) {
+      mediaCopy.textContent = card.dataset.videoCopy || '';
+    }
+
+    if (mediaExternal) {
+      mediaExternal.href = card.dataset.videoUrl || 'https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ';
+    }
+
+    mediaCards.forEach(function (entry) {
+      entry.classList.toggle('is-selected', entry === card);
+      entry.setAttribute('aria-pressed', entry === card ? 'true' : 'false');
+    });
+  }
+
   /* NEW: hero sparkles */
   function createHeroSparkles() {
     if (!heroSparkleLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -3027,6 +3397,17 @@
       }
     });
   });
+
+  mediaCards.forEach(function (card, index) {
+    card.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+    card.addEventListener('click', function () {
+      setActiveMedia(card, true);
+    });
+  });
+
+  if (mediaCards.length) {
+    setActiveMedia(mediaCards[0], false);
+  }
 
   // Hash on load
   var hash = window.location.hash ? window.location.hash.replace('#', '') : '';
