@@ -1241,6 +1241,34 @@
     margin-top: 1.5rem;
   }
 
+  .join-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 2rem auto;
+    max-width: 980px;
+  }
+
+  .join-detail-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.3rem;
+  }
+
+  .join-detail-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.55rem;
+  }
+
+  .join-detail-card p {
+    font-size: 0.98rem;
+    color: rgba(250,246,239,0.76);
+    line-height: 1.68;
+  }
+
   .instrument-discovery {
     margin: 3rem auto 0;
     max-width: 1120px;
@@ -2239,7 +2267,7 @@
           <a href="#about"      class="top-nav-dropdown-link">Our Story</a>
           <a href="#conductor"  class="top-nav-dropdown-link">Conductor</a>
           <a href="#musician-info"  class="top-nav-dropdown-link">Musicians</a>
-          <a href="#join-orchestra" class="top-nav-dropdown-link">Join the Orchestra</a>
+          <a href="#join-orchestra" class="top-nav-dropdown-link">Interested In Joining</a>
         </div>
       </div>
 
@@ -2378,7 +2406,7 @@
       <div class="section-cta-row">
         <a href="#concerts"  class="btn btn-secondary">View This Season</a>
         <a href="#foundation" class="btn btn-secondary">Our Foundation</a>
-        <a href="#join-orchestra"  class="btn btn-secondary">Join the Orchestra</a>
+        <a href="#join-orchestra"  class="btn btn-secondary">Interested In Joining</a>
       </div>
     </div>
   </section>
@@ -3075,31 +3103,69 @@
   <!-- ══ MUSICIANS ══════════════════════════════════════════════════════ -->
   <section class="reveal-topic is-hidden" id="join-orchestra">
     <div class="section">
-      <h2>Join the Orchestra</h2>
+      <h2>Interested In Joining</h2>
       <div class="section-divider"></div>
       <p class="section-intro">
-        The Poway Symphony Orchestra welcomes qualified musicians of all ages and
-        backgrounds. Our repertoire spans Classical, Romantic, and Contemporary works,
-        performed at the highest artistic level. We are especially seeking additional
-        string players in all sections.
+        Rehearsals, concerts, expectations, and how to join our orchestra. The ensemble brings together
+        community members, students, educators, and professional musicians for three full-orchestra
+        performances each year at the Poway Center for the Performing Arts.
       </p>
       <figure class="section-photo">
-        <img src="{{ '/images/capstone/powaysymphonyorchestra/orch3.jpg' | relative_url }}" alt="Poway Symphony Orchestra musicians rehearsing together">
+        <img src="{{ '/images/capstone/powaysymphonyorchestra/orch1.jpg' | relative_url }}" alt="Poway Symphony Orchestra performing together on stage during a concert">
       </figure>
+
+      <div class="join-details-grid">
+        <article class="join-detail-card">
+          <h3>Registration</h3>
+          <p>
+            Prospective and returning musicians register through Poway Adult School each term.
+            Fees help cover the conductor, facilities, administration, and liability insurance.
+            Registration is available online, by phone, by mail, or in person, and orchestra
+            members should be prepared for medium-to-advanced symphonic repertoire.
+          </p>
+        </article>
+        <article class="join-detail-card">
+          <h3>Rehearsals</h3>
+          <p>
+            Regular rehearsals are held on Mondays from 7:15 PM to 9:15 PM at Tierra Bonita
+            Elementary School in Poway. A Saturday morning dress rehearsal is held on the PCPA
+            stage before each Sunday concert, with detailed schedules shared by the Music Director.
+          </p>
+        </article>
+        <article class="join-detail-card">
+          <h3>Expectations</h3>
+          <p>
+            The ensemble performs standard symphonic literature with accomplished guest soloists and
+            values strong preparation, dependable attendance, and collaborative musicianship. String
+            players are especially welcome, and woodwind or brass openings may be limited by season.
+          </p>
+        </article>
+        <article class="join-detail-card">
+          <h3>Concert Attire</h3>
+          <p>
+            Performers wear formal black concert attire. Women wear a long black dress or long skirt
+            with a black top, while men wear a black tuxedo or suit with a white dress shirt and black
+            bow tie, along with black dress shoes.
+          </p>
+        </article>
+      </div>
+
       <ul class="musicians-highlights">
-        <li>Rehearsals: Monday evenings, 7:15–9:15 PM</li>
-        <li>Performances: Sundays at 4:00 PM</li>
-        <li>Dress rehearsals: Saturdays at 10:00 AM</li>
-        <li>Currently seeking string players in all sections</li>
-        <li>Musicians of all ages and walks of life welcome</li>
+        <li>Register each term through Poway Adult School before joining the orchestra.</li>
+        <li>Three concerts each year are presented at the Poway Center for the Performing Arts.</li>
+        <li>Monday rehearsals run from 7:15 PM to 9:15 PM at Tierra Bonita Elementary School.</li>
+        <li>Dress rehearsal takes place on the Saturday morning before each Sunday concert.</li>
+        <li>String players are especially needed, with additional low brass and percussion openings depending on the program.</li>
       </ul>
 
       <p class="conductor-contact">
-        For audition information, contact Conductor John LoPiccolo at
-        <a href="tel:2087571980" style="color:var(--gold-light)">(208) 757-1980</a>
+        For limited openings in woodwinds and brass, please use the Contact section to reach the conductor.
+        For registration details, Poway Adult School can be reached at
+        <a href="tel:8586684024" style="color:var(--gold-light)">(858) 668-4024</a>
+        or at 13626 Twin Peaks Road, Poway, CA 92064.
       </p>
       <div class="section-cta-row">
-        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="#contact" class="btn btn-primary">Contact the Orchestra</a>
         <a href="#musician-info" class="btn btn-secondary">Explore Instrument Families</a>
       </div>
     </div>
