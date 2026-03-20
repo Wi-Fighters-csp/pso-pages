@@ -902,6 +902,66 @@
     transition: opacity 0.2s ease;
     pointer-events: none;
   }
+    .instrument-card::after {
+    content: '♪  ♫  ♩';
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.35rem;
+    color: rgba(226,201,122,0.22);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+
+  .instrument-card:hover::after,
+  .instrument-card:focus-visible::after,
+  .instrument-card.is-active::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .instrument-card .instrument-floating-note {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    font-size: 1rem;
+    color: rgba(226,201,122,0.18);
+    pointer-events: none;
+    animation: instrumentNoteFloat 3.8s ease-in-out infinite;
+  }
+
+  .instrument-card .instrument-floating-note.note-2 {
+    left: 2.4rem;
+    bottom: 2.2rem;
+    font-size: 0.85rem;
+    animation-delay: 0.8s;
+  }
+
+  .instrument-card .instrument-floating-note.note-3 {
+    left: 3.6rem;
+    bottom: 1.2rem;
+    font-size: 1.1rem;
+    animation-delay: 1.5s;
+  }
+
+  @keyframes instrumentNoteFloat {
+    0% {
+      transform: translateY(0px) rotate(-4deg);
+      opacity: 0.12;
+    }
+    50% {
+      transform: translateY(-10px) rotate(4deg);
+      opacity: 0.28;
+    }
+    100% {
+      transform: translateY(0px) rotate(-4deg);
+      opacity: 0.12;
+    }
+  }
 
   .instrument-card:hover,
   .instrument-card:focus-visible,
@@ -2444,83 +2504,89 @@
           watch the card tilt in 3D, and click to reveal the musicians and instruments that bring each sound to life.
         </p>
 
-        <div class="instrument-grid" role="list">
-          <button
-            type="button"
-            class="instrument-card"
-            data-family="strings"
-            data-title="Strings"
-            data-copy="Strings carry the singing heart of the orchestra, moving easily from whisper-soft harmonies to bold, cinematic lines. Younger listeners often recognize them as the section that can sound warm, dramatic, and deeply expressive all at once."
-            data-players="Violinists|Violists|Cellists|Bassists"
-            data-instruments="Violin|Viola|Cello|Double Bass"
-            data-preview="G4,B4,D5"
-            data-wave="triangle"
-            data-meta="Common jobs in the section include leading melodies, building harmony, and creating the rich blanket of sound under the full orchestra."
-            data-soundhint="Hover after your first click or tap to hear a short string-like preview.">
-            <span class="instrument-family-label">Strings</span>
-            <h3>Violins, violas, cellos, and basses</h3>
-            <p>Warm, lyrical, and flexible. This family often carries the melody and the emotional core of a concert.</p>
-            <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
-            <span class="instrument-visual" aria-hidden="true">🎻</span>
-          </button>
+        <button
+          type="button"
+          class="instrument-card"
+          data-family="strings"
+          data-title="Strings"
+          data-copy="Strings carry the singing heart of the orchestra, moving easily from whisper-soft harmonies to bold, cinematic lines. Younger listeners often recognize them as the section that can sound warm, dramatic, and deeply expressive all at once."
+          data-players="Violinists|Violists|Cellists|Bassists"
+          data-instruments="Violin|Viola|Cello|Double Bass"
+          data-hover-audio="{{ '/assets/audio/poway-orchestra/violin.mp3' | relative_url }}"
+          data-meta="Common jobs in the section include leading melodies, building harmony, and creating the rich blanket of sound under the full orchestra."
+          data-soundhint="Hover after your first click or tap to hear a short string preview.">
+          <span class="instrument-family-label">Strings</span>
+          <h3>Violins, violas, cellos, and basses</h3>
+          <p>Warm, lyrical, and flexible. This family often carries the melody and the emotional core of a concert.</p>
+          <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
+          <span class="instrument-floating-note" aria-hidden="true">♪</span>
+          <span class="instrument-floating-note note-2" aria-hidden="true">♫</span>
+          <span class="instrument-floating-note note-3" aria-hidden="true">♩</span>
+          <span class="instrument-visual" aria-hidden="true">🎻</span>
+        </button>
 
-          <button
-            type="button"
-            class="instrument-card"
-            data-family="brass"
-            data-title="Brass"
-            data-copy="Brass instruments bring brilliance, power, and ceremony. They can sound heroic and triumphant, but they also add warmth and depth when blended carefully with the rest of the orchestra."
-            data-players="Trumpeters|Horn Players|Trombonists|Tubists"
-            data-instruments="Trumpet|French Horn|Trombone|Tuba"
-            data-preview="C4,G4,C5"
-            data-wave="sawtooth"
-            data-meta="Brass players often deliver fanfares, dramatic climaxes, and the big resonant chords that make orchestral finales feel huge."
-            data-soundhint="After one tap or click, hovering can trigger a short brass-style preview.">
-            <span class="instrument-family-label">Brass</span>
-            <h3>Trumpets, horns, trombones, and tuba</h3>
-            <p>Bright and bold. This section adds sparkle, fanfares, and the thrilling power behind big musical moments.</p>
-            <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
-            <span class="instrument-visual" aria-hidden="true">🎺</span>
-          </button>
+        <button
+          type="button"
+          class="instrument-card"
+          data-family="brass"
+          data-title="Brass"
+          data-copy="Brass instruments bring brilliance, power, and ceremony. They can sound heroic and triumphant, but they also add warmth and depth when blended carefully with the rest of the orchestra."
+          data-players="Trumpeters|Horn Players|Trombonists|Tubists"
+          data-instruments="Trumpet|French Horn|Trombone|Tuba"
+          data-hover-audio="{{ '/assets/audio/poway-orchestra/trumpet.mp3' | relative_url }}"
+          data-meta="Brass players often deliver fanfares, dramatic climaxes, and the big resonant chords that make orchestral finales feel huge."
+          data-soundhint="Hover after your first click or tap to hear a short brass preview.">
+          <span class="instrument-family-label">Brass</span>
+          <h3>Trumpets, horns, trombones, and tuba</h3>
+          <p>Bright and bold. This section adds sparkle, fanfares, and the thrilling power behind big musical moments.</p>
+          <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
+          <span class="instrument-floating-note" aria-hidden="true">♪</span>
+          <span class="instrument-floating-note note-2" aria-hidden="true">♫</span>
+          <span class="instrument-floating-note note-3" aria-hidden="true">♩</span>
+          <span class="instrument-visual" aria-hidden="true">🎺</span>
+        </button>
 
-          <button
-            type="button"
-            class="instrument-card"
-            data-family="woodwinds"
-            data-title="Woodwinds"
-            data-copy="Woodwinds are the orchestra's colorists. They can sound playful, mysterious, airy, or bird-like, and they often add personality to the musical story with highly distinct timbres."
-            data-players="Flutists|Oboists|Clarinetists|Bassoonists"
-            data-instruments="Flute|Oboe|Clarinet|Bassoon"
-            data-preview="E5,G5,B5"
-            data-wave="sine"
-            data-meta="Woodwind players frequently trade solos, mimic natural sounds, and provide the character voices that listeners remember after a concert."
-            data-soundhint="Hover after interaction to hear a light woodwind-style preview.">
-            <span class="instrument-family-label">Woodwinds</span>
-            <h3>Flute, oboe, clarinet, and bassoon</h3>
-            <p>Colorful and agile. These instruments often shape the orchestra's most distinctive melodies and textures.</p>
-            <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
-            <span class="instrument-visual" aria-hidden="true">🎶</span>
-          </button>
+        <button
+          type="button"
+          class="instrument-card"
+          data-family="woodwinds"
+          data-title="Woodwinds"
+          data-copy="Woodwinds are the orchestra's colorists. They can sound playful, mysterious, airy, or bird-like, and they often add personality to the musical story with highly distinct timbres."
+          data-players="Flutists|Oboists|Clarinetists|Bassoonists"
+          data-instruments="Flute|Oboe|Clarinet|Bassoon"
+          data-hover-audio="{{ '/assets/audio/poway-orchestra/flute.mp3' | relative_url }}"
+          data-meta="Woodwind players frequently trade solos, mimic natural sounds, and provide the character voices that listeners remember after a concert."
+          data-soundhint="Hover after your first click or tap to hear a short woodwind preview.">
+          <span class="instrument-family-label">Woodwinds</span>
+          <h3>Flute, oboe, clarinet, and bassoon</h3>
+          <p>Colorful and agile. These instruments often shape the orchestra's most distinctive melodies and textures.</p>
+          <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
+          <span class="instrument-floating-note" aria-hidden="true">♪</span>
+          <span class="instrument-floating-note note-2" aria-hidden="true">♫</span>
+          <span class="instrument-floating-note note-3" aria-hidden="true">♩</span>
+          <span class="instrument-visual" aria-hidden="true">🎶</span>
+        </button>
 
-          <button
-            type="button"
-            class="instrument-card"
-            data-family="percussion"
-            data-title="Percussion"
-            data-copy="Percussion adds rhythm, impact, and surprise. Sometimes it drives the pulse from the back of the stage, and sometimes one well-timed entrance changes the energy of the entire orchestra."
-            data-players="Timpanists|Mallet Percussionists|Snare and Bass Drum Players|Cymbal and Accessory Percussionists"
-            data-instruments="Timpani|Snare Drum|Bass Drum|Cymbals|Xylophone"
-            data-preview="D3,A3,D4"
-            data-wave="square"
-            data-meta="Percussion players help shape tempo, texture, and excitement, from crisp rhythmic patterns to thunderous climaxes."
-            data-soundhint="Hover after a tap or click to hear a short percussion-style pulse.">
-            <span class="instrument-family-label">Percussion</span>
-            <h3>Drums, cymbals, timpani, and mallets</h3>
-            <p>Rhythmic and dramatic. This family provides pulse, accents, and the striking sounds that younger audiences instantly notice.</p>
-            <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
-            <span class="instrument-visual" aria-hidden="true">🥁</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          class="instrument-card"
+          data-family="percussion"
+          data-title="Percussion"
+          data-copy="Percussion adds rhythm, impact, and surprise. Sometimes it drives the pulse from the back of the stage, and sometimes one well-timed entrance changes the energy of the entire orchestra."
+          data-players="Timpanists|Mallet Percussionists|Snare and Bass Drum Players|Cymbal and Accessory Percussionists"
+          data-instruments="Timpani|Snare Drum|Bass Drum|Cymbals|Xylophone"
+          data-hover-audio="{{ '/assets/audio/poway-orchestra/timpani.mp3' | relative_url }}"
+          data-meta="Percussion players help shape tempo, texture, and excitement, from crisp rhythmic patterns to thunderous climaxes."
+          data-soundhint="Hover after your first click or tap to hear a short percussion preview.">
+          <span class="instrument-family-label">Percussion</span>
+          <h3>Drums, cymbals, timpani, and mallets</h3>
+          <p>Rhythmic and dramatic. This family provides pulse, accents, and the striking sounds that younger audiences instantly notice.</p>
+          <span class="instrument-card-note">Hover for sound. Click to meet the section.</span>
+          <span class="instrument-floating-note" aria-hidden="true">♪</span>
+          <span class="instrument-floating-note note-2" aria-hidden="true">♫</span>
+          <span class="instrument-floating-note note-3" aria-hidden="true">♩</span>
+          <span class="instrument-visual" aria-hidden="true">🥁</span>
+        </button>
 
         <div class="instrument-detail-panel" aria-live="polite">
           <div>
@@ -2708,6 +2774,8 @@
   var audioReady = false;
   var previewCooldown = new WeakMap();
   var lastFloatingNoteTime = 0;
+  var currentHoverAudio = null;
+  var currentHoverCard = null;
 
   if (pageNoteLayer && pageNoteLayer.parentNode !== document.body) {
     document.body.appendChild(pageNoteLayer);
@@ -3057,84 +3125,47 @@
     }
   }
 
-  function ensureAudio() {
-    if (!window.AudioContext && !window.webkitAudioContext) return null;
-    if (!audioContext) {
-      var Context = window.AudioContext || window.webkitAudioContext;
-      audioContext = new Context();
-    }
+  function unlockAudio() {
+    audioReady = true;
+  }
 
-    if (audioContext.state === 'suspended') {
-      audioContext.resume().then(function () {
-        audioReady = true;
-      }).catch(function () {});
-    } else {
-      audioReady = true;
-    }
+  function stopHoverPreview(card) {
+    if (!currentHoverAudio) return;
+    if (card && currentHoverCard !== card) return;
 
-    return audioContext;
+    currentHoverAudio.pause();
+    currentHoverAudio.currentTime = 0;
+    currentHoverAudio = null;
+    currentHoverCard = null;
   }
 
   function playInstrumentPreview(card) {
-    var context = ensureAudio();
-    if (!context || !audioReady || !card) return;
+    if (!audioReady || !card) return;
+
+    var audioPath = card.getAttribute('data-hover-audio');
+    if (!audioPath) return;
 
     var last = previewCooldown.get(card) || 0;
-    if (Date.now() - last < 650) return;
+    if (Date.now() - last < 500) return;
     previewCooldown.set(card, Date.now());
 
-    var frequencies = (card.dataset.preview || '')
-      .split(',')
-      .map(function (note) { return note.trim(); })
-      .filter(Boolean)
-      .map(noteToFrequency)
-      .filter(Boolean);
+    if (currentHoverCard === card && currentHoverAudio) {
+      currentHoverAudio.currentTime = 0;
+      currentHoverAudio.play().catch(function () {});
+      return;
+    }
 
-    if (!frequencies.length) return;
+    stopHoverPreview();
 
-    var wave = card.dataset.wave || 'sine';
-    var startTime = context.currentTime + 0.01;
+    var audio = new Audio(audioPath);
+    audio.preload = 'auto';
+    audio.volume = 0.65;
+    audio.currentTime = 0;
 
-    frequencies.forEach(function (frequency, index) {
-      var oscillator = context.createOscillator();
-      var gainNode = context.createGain();
-      var noteStart = startTime + (index * 0.14);
-      var noteEnd = noteStart + 0.18;
-
-      oscillator.type = wave;
-      oscillator.frequency.setValueAtTime(frequency, noteStart);
-
-      gainNode.gain.setValueAtTime(0.0001, noteStart);
-      gainNode.gain.exponentialRampToValueAtTime(0.045, noteStart + 0.03);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, noteEnd);
-
-      oscillator.connect(gainNode);
-      gainNode.connect(context.destination);
-      oscillator.start(noteStart);
-      oscillator.stop(noteEnd + 0.02);
-    });
-  }
-
-  function noteToFrequency(note) {
-    var parsed = /^([A-G])(#?)(\d)$/.exec(note);
-    if (!parsed) return null;
-
-    var semitones = {
-      C: -9,
-      D: -7,
-      E: -5,
-      F: -4,
-      G: -2,
-      A: 0,
-      B: 2
-    };
-
-    var letter = parsed[1];
-    var sharp = parsed[2] === '#' ? 1 : 0;
-    var octave = parseInt(parsed[3], 10);
-    var distance = semitones[letter] + sharp + ((octave - 4) * 12);
-
-    return 440 * Math.pow(2, distance / 12);
+    audio.play().then(function () {
+      currentHoverAudio = audio;
+      currentHoverCard = card;
+    }).catch(function () {});
   }
 
   function setActiveMedia(card, shouldAutoplay) {
@@ -3217,7 +3248,7 @@
 
   ['pointerdown', 'keydown', 'touchstart'].forEach(function (eventName) {
     root.addEventListener(eventName, function () {
-      ensureAudio();
+      unlockAudio();
     }, { once: true, passive: true });
   });
 
@@ -3233,8 +3264,16 @@
       playInstrumentPreview(card);
     });
 
+    card.addEventListener('pointerleave', function () {
+      stopHoverPreview(card);
+    });
+
     card.addEventListener('focus', function () {
       playInstrumentPreview(card);
+    });
+
+    card.addEventListener('blur', function () {
+      stopHoverPreview(card);
     });
   });
 
@@ -3436,4 +3475,3 @@
 })();
 </script>
 </body>
-</html>
