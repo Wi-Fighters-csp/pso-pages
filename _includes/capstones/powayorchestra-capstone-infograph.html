@@ -689,14 +689,64 @@
     margin-bottom: 2rem;
   }
 
+  .season-calendar-viewer {
+    margin: 2.2rem 0 2rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(200,168,75,0.18);
+    border-radius: 16px;
+    background:
+      linear-gradient(135deg, rgba(200,168,75,0.08), transparent 55%),
+      var(--navy-mid);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.2);
+  }
+
+  .season-calendar-viewer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .season-calendar-viewer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin: 0;
+  }
+
+  .season-calendar-controls {
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .season-calendar-nav {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(200,168,75,0.32);
+    background: rgba(8,17,31,0.62);
+    color: var(--gold-light);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .season-calendar-nav:hover,
+  .season-calendar-nav:focus-visible {
+    background: rgba(200,168,75,0.14);
+    border-color: rgba(200,168,75,0.6);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
   .season-calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.2rem;
-    margin: 2rem 0 2.2rem;
+    margin: 0;
   }
 
   .season-calendar-month {
+    display: none;
     border: 1px solid rgba(200,168,75,0.18);
     border-radius: 12px;
     padding: 1.2rem;
@@ -704,6 +754,10 @@
       linear-gradient(135deg, rgba(200,168,75,0.08), transparent 55%),
       var(--navy-mid);
     box-shadow: 0 16px 34px rgba(0,0,0,0.18);
+  }
+
+  .season-calendar-month.is-active {
+    display: block;
   }
 
   .season-calendar-month-header {
@@ -827,6 +881,17 @@
     font-size: 0.96rem;
     line-height: 1.65;
     margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .season-calendar-viewer-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .season-calendar-controls {
+      align-self: flex-end;
+    }
   }
 
   .season-calendar-meta {
@@ -2388,198 +2453,6 @@
         </div>
       </div>
 
-      <div class="season-calendar-grid">
-        <article class="season-calendar-month">
-          <div class="season-calendar-month-header">
-            <div>
-              <span class="season-calendar-label">Fall Concert</span>
-              <h3>Dvořák in America</h3>
-            </div>
-            <div class="season-calendar-month-name">November 2025</div>
-          </div>
-          <div class="season-calendar-weekdays">
-            <span class="season-calendar-weekday">Sun</span>
-            <span class="season-calendar-weekday">Mon</span>
-            <span class="season-calendar-weekday">Tue</span>
-            <span class="season-calendar-weekday">Wed</span>
-            <span class="season-calendar-weekday">Thu</span>
-            <span class="season-calendar-weekday">Fri</span>
-            <span class="season-calendar-weekday">Sat</span>
-          </div>
-          <div class="season-calendar-days">
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
-            <div class="season-calendar-day has-event">
-              <span class="season-calendar-day-number">16</span>
-              <span class="season-calendar-event-chip">4:00 PM</span>
-              <span class="season-calendar-event-title">Dvořák in America</span>
-            </div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">22</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
-          </div>
-          <div class="season-calendar-summary">
-            <p class="season-calendar-date">Sunday, November 16, 2025</p>
-            <p>Dvořák's Symphony No. 9 “From the New World” and the Dvořák Cello Concerto with featured soloist.</p>
-          </div>
-        </article>
-
-        <article class="season-calendar-month">
-          <div class="season-calendar-month-header">
-            <div>
-              <span class="season-calendar-label">Spring Concert</span>
-              <h3>Mendelssohn Classics</h3>
-            </div>
-            <div class="season-calendar-month-name">March 2026</div>
-          </div>
-          <div class="season-calendar-weekdays">
-            <span class="season-calendar-weekday">Sun</span>
-            <span class="season-calendar-weekday">Mon</span>
-            <span class="season-calendar-weekday">Tue</span>
-            <span class="season-calendar-weekday">Wed</span>
-            <span class="season-calendar-weekday">Thu</span>
-            <span class="season-calendar-weekday">Fri</span>
-            <span class="season-calendar-weekday">Sat</span>
-          </div>
-          <div class="season-calendar-days">
-            <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">16</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
-            <div class="season-calendar-day has-event">
-              <span class="season-calendar-day-number">22</span>
-              <span class="season-calendar-event-chip">4:00 PM</span>
-              <span class="season-calendar-event-title">Mendelssohn Classics</span>
-            </div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">31</span></div>
-          </div>
-          <div class="season-calendar-summary">
-            <p class="season-calendar-date">Sunday, March 22, 2026</p>
-            <p>Mendelssohn's “Reformation” Symphony, Violin Concerto, and Beethoven's Overture to Fidelio.</p>
-          </div>
-        </article>
-
-        <article class="season-calendar-month">
-          <div class="season-calendar-month-header">
-            <div>
-              <span class="season-calendar-label">Late Spring Concert</span>
-              <h3>An American Celebration</h3>
-            </div>
-            <div class="season-calendar-month-name">May 2026</div>
-          </div>
-          <div class="season-calendar-weekdays">
-            <span class="season-calendar-weekday">Sun</span>
-            <span class="season-calendar-weekday">Mon</span>
-            <span class="season-calendar-weekday">Tue</span>
-            <span class="season-calendar-weekday">Wed</span>
-            <span class="season-calendar-weekday">Thu</span>
-            <span class="season-calendar-weekday">Fri</span>
-            <span class="season-calendar-weekday">Sat</span>
-          </div>
-          <div class="season-calendar-days">
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day is-empty"></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">16</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">22</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
-            <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
-            <div class="season-calendar-day has-event">
-              <span class="season-calendar-day-number">31</span>
-              <span class="season-calendar-event-chip">4:00 PM</span>
-              <span class="season-calendar-event-title">An American Celebration</span>
-            </div>
-          </div>
-          <div class="season-calendar-summary">
-            <p class="season-calendar-date">Sunday, May 31, 2026</p>
-            <p>A patriotic late-season program featuring American voices and a festive orchestral close.</p>
-          </div>
-        </article>
-      </div>
-
       <div class="concert-grid">
 
         <!-- Concert 1 -->
@@ -2637,6 +2510,211 @@
           <a href="#tickets" class="btn btn-primary" style="margin-top:0.5rem">Buy Tickets</a>
         </div>
 
+      </div>
+
+      <div class="season-calendar-viewer" data-season-calendar>
+        <div class="season-calendar-viewer-header">
+          <div>
+            <span class="season-calendar-label">Season Calendar</span>
+            <h3 class="season-calendar-viewer-title">Navigate The Concert Months</h3>
+          </div>
+          <div class="season-calendar-controls">
+            <button type="button" class="season-calendar-nav" data-calendar-nav="prev" aria-label="Show previous concert month">&#8592;</button>
+            <button type="button" class="season-calendar-nav" data-calendar-nav="next" aria-label="Show next concert month">&#8594;</button>
+          </div>
+        </div>
+
+        <div class="season-calendar-grid">
+          <article class="season-calendar-month is-active" data-calendar-month="0">
+            <div class="season-calendar-month-header">
+              <div>
+                <span class="season-calendar-label">Fall Concert</span>
+                <h3>Dvořák in America</h3>
+              </div>
+              <div class="season-calendar-month-name">November 2025</div>
+            </div>
+            <div class="season-calendar-weekdays">
+              <span class="season-calendar-weekday">Sun</span>
+              <span class="season-calendar-weekday">Mon</span>
+              <span class="season-calendar-weekday">Tue</span>
+              <span class="season-calendar-weekday">Wed</span>
+              <span class="season-calendar-weekday">Thu</span>
+              <span class="season-calendar-weekday">Fri</span>
+              <span class="season-calendar-weekday">Sat</span>
+            </div>
+            <div class="season-calendar-days">
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
+              <div class="season-calendar-day has-event">
+                <span class="season-calendar-day-number">16</span>
+                <span class="season-calendar-event-chip">4:00 PM</span>
+                <span class="season-calendar-event-title">Dvořák in America</span>
+              </div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">22</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
+            </div>
+            <div class="season-calendar-summary">
+              <p class="season-calendar-date">Sunday, November 16, 2025</p>
+              <p>Dvořák's Symphony No. 9 “From the New World” and the Dvořák Cello Concerto with featured soloist.</p>
+            </div>
+          </article>
+
+          <article class="season-calendar-month" data-calendar-month="1">
+            <div class="season-calendar-month-header">
+              <div>
+                <span class="season-calendar-label">Spring Concert</span>
+                <h3>Mendelssohn Classics</h3>
+              </div>
+              <div class="season-calendar-month-name">March 2026</div>
+            </div>
+            <div class="season-calendar-weekdays">
+              <span class="season-calendar-weekday">Sun</span>
+              <span class="season-calendar-weekday">Mon</span>
+              <span class="season-calendar-weekday">Tue</span>
+              <span class="season-calendar-weekday">Wed</span>
+              <span class="season-calendar-weekday">Thu</span>
+              <span class="season-calendar-weekday">Fri</span>
+              <span class="season-calendar-weekday">Sat</span>
+            </div>
+            <div class="season-calendar-days">
+              <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">16</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
+              <div class="season-calendar-day has-event">
+                <span class="season-calendar-day-number">22</span>
+                <span class="season-calendar-event-chip">4:00 PM</span>
+                <span class="season-calendar-event-title">Mendelssohn Classics</span>
+              </div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">31</span></div>
+            </div>
+            <div class="season-calendar-summary">
+              <p class="season-calendar-date">Sunday, March 22, 2026</p>
+              <p>Mendelssohn's “Reformation” Symphony, Violin Concerto, and Beethoven's Overture to Fidelio.</p>
+            </div>
+          </article>
+
+          <article class="season-calendar-month" data-calendar-month="2">
+            <div class="season-calendar-month-header">
+              <div>
+                <span class="season-calendar-label">Late Spring Concert</span>
+                <h3>An American Celebration</h3>
+              </div>
+              <div class="season-calendar-month-name">May 2026</div>
+            </div>
+            <div class="season-calendar-weekdays">
+              <span class="season-calendar-weekday">Sun</span>
+              <span class="season-calendar-weekday">Mon</span>
+              <span class="season-calendar-weekday">Tue</span>
+              <span class="season-calendar-weekday">Wed</span>
+              <span class="season-calendar-weekday">Thu</span>
+              <span class="season-calendar-weekday">Fri</span>
+              <span class="season-calendar-weekday">Sat</span>
+            </div>
+            <div class="season-calendar-days">
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day is-empty"></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">1</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">2</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">3</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">4</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">5</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">6</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">7</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">8</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">9</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">10</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">11</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">12</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">13</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">14</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">15</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">16</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">17</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">18</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">19</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">20</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">21</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">22</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">23</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">24</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">25</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">26</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">27</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">28</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">29</span></div>
+              <div class="season-calendar-day"><span class="season-calendar-day-number">30</span></div>
+              <div class="season-calendar-day has-event">
+                <span class="season-calendar-day-number">31</span>
+                <span class="season-calendar-event-chip">4:00 PM</span>
+                <span class="season-calendar-event-title">An American Celebration</span>
+              </div>
+            </div>
+            <div class="season-calendar-summary">
+              <p class="season-calendar-date">Sunday, May 31, 2026</p>
+              <p>A patriotic late-season program featuring American voices and a festive orchestral close.</p>
+            </div>
+          </article>
+        </div>
       </div>
 
       <div class="section-cta-row">
@@ -3264,6 +3342,9 @@
   var homeButton       = root.querySelector('.pso-home-trigger');
   var topicSections    = root.querySelectorAll('.reveal-topic');
   var ctaButtons       = root.querySelectorAll('.cta-reveal');
+  var seasonCalendar   = root.querySelector('[data-season-calendar]');
+  var seasonCalendarMonths = Array.prototype.slice.call(root.querySelectorAll('[data-calendar-month]'));
+  var seasonCalendarNavButtons = Array.prototype.slice.call(root.querySelectorAll('[data-calendar-nav]'));
   var instrumentCards  = Array.prototype.slice.call(root.querySelectorAll('.instrument-card'));
   var mediaCards       = Array.prototype.slice.call(root.querySelectorAll('.media-video-card[data-video-id]'));
   var mediaPlayer      = root.querySelector('[data-media-player]');
@@ -3855,6 +3936,34 @@
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  function renderSeasonCalendar(index) {
+    if (!seasonCalendarMonths.length) return;
+
+    var normalizedIndex = ((index % seasonCalendarMonths.length) + seasonCalendarMonths.length) % seasonCalendarMonths.length;
+
+    seasonCalendarMonths.forEach(function (month, monthIndex) {
+      var isActive = monthIndex === normalizedIndex;
+      month.classList.toggle('is-active', isActive);
+      month.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+    });
+
+    seasonCalendar.dataset.activeMonth = String(normalizedIndex);
+  }
+
+  function initSeasonCalendar() {
+    if (!seasonCalendar || !seasonCalendarMonths.length) return;
+
+    renderSeasonCalendar(Number(seasonCalendar.dataset.activeMonth || 0));
+
+    seasonCalendarNavButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var currentIndex = Number(seasonCalendar.dataset.activeMonth || 0);
+        var direction = button.dataset.calendarNav === 'prev' ? -1 : 1;
+        renderSeasonCalendar(currentIndex + direction);
+      });
+    });
+  }
+
   // CTA reveal buttons
   ctaButtons.forEach(function (btn) {
     btn.addEventListener('click', function (e) {
@@ -3900,6 +4009,8 @@
   if (instrumentCards.length) {
     resetInstrumentPanel();
   }
+
+  initSeasonCalendar();
 
   createHeroSparkles();
   window.addEventListener('resize', createHeroSparkles);
