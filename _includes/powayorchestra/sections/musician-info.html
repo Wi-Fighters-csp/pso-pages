@@ -1,0 +1,86 @@
+  <section class="reveal-topic is-hidden" id="musician-info">
+    <div class="section">
+      <h2>Musician Info</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro">
+        Meet the instrument families that shape the orchestra's sound. This section is designed to help visitors,
+        students, and younger audiences connect each part of the ensemble with the players who perform it.
+      </p>
+
+      <div class="instrument-discovery" aria-labelledby="instrument-explorer-title">
+        <h3 id="instrument-explorer-title" class="conductor-title" style="text-align:center; margin-bottom:0.8rem;">Interactive Instrument Guide</h3>
+        <p class="instrument-discovery-intro">
+          Explore the orchestra by family. Hover over a section to hear a short audio preview,
+          watch the card tilt in 3D, and click to reveal the musicians and instruments that bring each sound to life.
+        </p>
+
+        <div class="instrument-grid">
+          <button type="button" class="instrument-card" data-family="strings" data-title="Strings" data-copy="Strings carry the singing heart of the orchestra, moving easily from whisper-soft harmonies to bold, cinematic lines. Younger listeners often recognize them as the section that can sound warm, dramatic, and deeply expressive all at once." data-players="Violinists|Violists|Cellists|Bassists" data-instruments="Violin|Viola|Cello|Double Bass" data-hover-audio="{{ '/assets/audio/poway-orchestra/strings_sound.mp3' | relative_url }}" data-meta="Common jobs in the section include leading melodies, building harmony, and creating the rich blanket of sound under the full orchestra." data-soundhint="Hover after your first click or tap to hear a short string preview.">
+            <span class="instrument-family-label">Strings</span><h3>Violins, violas, cellos, and basses</h3><p>Warm, lyrical, and flexible. This family often carries the melody and the emotional core of a concert.</p><span class="instrument-card-note">Hover for sound. Click to meet the section.</span><span class="instrument-floating-note" aria-hidden="true">♪</span><span class="instrument-floating-note note-2" aria-hidden="true">♫</span><span class="instrument-floating-note note-3" aria-hidden="true">♩</span><span class="instrument-visual" aria-hidden="true">🎻</span>
+          </button>
+          <button type="button" class="instrument-card" data-family="brass" data-title="Brass" data-copy="Brass instruments bring brilliance, power, and ceremony. They can sound heroic and triumphant, but they also add warmth and depth when blended carefully with the rest of the orchestra." data-players="Trumpeters|Horn Players|Trombonists|Tubists" data-instruments="Trumpet|French Horn|Trombone|Tuba" data-hover-audio="{{ '/assets/audio/poway-orchestra/brass_sound.mp3' | relative_url }}" data-meta="Brass players often deliver fanfares, dramatic climaxes, and the big resonant chords that make orchestral finales feel huge." data-soundhint="Hover after your first click or tap to hear a short brass preview.">
+            <span class="instrument-family-label">Brass</span><h3>Trumpets, horns, trombones, and tuba</h3><p>Bright and bold. This section adds sparkle, fanfares, and the thrilling power behind big musical moments.</p><span class="instrument-card-note">Hover for sound. Click to meet the section.</span><span class="instrument-floating-note" aria-hidden="true">♪</span><span class="instrument-floating-note note-2" aria-hidden="true">♫</span><span class="instrument-floating-note note-3" aria-hidden="true">♩</span><span class="instrument-visual" aria-hidden="true">🎺</span>
+          </button>
+          <button type="button" class="instrument-card" data-family="woodwinds" data-title="Woodwinds" data-copy="Woodwinds are the orchestra's colorists. They can sound playful, mysterious, airy, or bird-like, and they often add personality to the musical story with highly distinct timbres." data-players="Flutists|Oboists|Clarinetists|Bassoonists" data-instruments="Flute|Oboe|Clarinet|Bassoon" data-hover-audio="{{ '/assets/audio/poway-orchestra/woodwind_sound.mp3' | relative_url }}" data-meta="Woodwind players frequently trade solos, mimic natural sounds, and provide the character voices that listeners remember after a concert." data-soundhint="Hover after your first click or tap to hear a short woodwind preview.">
+            <span class="instrument-family-label">Woodwinds</span><h3>Flute, oboe, clarinet, and bassoon</h3><p>Colorful and agile. These instruments often shape the orchestra's most distinctive melodies and textures.</p><span class="instrument-card-note">Hover for sound. Click to meet the section.</span><span class="instrument-floating-note" aria-hidden="true">♪</span><span class="instrument-floating-note note-2" aria-hidden="true">♫</span><span class="instrument-floating-note note-3" aria-hidden="true">♩</span><span class="instrument-visual" aria-hidden="true">🎶</span>
+          </button>
+          <button type="button" class="instrument-card" data-family="percussion" data-title="Percussion" data-copy="Percussion adds rhythm, impact, and surprise. Sometimes it drives the pulse from the back of the stage, and sometimes one well-timed entrance changes the energy of the entire orchestra." data-players="Timpanists|Mallet Percussionists|Snare and Bass Drum Players|Cymbal and Accessory Percussionists" data-instruments="Timpani|Snare Drum|Bass Drum|Cymbals|Xylophone" data-hover-audio="{{ '/assets/audio/poway-orchestra/percussion_sound.mp3' | relative_url }}" data-meta="Percussion players help shape tempo, texture, and excitement, from crisp rhythmic patterns to thunderous climaxes." data-soundhint="Hover after your first click or tap to hear a short percussion preview.">
+            <span class="instrument-family-label">Percussion</span><h3>Drums, cymbals, timpani, and mallets</h3><p>Rhythmic and dramatic. This family provides pulse, accents, and the striking sounds that younger audiences instantly notice.</p><span class="instrument-card-note">Hover for sound. Click to meet the section.</span><span class="instrument-floating-note" aria-hidden="true">♪</span><span class="instrument-floating-note note-2" aria-hidden="true">♫</span><span class="instrument-floating-note note-3" aria-hidden="true">♩</span><span class="instrument-visual" aria-hidden="true">🥁</span>
+          </button>
+        </div>
+
+        <div class="instrument-detail-panel" aria-live="polite">
+          <div>
+            <p class="instrument-detail-eyebrow">Start Here</p>
+            <h3 class="instrument-detail-title" data-instrument-title>Choose an instrument family</h3>
+            <p class="instrument-detail-copy" data-instrument-copy>
+              Nothing is selected yet. Hover over a family card to preview its sound, then click the one you want to explore to see the musicians and instruments in that section.
+            </p>
+            <p class="instrument-detail-subheading">See the mucisians under the following section</p>
+            <div class="instrument-chip-list" data-instrument-players></div>
+          </div>
+
+          <div class="instrument-detail-meta">
+            <div class="instrument-chip-list" data-instrument-list></div>
+            <p data-instrument-meta>
+              Each family has its own role in the orchestra, from carrying the melody to building rhythm and dramatic impact.
+            </p>
+            <p class="instrument-audio-hint" data-instrument-soundhint>
+              Audio previews usually begin after the page receives one click, tap, or key press.
+            </p>
+          </div>
+
+          <div class="musician-roster is-hidden" data-musician-roster aria-labelledby="musician-roster-title" aria-hidden="true">
+            <div class="musician-roster-header">
+              <span class="musician-roster-label">Current Musicians</span>
+              <h3 id="musician-roster-title" class="conductor-title" style="text-align:left; margin-bottom:0.5rem;">Poway Symphony Orchestra Musicians</h3>
+              <p data-musician-roster-copy>Current musicians as of November 16, 2025 for Dvořák in America.</p>
+            </div>
+
+            <div class="musician-roster-grid">
+              <div class="musician-roster-empty" data-musician-roster-empty>
+                <p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra.</p>
+              </div>
+
+              <div class="musician-roster-detail is-hidden" data-musician-roster-detail>
+                <div class="musician-roster-detail-header">
+                  <p class="instrument-detail-subheading">Selected Section</p>
+                  <h4 data-musician-section-title>Select a section</h4>
+                  <p data-musician-section-copy>Pick a section chip to load the current players.</p>
+                </div>
+
+                <div class="musician-member-groups" data-musician-member-groups></div>
+              </div>
+            </div>
+
+            <p class="musician-roster-note">An asterisk indicates the original roster notation provided for this program.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-cta-row">
+        <a href="#join-orchestra" class="btn btn-secondary">Interested in Joining?</a>
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      </div>
+    </div>
+  </section>

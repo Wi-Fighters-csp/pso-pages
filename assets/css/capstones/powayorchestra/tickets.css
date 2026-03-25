@@ -1,0 +1,98 @@
+  .ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0;
+  }
+
+  .ticket-next-performance {
+    margin: 2rem 0 1.4rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(200,168,75,0.28);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(200,168,75,0.08), transparent 52%),
+      var(--navy-mid);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+  }
+
+  .ticket-next-performance-label {
+    display: inline-block;
+    margin-bottom: 0.7rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .ticket-next-performance h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.45rem;
+  }
+
+  .ticket-next-performance-meta {
+    color: var(--gold-light);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .ticket-next-performance p {
+    color: rgba(250,246,239,0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .ticket-option {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.6rem 1.4rem;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .ticket-option:hover { border-color: var(--gold); }
+
+  .ticket-option h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .ticket-option p {
+    font-size: 0.95rem;
+    color: rgba(250,246,239,0.7);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .ticket-notes {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem auto 0;
+    max-width: 560px;
+  }
+
+  .ticket-notes li {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.98rem;
+    color: rgba(250,246,239,0.78);
+    letter-spacing: 0.04em;
+    line-height: 1.65;
+    padding: 0.45rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .ticket-notes li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+

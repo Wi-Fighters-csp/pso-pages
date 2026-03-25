@@ -1,0 +1,230 @@
+<link rel="stylesheet" href="{{ '/assets/css/capstones/powayorchestra/signin.css' | relative_url }}">
+
+<div class="pso-signin-page">
+  <div class="pso-topbar">
+    <a class="pso-home-trigger" href="{{ '/capstone/powayorchestra/' | relative_url }}">
+      <span class="pso-treble">𝄞</span>
+      <span>PSO</span>
+    </a>
+
+    <nav class="pso-topbar-nav" aria-label="Main navigation">
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-dropdown-link">Our Mission</a>
+          <a href="{{ '/capstone/powayorchestra/#foundation' | relative_url }}" class="top-nav-dropdown-link">Foundation</a>
+          <a href="{{ '/capstone/powayorchestra/#news' | relative_url }}" class="top-nav-dropdown-link">News</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#concerts' | relative_url }}" class="top-nav-link">Concerts <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/capstone/powayorchestra/#concerts' | relative_url }}" class="top-nav-dropdown-link">2025-2026 Season</a>
+          <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-dropdown-link">Buy Tickets</a>
+          <a href="{{ '/capstone/powayorchestra/#media' | relative_url }}" class="top-nav-dropdown-link">Videos and Recordings</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#support' | relative_url }}" class="top-nav-link">Support <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/capstone/powayorchestra/#donate' | relative_url }}" class="top-nav-dropdown-link">Donor and Sponsor Program</a>
+          <a href="{{ '/capstone/powayorchestra/#donate' | relative_url }}" class="top-nav-dropdown-link">Volunteer</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/capstone/powayorchestra/#conductor' | relative_url }}" class="top-nav-link">Conductor</a>
+      </div>
+
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#musicians' | relative_url }}" class="top-nav-link">Musicians <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/capstone/powayorchestra/#musicians' | relative_url }}" class="top-nav-dropdown-link">Join the Orchestra</a>
+          <a href="{{ '/capstone/powayorchestra/#musicians' | relative_url }}" class="top-nav-dropdown-link">Musician Info</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/capstone/powayorchestra/#contact' | relative_url }}" class="top-nav-link">Contact</a>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/capstone/powayorchestra/signin/' | relative_url }}" class="top-nav-link">Sign In</a>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/capstone/powayorchestra/#donate' | relative_url }}" class="top-nav-link btn-primary">Donate</a>
+      </div>
+    </nav>
+  </div>
+
+  <section class="pso-signin-shell">
+    <div class="pso-signin-inner">
+      <div class="pso-signin-hero">
+        <p class="pso-signin-eyebrow">Poway Center for the Performing Arts · Est. 2004</p>
+        <h1>Poway Symphony Orchestra</h1>
+        <p class="pso-signin-subtitle">Member and Patron Sign In</p>
+        <div class="pso-signin-rule"></div>
+        <p class="pso-signin-copy">
+          Sign in to continue to orchestra resources, concert updates, and account tools while staying inside the Poway Symphony Orchestra experience.
+        </p>
+      </div>
+
+      <div class="pso-signin-grid">
+        <section class="pso-signin-card">
+          <h2>Sign In</h2>
+          <p class="pso-signin-section-copy">
+            Use the same account you use across the site. After a successful sign-in, this page will return you to the orchestra homepage automatically.
+          </p>
+
+          <form class="pso-signin-form" id="pso-signin-form">
+            <div class="pso-field">
+              <label for="pso-uid">Email</label>
+              <input id="pso-uid" name="uid" type="email" autocomplete="username" placeholder="your email address" required>
+            </div>
+
+            <div class="pso-field">
+              <label for="pso-password">Password</label>
+              <input id="pso-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="pso-form-actions">
+              <button class="pso-button pso-button-primary" id="pso-submit-button" type="submit">Sign In</button>
+              <a class="pso-inline-link" href="{{ '/login' | relative_url }}">Open the full site login page</a>
+            </div>
+          </form>
+
+          <p class="pso-auth-message" id="pso-auth-message" role="status" aria-live="polite"></p>
+          <div class="pso-auth-actions" id="pso-auth-actions">
+            <a class="pso-button pso-button-secondary" href="{{ '/capstone/powayorchestra/' | relative_url }}">Continue to Orchestra Home</a>
+            <a class="pso-button pso-button-secondary" href="{{ '/profile' | relative_url }}">Open Profile</a>
+          </div>
+        </section>
+
+        <aside class="pso-signin-panel">
+          <h3>Quick Access</h3>
+          <p class="pso-signin-section-copy">
+            After signing in, you can move directly back into the orchestra site for season details, musician information, and supporter resources.
+          </p>
+
+          <ul class="pso-panel-list">
+            <li>
+              <span class="pso-panel-label">Season</span>
+              Browse the current concert season and ticket links.
+            </li>
+            <li>
+              <span class="pso-panel-label">Musicians</span>
+              Return to audition, rehearsal, and member information.
+            </li>
+            <li>
+              <span class="pso-panel-label">Support</span>
+              Jump back to donations, sponsor support, and contact details.
+            </li>
+          </ul>
+
+          <h3>Need Help?</h3>
+          <p class="pso-signin-section-copy">
+            New here? Create an account first, or head back to the orchestra page for venue, ticketing, and contact information.
+          </p>
+
+          <div class="pso-panel-links">
+            <a href="{{ '/signup' | relative_url }}">Create an Account</a>
+            <a href="{{ '/capstone/powayorchestra/#contact' | relative_url }}">Orchestra Contact Info</a>
+            <a href="https://powaycenter.com" target="_blank" rel="noopener">Poway Center Tickets</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script type="module">
+  import { baseurl, pythonURI, javaURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
+  const form = document.getElementById('pso-signin-form');
+  const message = document.getElementById('pso-auth-message');
+  const actions = document.getElementById('pso-auth-actions');
+  const submitButton = document.getElementById('pso-submit-button');
+  const homeUrl = `${baseurl}/capstone/powayorchestra/`;
+
+  function setMessage(type, text) {
+    message.className = `pso-auth-message is-visible is-${type}`;
+    message.textContent = text;
+  }
+
+  function clearMessage() {
+    message.className = 'pso-auth-message';
+    message.textContent = '';
+  }
+
+  function showActions() {
+    actions.classList.add('is-visible');
+  }
+
+  async function checkExistingSession() {
+    try {
+      const response = await fetch(`${pythonURI}/api/id`, fetchOptions);
+      if (!response.ok) return;
+
+      const data = await response.json();
+      if (data && data.name) {
+        setMessage('success', `You are already signed in as ${data.name}.`);
+        showActions();
+      }
+    } catch (error) {
+      console.warn('Unable to verify existing session.', error);
+    }
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    clearMessage();
+    actions.classList.remove('is-visible');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Signing In';
+    setMessage('info', 'Signing you in and preparing your orchestra session...');
+
+    const credentials = {
+      uid: document.getElementById('pso-uid').value.trim(),
+      password: document.getElementById('pso-password').value
+    };
+
+    try {
+      const pythonRequest = fetch(`${pythonURI}/api/authenticate`, {
+        ...fetchOptions,
+        method: 'POST',
+        body: JSON.stringify(credentials)
+      });
+
+      const javaRequest = fetch(`${javaURI}/authenticate`, {
+        ...fetchOptions,
+        method: 'POST',
+        body: JSON.stringify(credentials)
+      }).catch(() => null);
+
+      const [pythonResult, javaResult] = await Promise.allSettled([pythonRequest, javaRequest]);
+      if (pythonResult.status !== 'fulfilled' || !pythonResult.value.ok) {
+        throw new Error('Sign in failed. Check your credentials and try again.');
+      }
+
+      if (javaResult.status === 'fulfilled' && javaResult.value && !javaResult.value.ok) {
+        console.warn('Secondary Spring login did not complete successfully.');
+      }
+
+      setMessage('success', 'Sign in successful. Returning you to the orchestra page...');
+      showActions();
+      window.setTimeout(() => {
+        window.location.href = homeUrl;
+      }, 1200);
+    } catch (error) {
+      setMessage('error', error.message);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Sign In';
+    }
+  });
+
+  checkExistingSession();
+</script>
