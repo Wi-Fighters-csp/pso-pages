@@ -11,11 +11,90 @@
     font-size: 1.02rem;
   }
 
+  .instrument-search-shell {
+    max-width: 760px;
+    margin: 0 auto 1.6rem;
+  }
+
+  .instrument-search-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .instrument-search-input {
+    width: 100%;
+    min-height: 54px;
+    padding: 0.95rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(226,201,122,0.24);
+    background: rgba(8,17,31,0.72);
+    color: var(--white);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.98rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .instrument-search-input::placeholder {
+    color: rgba(250,246,239,0.44);
+  }
+
+  .instrument-search-input:focus {
+    outline: none;
+    border-color: rgba(226,201,122,0.72);
+    box-shadow: 0 0 0 3px rgba(226,201,122,0.12);
+    background: rgba(8,17,31,0.88);
+  }
+
+  .instrument-search-status {
+    margin-top: 0.7rem;
+    color: rgba(250,246,239,0.62);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .instrument-discovery.is-search-results-mode .instrument-grid {
+    display: none;
+  }
+
+  .instrument-discovery.is-search-results-mode .instrument-detail-panel {
+    grid-template-columns: 1fr;
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  .instrument-discovery.is-search-results-mode .instrument-detail-panel > :not(.musician-roster) {
+    display: none;
+  }
+
+  .instrument-discovery.is-search-results-mode .musician-roster {
+    margin-top: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .instrument-discovery.is-search-results-mode .musician-roster-header,
+  .instrument-discovery.is-search-results-mode .musician-roster-detail-header,
+  .instrument-discovery.is-search-results-mode .musician-roster-note {
+    display: none;
+  }
+
   .instrument-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
     margin-bottom: 1.4rem;
+  }
+
+  .instrument-card.is-search-hidden {
+    display: none;
   }
 
   .instrument-card {
@@ -426,21 +505,66 @@
     text-transform: uppercase;
   }
 
-  .musician-member-group ul {
-    list-style: none;
-    padding: 0;
+  .musician-member-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .musician-search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .musician-member-card {
+    border: 1px solid rgba(226,201,122,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.03);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.14);
+  }
+
+  .musician-member-photo-shell {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(180deg, rgba(226,201,122,0.12), rgba(8,19,38,0.85));
+    border-bottom: 1px solid rgba(226,201,122,0.12);
+  }
+
+  .musician-member-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .musician-member-photo--empty {
+    width: 100%;
+    height: 100%;
+    background:
+      linear-gradient(135deg, rgba(226,201,122,0.08), rgba(255,255,255,0.02)),
+      rgba(8,19,38,0.82);
+  }
+
+  .musician-member-card-copy {
+    padding: 0.95rem 1rem 1rem;
+  }
+
+  .musician-member-instrument {
+    margin: 0 0 0.35rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .musician-member-name {
     margin: 0;
-  }
-
-  .musician-member-group li {
-    padding: 0.38rem 0;
-    color: rgba(250,246,239,0.84);
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .musician-member-group li:first-child {
-    border-top: 0;
-    padding-top: 0;
+    color: rgba(250,246,239,0.9);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    line-height: 1.35;
   }
 
   .musician-roster-note {

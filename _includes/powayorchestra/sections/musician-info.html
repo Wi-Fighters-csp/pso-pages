@@ -14,6 +14,20 @@
           watch the card tilt in 3D, and click to reveal the musicians and instruments that bring each sound to life.
         </p>
 
+        <div class="instrument-search-shell">
+          <label class="instrument-search-label" for="musician-search-input">Search by instrument or musician</label>
+          <input
+            id="musician-search-input"
+            class="instrument-search-input"
+            type="search"
+            placeholder="Try violin, horn, or a musician name"
+            autocomplete="off"
+            data-musician-search>
+          <p class="instrument-search-status" data-musician-search-status>
+            Search by musician or instrument to jump to the matching orchestra section.
+          </p>
+        </div>
+
         <div class="instrument-grid">
           <button type="button" class="instrument-card" data-family="strings" data-title="Strings" data-copy="Strings carry the singing heart of the orchestra, moving easily from whisper-soft harmonies to bold, cinematic lines. Younger listeners often recognize them as the section that can sound warm, dramatic, and deeply expressive all at once." data-players="Violinists|Violists|Cellists|Bassists" data-instruments="Violin|Viola|Cello|Double Bass" data-hover-audio="{{ '/assets/audio/poway-orchestra/strings_sound.mp3' | relative_url }}" data-meta="Common jobs in the section include leading melodies, building harmony, and creating the rich blanket of sound under the full orchestra." data-soundhint="Hover after your first click or tap to hear a short string preview.">
             <span class="instrument-family-label">Strings</span><h3>Violins, violas, cellos, and basses</h3><p>Warm, lyrical, and flexible. This family often carries the melody and the emotional core of a concert.</p><span class="instrument-card-note">Hover for sound. Click to meet the section.</span><span class="instrument-floating-note" aria-hidden="true">♪</span><span class="instrument-floating-note note-2" aria-hidden="true">♫</span><span class="instrument-floating-note note-3" aria-hidden="true">♩</span><span class="instrument-visual" aria-hidden="true">🎻</span>
