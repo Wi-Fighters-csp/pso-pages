@@ -18,7 +18,6 @@
     .section { padding: 3rem 1.2rem; }
     .section-full { padding: 3rem 1.2rem; }
     .concert-grid { grid-template-columns: 1fr; }
-    .sample-listen-grid { grid-template-columns: 1fr; }
     .instrument-detail-panel { grid-template-columns: 1fr; }
     .media-showcase { grid-template-columns: 1fr; }
     .media-featured { min-height: 360px; }
