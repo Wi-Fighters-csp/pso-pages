@@ -1,0 +1,264 @@
+  <section class="reveal-topic is-hidden" id="orchestra-builder">
+    <div class="section">
+      <h2>Orchestra Builder</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro">
+        Build the orchestra using a real stage layout. Strings form the front arc, woodwinds sit behind them, brass projects
+        from the back rows, and percussion anchors the rear of the stage.
+      </p>
+
+      <div class="orchestra-builder" data-orchestra-builder>
+        <div class="builder-overview-card">
+          <div>
+            <p class="builder-eyebrow">Challenge Mode</p>
+            <h3 class="conductor-title" style="text-align:left; margin-bottom:0.7rem;">Balance the orchestra before the overture begins</h3>
+            <p class="builder-overview-copy">
+              A strong orchestra is not just loud. It is balanced. Place five string sections, four woodwind sections,
+              four brass sections, and two percussion sections in their correct positions to unlock a featured Poway Symphony performance.
+            </p>
+          </div>
+          <div class="builder-target-strip" aria-label="Target family counts">
+            <div class="builder-target-pill family-strings"><span>Strings</span><strong data-builder-score="strings">0 / 5</strong></div>
+            <div class="builder-target-pill family-woodwinds"><span>Woodwinds</span><strong data-builder-score="woodwinds">0 / 4</strong></div>
+            <div class="builder-target-pill family-brass"><span>Brass</span><strong data-builder-score="brass">0 / 4</strong></div>
+            <div class="builder-target-pill family-percussion"><span>Percussion</span><strong data-builder-score="percussion">0 / 2</strong></div>
+          </div>
+        </div>
+
+        <div class="builder-layout">
+          <aside class="builder-palette" aria-labelledby="builder-palette-title">
+            <div class="builder-panel-heading">
+              <p class="builder-eyebrow">Instrument Library</p>
+              <h3 id="builder-palette-title">Place each section on stage</h3>
+              <p>Desktop: drag onto the matching circle. Mobile: use the place button to send each section to its spot.</p>
+            </div>
+
+            <div class="builder-instrument-grid" role="list">
+              <article class="builder-instrument-card family-strings" draggable="true" data-builder-card data-family="strings" data-slot="first-violins" data-instrument="First Violins" role="listitem">
+                <span class="builder-family-chip">Strings</span>
+                <h4>First Violins</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-strings" draggable="true" data-builder-card data-family="strings" data-slot="second-violins" data-instrument="Second Violins" role="listitem">
+                <span class="builder-family-chip">Strings</span>
+                <h4>Second Violins</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-strings" draggable="true" data-builder-card data-family="strings" data-slot="violas" data-instrument="Violas" role="listitem">
+                <span class="builder-family-chip">Strings</span>
+                <h4>Violas</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-strings" draggable="true" data-builder-card data-family="strings" data-slot="cellos" data-instrument="Cellos" role="listitem">
+                <span class="builder-family-chip">Strings</span>
+                <h4>Cellos</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-strings" draggable="true" data-builder-card data-family="strings" data-slot="double-basses" data-instrument="Double Basses" role="listitem">
+                <span class="builder-family-chip">Strings</span>
+                <h4>Double Basses</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-woodwinds" draggable="true" data-builder-card data-family="woodwinds" data-slot="flutes-piccolo" data-instrument="Flutes and Piccolo" role="listitem">
+                <span class="builder-family-chip">Woodwinds</span>
+                <h4>Flutes / Picc.</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-woodwinds" draggable="true" data-builder-card data-family="woodwinds" data-slot="oboes" data-instrument="Oboes" role="listitem">
+                <span class="builder-family-chip">Woodwinds</span>
+                <h4>Oboes</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-woodwinds" draggable="true" data-builder-card data-family="woodwinds" data-slot="clarinets" data-instrument="Clarinets" role="listitem">
+                <span class="builder-family-chip">Woodwinds</span>
+                <h4>Clarinets</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-woodwinds" draggable="true" data-builder-card data-family="woodwinds" data-slot="bassoons" data-instrument="Bassoons" role="listitem">
+                <span class="builder-family-chip">Woodwinds</span>
+                <h4>Bassoons</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-brass" draggable="true" data-builder-card data-family="brass" data-slot="horns" data-instrument="French Horns" role="listitem">
+                <span class="builder-family-chip">Brass</span>
+                <h4>French Horns</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-brass" draggable="true" data-builder-card data-family="brass" data-slot="trumpets" data-instrument="Trumpets" role="listitem">
+                <span class="builder-family-chip">Brass</span>
+                <h4>Trumpets</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-brass" draggable="true" data-builder-card data-family="brass" data-slot="trombones" data-instrument="Trombones" role="listitem">
+                <span class="builder-family-chip">Brass</span>
+                <h4>Trombones</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-brass" draggable="true" data-builder-card data-family="brass" data-slot="tuba" data-instrument="Tuba" role="listitem">
+                <span class="builder-family-chip">Brass</span>
+                <h4>Tuba</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-percussion" draggable="true" data-builder-card data-family="percussion" data-slot="timpani" data-instrument="Timpani" role="listitem">
+                <span class="builder-family-chip">Percussion</span>
+                <h4>Timpani</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+              <article class="builder-instrument-card family-percussion" draggable="true" data-builder-card data-family="percussion" data-slot="percussion" data-instrument="Percussion" role="listitem">
+                <span class="builder-family-chip">Percussion</span>
+                <h4>Percussion</h4>
+                <button type="button" class="builder-add-btn" data-builder-add>Place</button>
+              </article>
+            </div>
+          </aside>
+
+          <div class="builder-stage-shell">
+            <div class="builder-panel-heading">
+              <p class="builder-eyebrow">Stage</p>
+              <h3>Drop instruments into the marked stage layout</h3>
+              <p data-builder-status>Start by placing the four string sections across the front of the stage.</p>
+            </div>
+
+            <div class="builder-stage-map-shell">
+              <div class="builder-stage-map">
+                <img src="{{ '/images/capstone/powaysymphonyorchestra/stage.jpeg' | relative_url }}" alt="The orchestra stage used for the builder game" class="builder-stage-image">
+                <div class="builder-stage-overlay" aria-label="Interactive orchestra stage layout">
+                  <div class="builder-stage-podium" aria-hidden="true">
+                    <span class="builder-podium-dot"></span>
+                    <span class="builder-podium-label">Conductor</span>
+                  </div>
+                  <button type="button" class="builder-stage-slot slot-first-violins" data-builder-zone data-family="strings" data-slot="first-violins" aria-label="First violins on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">1st Violins</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="first-violins">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-second-violins" data-builder-zone data-family="strings" data-slot="second-violins" aria-label="Second violins on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">2nd Violins</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="second-violins">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-violas" data-builder-zone data-family="strings" data-slot="violas" aria-label="Violas on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Violas</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="violas">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-cellos" data-builder-zone data-family="strings" data-slot="cellos" aria-label="Cellos on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Cellos</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="cellos">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-double-basses" data-builder-zone data-family="strings" data-slot="double-basses" aria-label="Double basses on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Basses</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="double-basses">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-flutes-piccolo" data-builder-zone data-family="woodwinds" data-slot="flutes-piccolo" aria-label="Flutes and piccolo on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Flutes</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="flutes-piccolo">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-oboes" data-builder-zone data-family="woodwinds" data-slot="oboes" aria-label="Oboes on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Oboes</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="oboes">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-clarinets" data-builder-zone data-family="woodwinds" data-slot="clarinets" aria-label="Clarinets on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Clarinets</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="clarinets">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-bassoons" data-builder-zone data-family="woodwinds" data-slot="bassoons" aria-label="Bassoons on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Bassoons</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="bassoons">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-horns" data-builder-zone data-family="brass" data-slot="horns" aria-label="French horns on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Horns</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="horns">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-trumpets" data-builder-zone data-family="brass" data-slot="trumpets" aria-label="Trumpets on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Trumpets</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="trumpets">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-trombones" data-builder-zone data-family="brass" data-slot="trombones" aria-label="Trombones on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Trombones</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="trombones">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-tuba" data-builder-zone data-family="brass" data-slot="tuba" aria-label="Tuba on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Tuba</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="tuba">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-timpani" data-builder-zone data-family="percussion" data-slot="timpani" aria-label="Timpani on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Timpani</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="timpani">Empty</span>
+                  </button>
+                  <button type="button" class="builder-stage-slot slot-percussion" data-builder-zone data-family="percussion" data-slot="percussion" aria-label="Percussion on stage">
+                    <span class="builder-stage-dot" aria-hidden="true"></span>
+                    <span class="builder-stage-slot-label">Percussion</span>
+                    <span class="builder-stage-slot-state" data-builder-slot-state="percussion">Empty</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="builder-stage-legend" aria-label="Instrument color key">
+                <span class="builder-legend-item slot-first-violins"><i></i>1st Violins</span>
+                <span class="builder-legend-item slot-second-violins"><i></i>2nd Violins</span>
+                <span class="builder-legend-item slot-violas"><i></i>Violas</span>
+                <span class="builder-legend-item slot-cellos"><i></i>Cellos</span>
+                <span class="builder-legend-item slot-double-basses"><i></i>Basses</span>
+                <span class="builder-legend-item slot-flutes-piccolo"><i></i>Flutes</span>
+                <span class="builder-legend-item slot-oboes"><i></i>Oboes</span>
+                <span class="builder-legend-item slot-clarinets"><i></i>Clarinets</span>
+                <span class="builder-legend-item slot-bassoons"><i></i>Bassoons</span>
+                <span class="builder-legend-item slot-horns"><i></i>Horns</span>
+                <span class="builder-legend-item slot-trumpets"><i></i>Trumpets</span>
+                <span class="builder-legend-item slot-trombones"><i></i>Trombones</span>
+                <span class="builder-legend-item slot-tuba"><i></i>Tuba</span>
+                <span class="builder-legend-item slot-timpani"><i></i>Timpani</span>
+                <span class="builder-legend-item slot-percussion"><i></i>Percussion</span>
+              </div>
+            </div>
+
+            <div class="builder-controls">
+              <button type="button" class="btn btn-secondary builder-reset-btn" data-builder-reset>Reset Stage</button>
+              <p class="builder-help-text">Tip: click a filled stage circle to clear it and try another placement.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="builder-performance-panel is-locked" data-builder-performance>
+          <div class="builder-performance-copy">
+            <p class="builder-eyebrow">Performance Reward</p>
+            <h3>Unlock a featured overture</h3>
+            <p data-builder-performance-copy>
+              Your orchestra is still tuning. Fill every family to the correct count to unlock a Poway Symphony Orchestra performance.
+            </p>
+            <div class="section-cta-row builder-performance-actions">
+              <a href="#media" class="btn btn-secondary">Browse More Videos</a>
+            </div>
+          </div>
+
+          <div class="builder-performance-shell">
+            <div class="builder-performance-lock" data-builder-lock-overlay>
+              <span>Performance Locked</span>
+            </div>
+            <iframe
+              class="builder-performance-frame"
+              data-builder-performance-frame
+              data-performance-src="https://www.youtube-nocookie.com/embed/GQ1dKdT9yXk?rel=0&enablejsapi=1"
+              title="Unlocked Poway Symphony Orchestra performance"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

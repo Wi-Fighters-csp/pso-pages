@@ -37,6 +37,11 @@
   var musicianSectionTitle = root.querySelector('[data-musician-section-title]');
   var musicianSectionCopy = root.querySelector('[data-musician-section-copy]');
   var musicianMemberGroups = root.querySelector('[data-musician-member-groups]');
+  var orchestraBuilder = root.querySelector('[data-orchestra-builder]');
+  var builderStatus = root.querySelector('[data-builder-status]');
+  var builderPerformance = root.querySelector('[data-builder-performance]');
+  var builderPerformanceCopy = root.querySelector('[data-builder-performance-copy]');
+  var builderPerformanceFrame = root.querySelector('[data-builder-performance-frame]');
   var pageNoteLayer = root.querySelector('.page-note-layer');
   var heroSparkleLayer = root.querySelector('.hero-sparkle-layer');
   var selectedFamily = null;
@@ -47,6 +52,52 @@
   var currentHoverCard = null;
   var activeMusicianSearchQuery = '';
   var musicianSearchMatches = {};
+  var builderSlotConfig = {
+    'first-violins': { instrument: 'First Violins', family: 'strings' },
+    'second-violins': { instrument: 'Second Violins', family: 'strings' },
+    violas: { instrument: 'Violas', family: 'strings' },
+    cellos: { instrument: 'Cellos', family: 'strings' },
+    'double-basses': { instrument: 'Double Basses', family: 'strings' },
+    'flutes-piccolo': { instrument: 'Flutes and Piccolo', family: 'woodwinds' },
+    oboes: { instrument: 'Oboes', family: 'woodwinds' },
+    clarinets: { instrument: 'Clarinets', family: 'woodwinds' },
+    bassoons: { instrument: 'Bassoons', family: 'woodwinds' },
+    horns: { instrument: 'French Horns', family: 'brass' },
+    trumpets: { instrument: 'Trumpets', family: 'brass' },
+    trombones: { instrument: 'Trombones', family: 'brass' },
+    tuba: { instrument: 'Tuba', family: 'brass' },
+    timpani: { instrument: 'Timpani', family: 'percussion' },
+    percussion: { instrument: 'Percussion', family: 'percussion' }
+  };
+  var builderFamilyTargets = {
+    strings: 5,
+    woodwinds: 4,
+    brass: 4,
+    percussion: 2
+  };
+  var builderFamilyNames = {
+    strings: 'Strings',
+    woodwinds: 'Woodwinds',
+    brass: 'Brass',
+    percussion: 'Percussion'
+  };
+  var builderStageState = {
+    'first-violins': '',
+    'second-violins': '',
+    violas: '',
+    cellos: '',
+    'double-basses': '',
+    'flutes-piccolo': '',
+    oboes: '',
+    clarinets: '',
+    bassoons: '',
+    horns: '',
+    trumpets: '',
+    trombones: '',
+    tuba: '',
+    timpani: '',
+    percussion: ''
+  };
 
   if (pageNoteLayer && pageNoteLayer.parentNode !== document.body) {
     document.body.appendChild(pageNoteLayer);
@@ -373,6 +424,164 @@
   function stopAllSectionAudio() { stopHoverPreview(); stopCurrentAudio(); stopMediaPlayback(); }
   function setActiveMedia(card, shouldAutoplay) { if (!card || !mediaPlayer) return; var videoId = card.dataset.videoId; if (!videoId) return; stopHoverPreview(); stopCurrentAudio(); var embedUrl = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0&enablejsapi=1' + (shouldAutoplay ? '&autoplay=1' : ''); mediaPlayer.src = embedUrl; mediaPlayer.title = (card.dataset.videoTitle || 'Poway Symphony Orchestra video') + ' video player'; if (mediaTitle) mediaTitle.textContent = card.dataset.videoTitle || ''; if (mediaComposer) mediaComposer.textContent = card.dataset.videoComposer || ''; if (mediaCopy) mediaCopy.textContent = card.dataset.videoCopy || ''; if (mediaExternal) mediaExternal.href = card.dataset.videoUrl || 'https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ'; mediaCards.forEach(function (entry) { entry.classList.toggle('is-selected', entry === card); entry.setAttribute('aria-pressed', entry === card ? 'true' : 'false'); }); }
   function createHeroSparkles() { if (!heroSparkleLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; var sparkleCount = window.innerWidth < 700 ? 10 : 18; heroSparkleLayer.innerHTML = ''; for (var i = 0; i < sparkleCount; i++) { var sparkle = document.createElement('span'); sparkle.className = 'hero-sparkle'; sparkle.style.left = (Math.random() * 100) + '%'; sparkle.style.top = (15 + Math.random() * 70) + '%'; sparkle.style.animationDuration = (4.5 + Math.random() * 4.5) + 's'; sparkle.style.animationDelay = (Math.random() * 6) + 's'; sparkle.style.opacity = (0.35 + Math.random() * 0.4).toFixed(2); var size = 4 + Math.random() * 5; sparkle.style.width = size + 'px'; sparkle.style.height = size + 'px'; heroSparkleLayer.appendChild(sparkle); } }
+  function getBuilderZone(slotKey) {
+    return orchestraBuilder ? orchestraBuilder.querySelector('[data-builder-zone][data-slot="' + slotKey + '"]') : null;
+  }
+  function getBuilderScore(familyKey) {
+    return orchestraBuilder ? orchestraBuilder.querySelector('[data-builder-score="' + familyKey + '"]') : null;
+  }
+  function getBuilderSlotState(slotKey) {
+    return orchestraBuilder ? orchestraBuilder.querySelector('[data-builder-slot-state="' + slotKey + '"]') : null;
+  }
+  function getBuilderFamilyCount(familyKey) {
+    return Object.keys(builderStageState).filter(function (slotKey) {
+      var slot = builderSlotConfig[slotKey];
+      return slot && slot.family === familyKey && builderStageState[slotKey];
+    }).length;
+  }
+  function updateBuilderStatus() {
+    if (!orchestraBuilder) return;
+    var familyKeys = Object.keys(builderFamilyTargets);
+    var counts = familyKeys.map(function (familyKey) {
+      return builderFamilyNames[familyKey] + ' ' + getBuilderFamilyCount(familyKey) + '/' + builderFamilyTargets[familyKey];
+    }).join(' · ');
+    var allBalanced = familyKeys.every(function (familyKey) {
+      return getBuilderFamilyCount(familyKey) === builderFamilyTargets[familyKey];
+    });
+
+    if (allBalanced) {
+      if (builderStatus) builderStatus.textContent = 'Balanced orchestra complete. Performance unlocked.';
+      if (builderPerformanceCopy) builderPerformanceCopy.textContent = 'Excellent orchestration. The families are balanced, so the featured Poway Symphony performance is now unlocked below.';
+      if (builderPerformance) builderPerformance.classList.add('is-unlocked');
+      if (builderPerformance) builderPerformance.classList.remove('is-locked');
+      if (builderPerformanceFrame && !builderPerformanceFrame.src) {
+        builderPerformanceFrame.src = builderPerformanceFrame.dataset.performanceSrc || '';
+      }
+      return;
+    }
+
+    if (builderPerformance) builderPerformance.classList.add('is-locked');
+    if (builderPerformance) builderPerformance.classList.remove('is-unlocked');
+    if (builderPerformanceCopy) builderPerformanceCopy.textContent = 'Your orchestra is still tuning. Fill every family to the correct count to unlock a Poway Symphony Orchestra performance.';
+
+    if (builderStatus) builderStatus.textContent = 'Current balance: ' + counts + '.';
+  }
+  function renderBuilderStage() {
+    if (!orchestraBuilder) return;
+
+    Object.keys(builderSlotConfig).forEach(function (slotKey) {
+      var zone = getBuilderZone(slotKey);
+      var stateNode = getBuilderSlotState(slotKey);
+      var instrumentName = builderStageState[slotKey];
+
+      if (stateNode) stateNode.textContent = instrumentName ? 'Placed' : 'Empty';
+      if (zone) {
+        zone.classList.toggle('is-filled', Boolean(instrumentName));
+        zone.classList.remove('is-mismatch');
+        zone.setAttribute('aria-pressed', instrumentName ? 'true' : 'false');
+      }
+    });
+
+    Object.keys(builderFamilyTargets).forEach(function (familyKey) {
+      var scoreNode = getBuilderScore(familyKey);
+      var count = getBuilderFamilyCount(familyKey);
+      var target = builderFamilyTargets[familyKey];
+      if (scoreNode) scoreNode.textContent = count + ' / ' + target;
+    });
+
+    updateBuilderStatus();
+  }
+  function addBuilderInstrument(slotKey, instrumentName) {
+    if (!builderStageState.hasOwnProperty(slotKey)) return;
+    builderStageState[slotKey] = instrumentName;
+    renderBuilderStage();
+  }
+  function clearBuilderInstrument(slotKey) {
+    if (!builderStageState.hasOwnProperty(slotKey)) return;
+    builderStageState[slotKey] = '';
+    renderBuilderStage();
+  }
+  function resetBuilderStage() {
+    Object.keys(builderStageState).forEach(function (slotKey) {
+      builderStageState[slotKey] = '';
+    });
+    renderBuilderStage();
+  }
+  function initOrchestraBuilder() {
+    if (!orchestraBuilder) return;
+
+    Array.prototype.forEach.call(orchestraBuilder.querySelectorAll('[data-builder-card]'), function (card) {
+      card.addEventListener('dragstart', function (event) {
+        card.classList.add('is-dragging');
+        if (event.dataTransfer) {
+          event.dataTransfer.effectAllowed = 'copy';
+          event.dataTransfer.setData('text/plain', JSON.stringify({
+            family: card.dataset.family,
+            slot: card.dataset.slot,
+            instrument: card.dataset.instrument
+          }));
+        }
+      });
+
+      card.addEventListener('dragend', function () {
+        card.classList.remove('is-dragging');
+      });
+    });
+
+    Array.prototype.forEach.call(orchestraBuilder.querySelectorAll('[data-builder-zone]'), function (zone) {
+      zone.addEventListener('dragover', function (event) {
+        event.preventDefault();
+        zone.classList.add('is-drop-target');
+      });
+
+      zone.addEventListener('dragleave', function () {
+        zone.classList.remove('is-drop-target');
+      });
+
+      zone.addEventListener('drop', function (event) {
+        event.preventDefault();
+        zone.classList.remove('is-drop-target');
+        if (!event.dataTransfer) return;
+
+        var payload = event.dataTransfer.getData('text/plain');
+        if (!payload) return;
+
+        try {
+          var instrumentData = JSON.parse(payload);
+          if (!instrumentData.slot || instrumentData.slot !== zone.dataset.slot) {
+            zone.classList.add('is-mismatch');
+            window.setTimeout(function () { zone.classList.remove('is-mismatch'); }, 550);
+            if (builderStatus) builderStatus.textContent = 'That spot is reserved for ' + builderSlotConfig[zone.dataset.slot].instrument + '.';
+            return;
+          }
+
+          addBuilderInstrument(instrumentData.slot, instrumentData.instrument);
+        } catch (error) {}
+      });
+    });
+
+    orchestraBuilder.addEventListener('click', function (event) {
+      var addButton = event.target.closest('[data-builder-add]');
+      if (addButton) {
+        var card = addButton.closest('[data-builder-card]');
+        if (card) addBuilderInstrument(card.dataset.slot, card.dataset.instrument);
+        return;
+      }
+
+      var stageSlot = event.target.closest('[data-builder-zone]');
+      if (stageSlot && builderStageState[stageSlot.dataset.slot]) {
+        clearBuilderInstrument(stageSlot.dataset.slot);
+        return;
+      }
+
+      var resetButton = event.target.closest('[data-builder-reset]');
+      if (resetButton) {
+        resetBuilderStage();
+      }
+    });
+
+    renderBuilderStage();
+  }
   function spawnFloatingNote(x, y) { if (!pageNoteLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; var now = Date.now(); if (now - lastFloatingNoteTime < 140) return; lastFloatingNoteTime = now; var note = document.createElement('span'); var notes = ['♪', '♫', '♩', '♬']; note.className = 'music-note-pop'; note.textContent = notes[Math.floor(Math.random() * notes.length)]; note.style.left = x + 'px'; note.style.top = y + 'px'; note.style.fontSize = (16 + Math.random() * 12) + 'px'; note.style.animationDuration = (1.5 + Math.random() * 0.7) + 's'; pageNoteLayer.appendChild(note); window.setTimeout(function () { if (note.parentNode) note.parentNode.removeChild(note); }, 2200); }
   function bindInstrumentCardEvents() {
     instrumentCards.forEach(function (card) {
@@ -440,6 +649,7 @@
   bindInstrumentCardEvents();
   if (instrumentCards.length) resetInstrumentPanel();
   initSeasonCalendar();
+  initOrchestraBuilder();
   createHeroSparkles();
   window.addEventListener('resize', createHeroSparkles);
   mediaCards.forEach(function (card, index) { card.setAttribute('aria-pressed', index === 0 ? 'true' : 'false'); card.addEventListener('click', function () { setActiveMedia(card, true); }); });
