@@ -73,6 +73,26 @@ class Npc extends Character {
         // Use moveDirection and speed, defaulting if not set
         if (!this.moveDirection) this.moveDirection = { x: 1, y: 1 };
         if (!this.speed) this.speed = 1;
+
+        // Keep sprite facing aligned with actual patrol movement.
+        if (this.moveDirection.x > 0 && this.moveDirection.y > 0) {
+            this.direction = 'downRight';
+        } else if (this.moveDirection.x > 0 && this.moveDirection.y < 0) {
+            this.direction = 'upRight';
+        } else if (this.moveDirection.x < 0 && this.moveDirection.y > 0) {
+            this.direction = 'downLeft';
+        } else if (this.moveDirection.x < 0 && this.moveDirection.y < 0) {
+            this.direction = 'upLeft';
+        } else if (this.moveDirection.x > 0) {
+            this.direction = 'right';
+        } else if (this.moveDirection.x < 0) {
+            this.direction = 'left';
+        } else if (this.moveDirection.y > 0) {
+            this.direction = 'down';
+        } else if (this.moveDirection.y < 0) {
+            this.direction = 'up';
+        }
+
         // Update position based on direction and speed
         this.position.x += this.moveDirection.x * this.speed;
         this.position.y += this.moveDirection.y * this.speed;

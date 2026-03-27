@@ -3,6 +3,17 @@ import AiNpc from './essentials/AiNpc.js';
 import Npc from './essentials/Npc.js';
 import Player from './essentials/Player.js';
 
+function clearDialogueButtons(dialogueSystem) {
+	if (!dialogueSystem?.dialogueBox) return;
+	const buttonContainers = dialogueSystem.dialogueBox.querySelectorAll('div[style*="display: flex"]');
+	buttonContainers.forEach(container => {
+		if (container.contains(document.getElementById('dialogue-avatar-' + dialogueSystem.safeId))) {
+			return;
+		}
+		container.remove();
+	});
+}
+
 class GameLevelWiFighters {
 	constructor(gameEnv) {
 		const width = gameEnv.innerWidth;
@@ -11,8 +22,8 @@ class GameLevelWiFighters {
 
 		const image_data_arena = {
 			id: 'WiFightersArena',
-			src: path + '/images/gamify/retrocity.jpg',
-			pixels: { height: 736, width: 1308 }
+			src: path + '/images/gamify/wild.png',
+			pixels: { height: 1440, width: 2560 }
 		};
 
 		const sprite_data_octopus = {
@@ -47,7 +58,7 @@ class GameLevelWiFighters {
 			ANIMATION_RATE: 10,
 			pixels: { height: 2997, width: 2313 },
 			sourceOffsetY: -24,
-			INIT_POSITION: { x: width * 0.72, y: height * 0.22 },
+			INIT_POSITION: { x: width * 0.84, y: height * 0.22 },
 			orientation: { rows: 4, columns: 3 },
 			down: { row: 1, start: 0, columns: 3 },
 			up: { row: 3, start: 0, columns: 3 },
@@ -58,12 +69,67 @@ class GameLevelWiFighters {
 			downLeft: { row: 0, start: 0, columns: 3 },
 			downRight: { row: 2, start: 0, columns: 3 },
 			hitbox: { widthPercentage: 0.1, heightPercentage: 0.2 },
-			dialogues: [
-				'DNS resolves the backend domain name to an IP address before the request can travel.',
-				'HTTP lives at the application layer, but reliable delivery happens through TCP at the transport layer.',
-				'Nginx acts as a reverse proxy: it receives traffic on ports 80 or 443 and forwards it to the backend app.',
-				'If the app uses HTTPS, SSL and TLS protect the data before it moves across the network.',
-				'Your browser sends a request down the stack, and the server response climbs back up the stack in reverse.'
+			quizQuestions: [
+				{
+					question: '1. Which layer in the TCP/IP model is responsible for HTTP and DNS?',
+					options: ['Application', 'Transport', 'Network', 'Data Link'],
+					correctIndex: 0,
+					explanation: 'HTTP and DNS both live at the application layer.'
+				},
+				{
+					question: '2. Which protocol gives reliable, ordered delivery for web traffic?',
+					options: ['UDP', 'TCP', 'IP', 'ARP'],
+					correctIndex: 1,
+					explanation: 'TCP handles ordered delivery, retransmission, and connection management.'
+				},
+				{
+					question: '3. What does DNS do before a browser reaches your backend?',
+					options: ['Encrypts the packet', 'Resolves a domain to an IP address', 'Builds the Ethernet frame', 'Stores cookies'],
+					correctIndex: 1,
+					explanation: 'DNS translates a domain name into the destination IP address.'
+				},
+				{
+					question: '4. In your deployment, what is nginx mainly doing?',
+					options: ['Serving as a reverse proxy', 'Replacing DNS', 'Acting as a database', 'Compiling JavaScript'],
+					correctIndex: 0,
+					explanation: 'Nginx receives outside traffic and forwards it to the correct backend service.'
+				},
+				{
+					question: '5. Which OSI layers are usually folded into the TCP/IP application layer?',
+					options: ['Physical and data link', 'Network and transport', 'Session and presentation', 'Transport and session'],
+					correctIndex: 2,
+					explanation: 'TCP/IP usually combines OSI session and presentation into the application layer.'
+				},
+				{
+					question: '6. A common Ethernet MTU is:',
+					options: ['128 bytes', '512 bytes', '1500 bytes', '4096 bytes'],
+					correctIndex: 2,
+					explanation: 'A standard Ethernet MTU is commonly 1500 bytes.'
+				},
+				{
+					question: '7. Which layer adds source and destination IP addresses?',
+					options: ['Application', 'Transport', 'Network', 'Physical'],
+					correctIndex: 2,
+					explanation: 'The network layer adds IP addressing for routing across networks.'
+				},
+				{
+					question: '8. HTTPS mainly adds which security feature?',
+					options: ['Routing tables', 'TLS encryption', 'MAC addressing', 'Packet fragmentation'],
+					correctIndex: 1,
+					explanation: 'HTTPS uses TLS to encrypt traffic between client and server.'
+				},
+				{
+					question: '9. In the request path, which comes first?',
+					options: ['IP packet creation', 'Browser creates HTTP request data', 'Ethernet frame delivery', 'Server response rendering'],
+					correctIndex: 1,
+					explanation: 'The browser creates the application-layer HTTP request before lower layers encapsulate it.'
+				},
+				{
+					question: '10. Why is a reverse proxy useful for your project deployment?',
+					options: ['It replaces JavaScript fetch', 'It lets users access internal app ports directly', 'It hides internal services behind standard web ports and can manage TLS', 'It removes the need for DNS'],
+					correctIndex: 2,
+					explanation: 'A reverse proxy exposes clean public ports and can handle TLS while keeping internal services hidden.'
+				}
 			],
 			reaction: function() {
 				if (this.dialogueSystem) {
@@ -71,9 +137,61 @@ class GameLevelWiFighters {
 				}
 			},
 			interact: function() {
-				if (this.dialogueSystem) {
-					this.showRandomDialogue();
-				}
+				if (!this.dialogueSystem) return;
+
+				const askQuestion = (questionIndex, score) => {
+					const quiz = this.spriteData.quizQuestions || [];
+					if (questionIndex >= quiz.length) {
+						clearDialogueButtons(this.dialogueSystem);
+						this.dialogueSystem.showDialogue(
+							`Quiz complete. You scored ${score} out of ${quiz.length} on networking.`,
+							this.spriteData.id,
+							this.spriteData.src,
+							this.spriteData
+						);
+						this.dialogueSystem.addButtons([
+							{
+								text: 'Restart Quiz',
+								action: () => askQuestion(0, 0)
+							}
+						]);
+						return;
+					}
+
+					const currentQuestion = quiz[questionIndex];
+					clearDialogueButtons(this.dialogueSystem);
+					this.dialogueSystem.showDialogue(
+						currentQuestion.question,
+						this.spriteData.id,
+						this.spriteData.src,
+						this.spriteData
+					);
+
+					this.dialogueSystem.addButtons(
+						currentQuestion.options.map((option, optionIndex) => ({
+							text: option,
+							action: () => {
+								const isCorrect = optionIndex === currentQuestion.correctIndex;
+								const nextScore = isCorrect ? score + 1 : score;
+								clearDialogueButtons(this.dialogueSystem);
+								this.dialogueSystem.showDialogue(
+									`${isCorrect ? 'Correct.' : 'Not quite.'} ${currentQuestion.explanation}`,
+									this.spriteData.id,
+									this.spriteData.src,
+									this.spriteData
+								);
+								this.dialogueSystem.addButtons([
+									{
+										text: questionIndex === quiz.length - 1 ? 'See Score' : 'Next Question',
+										action: () => askQuestion(questionIndex + 1, nextScore)
+									}
+								]);
+							}
+						}))
+					);
+				};
+
+				askQuestion(0, 0);
 			}
 		};
 
@@ -86,22 +204,22 @@ class GameLevelWiFighters {
 			pixels: { width: 128, height: 256 },
 			INIT_POSITION: { x: width * 0.12, y: height * 0.1 },
 			orientation: { rows: 8, columns: 4 },
-			down: { row: 0, start: 0, columns: 4 },
-			up: { row: 0, start: 0, columns: 4 },
-			left: { row: 0, start: 0, columns: 4 },
-			right: { row: 0, start: 0, columns: 4 },
-			downLeft: { row: 0, start: 0, columns: 4 },
-			downRight: { row: 0, start: 0, columns: 4 },
-			upLeft: { row: 0, start: 0, columns: 4 },
-			upRight: { row: 0, start: 0, columns: 4 },
+			down: { row: 2, start: 0, columns: 4 },
+			up: { row: 7, start: 0, columns: 4 },
+			left: { row: 1, start: 0, columns: 4 },
+			right: { row: 3, start: 0, columns: 4 },
+			downLeft: { row: 1, start: 0, columns: 4 },
+			downRight: { row: 3, start: 0, columns: 4 },
+			upLeft: { row: 6, start: 0, columns: 4 },
+			upRight: { row: 6, start: 0, columns: 4, mirror: true },
 			walkingArea: {
-				xMin: width * 0.03,
-				xMax: width * 0.3,
-				yMin: height * 0.04,
-				yMax: height * 0.3
+				xMin: width * 0.02,
+				xMax: width * 0.42,
+				yMin: height * 0.03,
+				yMax: height * 0.42
 			},
-			speed: 2.2,
-			moveDirection: { x: 1, y: 0.7 },
+			speed: 2.4,
+			moveDirection: { x: 1, y: 0.9 },
 			hitbox: { widthPercentage: 0.2, heightPercentage: 0.3 },
 			expertise: 'networking',
 			chatHistory: [],
