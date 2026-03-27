@@ -225,8 +225,10 @@ class Character extends GameObject {
 
         // Calculate the frame position on the sprite sheet
         const directionData = this.spriteData[this.direction] || {};
-        const frameX = ((directionData.start || 0) + (this.frameIndex || 0)) * frameWidth;
-        const frameY = (directionData.row || 0) * frameHeight;
+        const sourceOffsetX = directionData.sourceOffsetX || this.spriteData.sourceOffsetX || 0;
+        const sourceOffsetY = directionData.sourceOffsetY || this.spriteData.sourceOffsetY || 0;
+        const frameX = Math.max(0, ((directionData.start || 0) + (this.frameIndex || 0)) * frameWidth + sourceOffsetX);
+        const frameY = Math.max(0, (directionData.row || 0) * frameHeight + sourceOffsetY);
 
         // Set the canvas dimensions based on the frame size
         // Set the canvas dimensions based on the frame size (integers)
