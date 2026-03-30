@@ -594,32 +594,40 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid transparent;
-    padding: 0.38rem 0.6rem;
-    border-radius: 2px;
+    width: 1.7rem;
+    height: 1.7rem;
+    min-width: 1.7rem;
+    border: 1px solid rgba(226,201,122,0.24);
+    padding: 0;
+    border-radius: 999px;
     cursor: pointer;
     font-family: 'Jost', sans-serif;
-    font-size: 0.61rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: all 0.2s;
-    background: var(--gold);
-    color: var(--navy);
-    border-color: var(--gold);
-    line-height: 1.2;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, opacity 0.2s;
+    background: rgba(226,201,122,0.08);
+    color: rgba(250,246,239,0.78);
+    line-height: 1;
+    opacity: 0.82;
   }
 
   .sample-play-sample-btn:hover,
   .sample-play-sample-btn:focus-visible {
-    background: var(--gold-light);
-    border-color: var(--gold-light);
+    background: rgba(226,201,122,0.2);
+    border-color: rgba(226,201,122,0.45);
+    color: var(--gold-light);
+    transform: scale(1.04);
     outline: none;
+    opacity: 1;
   }
 
   .sample-play-sample-btn.is-playing {
-    background: #9fd89f;
-    border-color: #9fd89f;
-    color: #0d2710;
+    background: rgba(159,216,159,0.18);
+    border-color: rgba(159,216,159,0.52);
+    color: #c9efc9;
+    opacity: 1;
   }
 
   .sample-play-sample-btn.is-unavailable,
@@ -628,6 +636,7 @@
     color: rgba(250,246,239,0.54);
     border-color: rgba(226,201,122,0.2);
     cursor: default;
+    opacity: 0.5;
   }
 
   .sample-play-sample-btn.is-unavailable:hover,
@@ -637,8 +646,6 @@
   }
 
   .musician-sample-btn {
-    max-width: 9.5rem;
-    white-space: normal;
-    text-align: center;
+    flex: 0 0 auto;
   }
 

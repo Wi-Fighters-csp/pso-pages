@@ -145,6 +145,19 @@
     background: rgba(200,168,75,0.06);
   }
 
+  .top-nav-link--games {
+    border-color: rgba(124, 200, 180, 0.28);
+    color: #d9f1ea;
+    background: linear-gradient(135deg, rgba(124, 200, 180, 0.12), rgba(124, 200, 180, 0.03));
+  }
+
+  .top-nav-link--games:hover,
+  .top-nav-item--games:focus-within .top-nav-link--games {
+    border-color: rgba(124, 200, 180, 0.48);
+    color: #bff0e4;
+    background: linear-gradient(135deg, rgba(124, 200, 180, 0.18), rgba(124, 200, 180, 0.06));
+  }
+
   .top-nav-caret { font-size: 0.6rem; opacity: 0.7; }
 
   /* Dropdown */
@@ -183,6 +196,18 @@
   .top-nav-dropdown-link:hover {
     background: var(--navy-light);
     color: var(--gold-light);
+  }
+
+  .top-nav-dropdown--games {
+    background:
+      linear-gradient(180deg, rgba(124, 200, 180, 0.12), transparent 65%),
+      var(--navy-mid);
+    border-color: rgba(124, 200, 180, 0.32);
+  }
+
+  .top-nav-dropdown--games .top-nav-dropdown-link:hover {
+    background: rgba(124, 200, 180, 0.12);
+    color: #bff0e4;
   }
 
   /* ── BUTTONS ─────────────────────────────────────── */

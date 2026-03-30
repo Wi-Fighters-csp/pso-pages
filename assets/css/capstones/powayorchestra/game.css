@@ -1,3 +1,155 @@
+  .games-section {
+    background:
+      radial-gradient(circle at top left, rgba(124,200,180,0.16), transparent 32%),
+      linear-gradient(180deg, rgba(6, 15, 26, 0.96), rgba(12, 26, 46, 0.98));
+  }
+
+  .games-section-kicker,
+  .games-feature-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.74rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8fd8c8;
+  }
+
+  .games-section-kicker {
+    text-align: center;
+    margin-bottom: 0.55rem;
+  }
+
+  .games-divider {
+    background: linear-gradient(90deg, #78c6b4, var(--gold));
+  }
+
+  .games-section-intro {
+    max-width: 58rem;
+  }
+
+  .games-library-shell {
+    max-width: 980px;
+    margin: 2.8rem auto 0;
+  }
+
+  .games-dropdown {
+    border: 1px solid rgba(120,198,180,0.26);
+    border-radius: 14px;
+    background:
+      linear-gradient(145deg, rgba(120,198,180,0.12), rgba(120,198,180,0.03) 42%),
+      rgba(10, 20, 34, 0.92);
+    box-shadow: 0 22px 46px rgba(0,0,0,0.24);
+    overflow: hidden;
+  }
+
+  .games-dropdown summary {
+    list-style: none;
+  }
+
+  .games-dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .games-dropdown-summary {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.25rem 1.35rem;
+    cursor: pointer;
+  }
+
+  .games-dropdown-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.38rem 0.72rem;
+    border-radius: 999px;
+    background: rgba(120,198,180,0.16);
+    border: 1px solid rgba(120,198,180,0.28);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c8f0e6;
+  }
+
+  .games-dropdown-text {
+    display: grid;
+    gap: 0.22rem;
+  }
+
+  .games-dropdown-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    color: var(--white);
+    line-height: 1.15;
+  }
+
+  .games-dropdown-copy {
+    color: rgba(250,246,239,0.76);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .games-dropdown-caret {
+    font-size: 1rem;
+    color: #8fd8c8;
+    transition: transform 0.22s ease, color 0.22s ease;
+  }
+
+  .games-dropdown[open] .games-dropdown-caret {
+    transform: rotate(180deg);
+    color: var(--gold-light);
+  }
+
+  .games-dropdown-body {
+    padding: 0 1.35rem 1.35rem;
+  }
+
+  .games-feature-card {
+    border-top: 1px solid rgba(120,198,180,0.16);
+    padding-top: 1.2rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .games-feature-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    margin: 0.2rem 0 0.5rem;
+  }
+
+  .games-feature-card p {
+    color: rgba(250,246,239,0.8);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .games-feature-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .games-feature-facts span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(226,201,122,0.24);
+    background: rgba(255,255,255,0.04);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250,246,239,0.88);
+  }
+
+  .games-cta-row {
+    justify-content: flex-start;
+  }
+
   .orchestra-builder {
     margin-top: 3rem;
   }
@@ -515,6 +667,15 @@
   }
 
   @media (max-width: 980px) {
+    .games-dropdown-summary {
+      grid-template-columns: 1fr auto;
+    }
+
+    .games-dropdown-badge {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+
     .builder-overview-card,
     .builder-layout,
     .builder-performance-panel {
@@ -527,6 +688,16 @@
   }
 
   @media (max-width: 700px) {
+    .games-dropdown-summary,
+    .games-dropdown-body {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .games-feature-card h3 {
+      font-size: 1.35rem;
+    }
+
     .builder-target-strip {
       grid-template-columns: 1fr;
     }

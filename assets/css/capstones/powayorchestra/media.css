@@ -255,6 +255,28 @@
     content: ' ->';
   }
 
+  .media-external-archive {
+    margin-top: 1.2rem;
+    padding: 1rem 1rem 1.1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(200,168,75,0.16);
+    background: rgba(255,255,255,0.03);
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .media-external-archive h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.28rem;
+    line-height: 1.15;
+    color: var(--gold-pale);
+  }
+
+  .media-external-archive p {
+    color: rgba(250,246,239,0.74);
+    margin: 0;
+  }
+
   @keyframes instrument-card-reveal {
     from {
       opacity: 0;

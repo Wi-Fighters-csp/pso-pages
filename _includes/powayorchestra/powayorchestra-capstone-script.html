@@ -248,8 +248,8 @@
       ? '<img src="' + person.image + '" alt="' + person.name + ' portrait" class="musician-member-photo">'
       : '<div class="musician-member-photo musician-member-photo--empty" aria-hidden="true"></div>';
     var sampleButtonMarkup = samplePath
-      ? '<button type="button" class="sample-play-sample-btn musician-sample-btn" data-audio="' + samplePath + '" data-default-label="Play Instrument Sample">Play Instrument Sample</button>'
-      : '<button type="button" class="sample-play-sample-btn musician-sample-btn is-unavailable" disabled aria-disabled="true">Sample Coming Soon</button>';
+      ? '<button type="button" class="sample-play-sample-btn musician-sample-btn" data-audio="' + samplePath + '" data-default-label="&#9654;" aria-label="Play instrument sample" title="Play instrument sample">&#9654;</button>'
+      : '<button type="button" class="sample-play-sample-btn musician-sample-btn is-unavailable" disabled aria-disabled="true" aria-label="Instrument sample coming soon" title="Instrument sample coming soon">&#9654;</button>';
 
     return '<article class="musician-member-card">'
       + '<div class="musician-member-photo-shell">' + imageMarkup + '</div>'
@@ -418,7 +418,13 @@
   function stopHoverPreview(card) { if (!currentHoverAudio) return; if (card && currentHoverCard !== card) return; currentHoverAudio.pause(); currentHoverAudio.currentTime = 0; currentHoverAudio = null; currentHoverCard = null; }
   function stopMediaPlayback() { mediaPlayers.forEach(function (player) { if (!player || !player.contentWindow) return; try { player.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'); } catch (error) {} }); }
   var currentAudio = null; var currentButton = null;
-  function resetAudioButton(button) { if (!button) return; button.classList.remove('is-playing'); button.textContent = button.dataset.defaultLabel || 'Play Sample'; }
+  function resetAudioButton(button) {
+    if (!button) return;
+    button.classList.remove('is-playing');
+    button.innerHTML = button.dataset.defaultLabel || '&#9654;';
+    button.setAttribute('aria-label', 'Play instrument sample');
+    button.setAttribute('title', 'Play instrument sample');
+  }
   function stopCurrentAudio() { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } if (currentButton) { resetAudioButton(currentButton); currentButton = null; } }
   function playInstrumentPreview(card) { if (!audioReady || !card) return; var family = getFamilyConfig(card.dataset.family); var audioPath = family && family.hoverAudio; if (!audioPath) return; stopCurrentAudio(); stopMediaPlayback(); var last = previewCooldown.get(card) || 0; if (Date.now() - last < 500) return; previewCooldown.set(card, Date.now()); if (currentHoverCard === card && currentHoverAudio) { currentHoverAudio.currentTime = 0; currentHoverAudio.play().catch(function () {}); return; } stopHoverPreview(); var audio = new Audio(audioPath); audio.preload = 'auto'; audio.volume = 0.65; audio.currentTime = 0; audio.play().then(function () { currentHoverAudio = audio; currentHoverCard = card; }).catch(function () {}); }
   function stopAllSectionAudio() { stopHoverPreview(); stopCurrentAudio(); stopMediaPlayback(); }
@@ -620,7 +626,9 @@
       currentAudio = audio;
       currentButton = playBtn;
       playBtn.classList.add('is-playing');
-      playBtn.textContent = 'Playing';
+      playBtn.innerHTML = '&#9632;';
+      playBtn.setAttribute('aria-label', 'Stop instrument sample');
+      playBtn.setAttribute('title', 'Stop instrument sample');
     }).catch(function () {
       resetAudioButton(playBtn);
       currentAudio = null;
