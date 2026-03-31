@@ -147,7 +147,7 @@
           <div>
             <h3>Member Card Creator</h3>
             <p class="pso-signin-section-copy">
-              Create a musician card for an approved member. Their name and instrument fill in automatically from the approved request, and that member can edit their own card afterward.
+              Create a musician card for an approved member. Their name and instrument fill in automatically from the approved request, and that member can edit their own card afterward. An image is optional here, and the member can add one later.
             </p>
           </div>
           <span class="pso-profile-role-pill">Admin Only</span>
@@ -189,8 +189,8 @@
             </select>
           </div>
           <div class="pso-field pso-field--full">
-            <label for="pso-member-card-image">Image URL</label>
-            <input id="pso-member-card-image" type="url" placeholder="https://... or /images/...">
+            <label for="pso-member-card-image">Image URL (Optional)</label>
+            <input id="pso-member-card-image" type="url" placeholder="Leave blank if the member will upload this later">
           </div>
           <div class="pso-field pso-field--full">
             <label for="pso-member-card-bio">Short Bio</label>
@@ -213,7 +213,7 @@
   import { baseurl, pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
   const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  const psoPythonURI = isLocalHost ? `http://${location.hostname}:8367` : pythonURI;
+  const psoPythonURI = isLocalHost ? `http://${location.hostname}:8324` : pythonURI;
   const signInUrl = `${baseurl}/capstone/powayorchestra/signin/`;
   const profileUrl = `${baseurl}/capstone/powayorchestra/profile/`;
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
@@ -373,7 +373,7 @@
     renderRosterSectionOptions(memberCardFamily.value, inferred.sectionId);
     memberCardImage.value = '';
     memberCardBio.value = '';
-    setMemberCardStatus('Review the prefilled member card details, then save the card.');
+    setMemberCardStatus('Review the prefilled member card details, then save the card. You can leave the image blank and let the member add it later.');
   }
 
   function renderApprovedMemberOptions() {
@@ -392,7 +392,7 @@
     renderRosterSectionOptions('', '');
     memberCardImage.value = '';
     memberCardBio.value = '';
-    setMemberCardStatus('Choose an approved member to prefill the card form.');
+    setMemberCardStatus('Choose an approved member to prefill the card form. Images are optional here.');
   }
 
   async function parseResponseMessage(response, fallbackMessage) {
@@ -626,10 +626,10 @@
 
     if (existingCardIndex >= 0) {
       cards[existingCardIndex] = Object.assign({}, cards[existingCardIndex], nextCard);
-      setMemberCardStatus('Member card updated. The assigned member can now edit it from the musician roster.');
+      setMemberCardStatus('Member card updated. The assigned member can now edit it from the musician roster and add an image later if needed.');
     } else {
       cards.push(nextCard);
-      setMemberCardStatus('Member card created. The assigned member can now edit it from the musician roster.');
+      setMemberCardStatus('Member card created. The assigned member can now edit it from the musician roster and add an image later if needed.');
     }
 
     saveStoredMemberCards(cards);
