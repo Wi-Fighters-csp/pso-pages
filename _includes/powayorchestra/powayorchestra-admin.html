@@ -1,0 +1,400 @@
+<link rel="stylesheet" href="{{ '/assets/css/capstones/powayorchestra/signin.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/capstones/powayorchestra/profile.css' | relative_url }}">
+
+<div class="pso-signin-page">
+  <div class="pso-topbar">
+    <a class="pso-home-trigger" href="{{ '/capstone/powayorchestra/' | relative_url }}">
+      <span class="pso-treble">𝄞</span>
+      <span>PSO</span>
+    </a>
+
+    <nav class="pso-topbar-nav" aria-label="Main navigation">
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-dropdown-link">Our Mission</a>
+          <a href="{{ '/capstone/powayorchestra/#foundation' | relative_url }}" class="top-nav-dropdown-link">Foundation</a>
+          <a href="{{ '/capstone/powayorchestra/#news' | relative_url }}" class="top-nav-dropdown-link">News</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#concerts' | relative_url }}" class="top-nav-link">Concerts <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/capstone/powayorchestra/#concerts' | relative_url }}" class="top-nav-dropdown-link">2025-2026 Season</a>
+          <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-dropdown-link">Buy Tickets</a>
+          <a href="{{ '/capstone/powayorchestra/#media' | relative_url }}" class="top-nav-dropdown-link">Videos and Recordings</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/capstone/powayorchestra/#contact' | relative_url }}" class="top-nav-link">Contact</a>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/capstone/powayorchestra/signin/' | relative_url }}">Sign In</a>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
+      </div>
+    </nav>
+  </div>
+
+  <section class="pso-signin-shell pso-profile-shell">
+    <div class="pso-signin-inner">
+      <div class="pso-signin-hero">
+        <p class="pso-signin-eyebrow">Poway Symphony Orchestra Admin</p>
+        <h1 id="pso-admin-title">Admin Dashboard</h1>
+        <p class="pso-signin-subtitle" id="pso-admin-subtitle">Membership Request Review</p>
+        <div class="pso-signin-rule"></div>
+        <p class="pso-signin-copy" id="pso-admin-copy">
+          Review member applications, approve orchestra membership, and keep request status aligned with your backend records.
+        </p>
+      </div>
+
+      <div id="pso-admin-dashboard-content" hidden>
+      <div class="pso-profile-summary-grid pso-admin-summary-grid">
+        <section class="pso-profile-card">
+          <div class="pso-profile-identity-head">
+            <div class="pso-profile-avatar" id="pso-admin-avatar">AD</div>
+            <div>
+              <h2>Admin Access</h2>
+              <p class="pso-signin-section-copy" id="pso-admin-status">
+                Checking your orchestra admin session...
+              </p>
+              <span class="pso-profile-role-pill" id="pso-admin-role-pill">Admin</span>
+            </div>
+          </div>
+
+          <div class="pso-panel-list" aria-live="polite">
+            <div class="pso-profile-row"><span class="pso-panel-label">Name</span><span id="pso-admin-name">--</span></div>
+            <div class="pso-profile-row"><span class="pso-panel-label">User ID</span><span id="pso-admin-uid">--</span></div>
+            <div class="pso-profile-row"><span class="pso-panel-label">Role</span><span id="pso-admin-role">--</span></div>
+          </div>
+
+          <div class="pso-profile-inline-actions">
+            <a class="pso-button pso-button-secondary" href="{{ '/capstone/powayorchestra/profile/' | relative_url }}">Open Profile</a>
+            <button class="pso-button pso-button-secondary" id="pso-admin-logout" type="button">Sign Out</button>
+          </div>
+
+          <p class="pso-auth-message" id="pso-admin-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <aside class="pso-profile-card">
+          <h3>Request Overview</h3>
+          <p class="pso-signin-section-copy">
+            Submitted requests appear here after users apply for orchestra membership.
+          </p>
+
+          <div class="pso-profile-stats pso-admin-stats">
+            <div class="pso-profile-stat">
+              <span class="pso-profile-stat-label">Pending</span>
+              <strong id="pso-admin-pending-count">0</strong>
+            </div>
+            <div class="pso-profile-stat">
+              <span class="pso-profile-stat-label">Approved</span>
+              <strong id="pso-admin-approved-count">0</strong>
+            </div>
+            <div class="pso-profile-stat">
+              <span class="pso-profile-stat-label">Rejected</span>
+              <strong id="pso-admin-rejected-count">0</strong>
+            </div>
+            <div class="pso-profile-stat">
+              <span class="pso-profile-stat-label">Total Requests</span>
+              <strong id="pso-admin-total-count">0</strong>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <section class="pso-profile-card pso-admin-requests-card">
+        <div class="pso-admin-requests-head">
+          <div>
+            <h3>Submitted Member Requests</h3>
+            <p class="pso-signin-section-copy">
+              Filter by review status, then approve or reject pending orchestra membership applications.
+            </p>
+          </div>
+          <div class="pso-admin-filter-row" role="tablist" aria-label="Request filters">
+            <button class="pso-button pso-button-secondary is-active" id="pso-filter-pending" data-request-filter="pending" type="button">Pending</button>
+            <button class="pso-button pso-button-secondary" id="pso-filter-all" data-request-filter="all" type="button">All</button>
+            <button class="pso-button pso-button-secondary" id="pso-filter-approved" data-request-filter="approved" type="button">Approved</button>
+            <button class="pso-button pso-button-secondary" id="pso-filter-rejected" data-request-filter="rejected" type="button">Rejected</button>
+          </div>
+        </div>
+
+        <div class="pso-admin-request-list" id="pso-admin-request-list">
+          <article class="pso-admin-request-card is-empty">
+            <strong>Loading requests...</strong>
+            <p>Submitted membership applications will appear here once the admin session is verified.</p>
+          </article>
+        </div>
+      </section>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script type="module">
+  import { baseurl, pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
+  const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const psoPythonURI = isLocalHost ? `http://${location.hostname}:8367` : pythonURI;
+  const signInUrl = `${baseurl}/capstone/powayorchestra/signin/`;
+  const profileUrl = `${baseurl}/capstone/powayorchestra/profile/`;
+  const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
+  const dashboardContent = document.getElementById('pso-admin-dashboard-content');
+  const adminTitle = document.getElementById('pso-admin-title');
+  const adminSubtitle = document.getElementById('pso-admin-subtitle');
+  const adminCopy = document.getElementById('pso-admin-copy');
+  const adminStatus = document.getElementById('pso-admin-status');
+  const adminAvatar = document.getElementById('pso-admin-avatar');
+  const adminRolePill = document.getElementById('pso-admin-role-pill');
+  const adminName = document.getElementById('pso-admin-name');
+  const adminUid = document.getElementById('pso-admin-uid');
+  const adminRole = document.getElementById('pso-admin-role');
+  const adminMessage = document.getElementById('pso-admin-message');
+  const adminLogout = document.getElementById('pso-admin-logout');
+  const pendingCount = document.getElementById('pso-admin-pending-count');
+  const approvedCount = document.getElementById('pso-admin-approved-count');
+  const rejectedCount = document.getElementById('pso-admin-rejected-count');
+  const totalCount = document.getElementById('pso-admin-total-count');
+  const requestList = document.getElementById('pso-admin-request-list');
+  const filterButtons = Array.from(document.querySelectorAll('[data-request-filter]'));
+  let currentFilter = 'pending';
+  let allRequests = [];
+  let currentUser = null;
+
+  function setAccountLinks(user) {
+    accountLinks.forEach((link) => {
+      if (user && user.name) {
+        link.textContent = user.name;
+        link.href = link.dataset.profileHref;
+      } else {
+        link.textContent = link.dataset.signinLabel || 'Sign In';
+        link.href = link.dataset.signinHref;
+      }
+    });
+  }
+
+  function setMessage(type, text) {
+    adminMessage.className = `pso-auth-message is-visible is-${type}`;
+    adminMessage.textContent = text;
+  }
+
+  function initialsFromName(name) {
+    return String(name || 'Admin')
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part.charAt(0).toUpperCase())
+      .join('') || 'AD';
+  }
+
+  function isAdminUser(user) {
+    if (!user) return false;
+    if (user.is_admin === true) return true;
+    return ['admin', 'superadmin'].indexOf(String(user.role || '').toLowerCase()) !== -1;
+  }
+
+  async function parseResponseMessage(response, fallbackMessage) {
+    try {
+      const data = await response.json();
+      return data && data.message ? data.message : fallbackMessage;
+    } catch (error) {
+      return fallbackMessage;
+    }
+  }
+
+  function setFilterButtons(filter) {
+    filterButtons.forEach((button) => {
+      button.classList.toggle('is-active', button.dataset.requestFilter === filter);
+    });
+  }
+
+  function updateStats(requests) {
+    const pending = requests.filter((request) => request.status === 'pending').length;
+    const approved = requests.filter((request) => request.status === 'approved').length;
+    const rejected = requests.filter((request) => request.status === 'rejected').length;
+    pendingCount.textContent = String(pending);
+    approvedCount.textContent = String(approved);
+    rejectedCount.textContent = String(rejected);
+    totalCount.textContent = String(requests.length);
+  }
+
+  function filteredRequests() {
+    if (currentFilter === 'all') return allRequests;
+    return allRequests.filter((request) => request.status === currentFilter);
+  }
+
+  function requestActionButtons(request) {
+    if (request.status !== 'pending') {
+      return '<span class="pso-profile-chip">Reviewed</span>';
+    }
+
+    return '<div class="pso-admin-request-actions">' +
+      `<button class="pso-button pso-button-primary" data-request-action="approve" data-request-id="${request.id}" type="button">Approve</button>` +
+      `<button class="pso-button pso-button-secondary" data-request-action="reject" data-request-id="${request.id}" type="button">Reject</button>` +
+      '</div>';
+  }
+
+  function renderRequests() {
+    const visibleRequests = filteredRequests();
+    if (!visibleRequests.length) {
+      requestList.innerHTML = '<article class="pso-admin-request-card is-empty">' +
+        '<strong>No requests in this view.</strong>' +
+        '<p>When users submit member applications, they will appear here for admin review.</p>' +
+        '</article>';
+      return;
+    }
+
+    requestList.innerHTML = visibleRequests.map((request) => {
+      const reviewedBy = request.reviewed_by_name ? `Reviewed by ${request.reviewed_by_name}` : 'Awaiting review';
+      const reviewedAt = request.reviewed_at ? request.reviewed_at : 'Not reviewed yet';
+      return '<article class="pso-admin-request-card">' +
+        '<div class="pso-admin-request-head">' +
+          `<div><strong>${request.name}</strong><span class="pso-profile-role-pill pso-admin-status-pill is-${request.status}">${request.status}</span></div>` +
+          `<span class="pso-profile-chip">Request #${request.id}</span>` +
+        '</div>' +
+        '<div class="pso-admin-request-grid">' +
+          `<div class="pso-profile-row"><span class="pso-panel-label">User ID</span><span>${request.uid}</span></div>` +
+          `<div class="pso-profile-row"><span class="pso-panel-label">Email</span><span>${request.email}</span></div>` +
+          `<div class="pso-profile-row"><span class="pso-panel-label">Instrument</span><span>${request.instrument}</span></div>` +
+          `<div class="pso-profile-row"><span class="pso-panel-label">Section</span><span>${request.section}</span></div>` +
+          `<div class="pso-profile-row"><span class="pso-panel-label">Submitted</span><span>${request.submitted_at}</span></div>` +
+          `<div class="pso-profile-row"><span class="pso-panel-label">Review</span><span>${reviewedAt}</span></div>` +
+        '</div>' +
+        `<p class="pso-admin-request-meta">${reviewedBy}</p>` +
+        requestActionButtons(request) +
+        '</article>';
+    }).join('');
+  }
+
+  async function loadRequests() {
+    const response = await fetch(`${psoPythonURI}/api/pso/admin/member-requests?status=all`, fetchOptions);
+    if (!response.ok) {
+      throw new Error(await parseResponseMessage(response, 'Unable to load member requests.'));
+    }
+
+    const data = await response.json();
+    allRequests = Array.isArray(data.requests) ? data.requests : [];
+    updateStats(allRequests);
+    renderRequests();
+  }
+
+  async function reviewRequest(requestId, action) {
+    const endpoint = `${psoPythonURI}/api/pso/admin/member-requests/${requestId}/${action}`;
+    const response = await fetch(endpoint, {
+      ...fetchOptions,
+      method: 'POST'
+    });
+
+    if (!response.ok) {
+      throw new Error(await parseResponseMessage(response, `Unable to ${action} this request.`));
+    }
+
+    await loadRequests();
+    setMessage('success', `Request ${action === 'approve' ? 'approved' : 'rejected'} successfully.`);
+  }
+
+  async function loadDashboard() {
+    try {
+      dashboardContent.hidden = true;
+      const response = await fetch(`${psoPythonURI}/api/id`, fetchOptions);
+      if (!response.ok) {
+        setAccountLinks(null);
+        setMessage('error', 'Please sign in to access the admin dashboard. Redirecting to sign in...');
+        window.setTimeout(() => {
+          window.location.href = signInUrl;
+        }, 1000);
+        return;
+      }
+
+      currentUser = await response.json();
+      setAccountLinks(currentUser);
+      if (!isAdminUser(currentUser)) {
+        adminStatus.textContent = 'This account is signed in, but it does not have admin privileges.';
+        adminSubtitle.textContent = 'Admin Access Required';
+        adminCopy.textContent = 'Only orchestra admins can review membership requests from this dashboard.';
+        adminName.textContent = currentUser.name || '--';
+        adminUid.textContent = currentUser.uid || '--';
+        adminRole.textContent = currentUser.role || 'User';
+        adminRolePill.textContent = currentUser.role || 'User';
+        adminAvatar.textContent = initialsFromName(currentUser.name);
+        setMessage('error', 'This signed-in account is not authorized to view member requests.');
+        window.setTimeout(() => {
+          window.location.href = profileUrl;
+        }, 1000);
+        return;
+      }
+
+      adminTitle.textContent = `${currentUser.name}'s Dashboard`;
+      adminStatus.textContent = 'Signed in as an orchestra admin. Submitted member requests will appear below.';
+      adminName.textContent = currentUser.name || '--';
+      adminUid.textContent = currentUser.uid || '--';
+      adminRole.textContent = currentUser.role || 'admin';
+      adminRolePill.textContent = currentUser.role || 'Admin';
+      adminAvatar.textContent = initialsFromName(currentUser.name);
+      dashboardContent.hidden = false;
+      await loadRequests();
+    } catch (error) {
+      setAccountLinks(currentUser);
+      dashboardContent.hidden = true;
+      requestList.innerHTML = '<article class="pso-admin-request-card is-empty"><strong>Unable to load requests.</strong><p>The admin dashboard could not reach the membership API.</p></article>';
+      setMessage('error', error.message || 'Unable to load the admin dashboard right now.');
+    }
+  }
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      currentFilter = button.dataset.requestFilter || 'pending';
+      setFilterButtons(currentFilter);
+      renderRequests();
+    });
+  });
+
+  requestList.addEventListener('click', async (event) => {
+    const actionButton = event.target.closest('[data-request-action]');
+    if (!actionButton) return;
+    const requestId = actionButton.dataset.requestId;
+    const action = actionButton.dataset.requestAction;
+    if (!requestId || !action) return;
+
+    actionButton.disabled = true;
+    try {
+      await reviewRequest(requestId, action);
+    } catch (error) {
+      setMessage('error', error.message);
+    } finally {
+      actionButton.disabled = false;
+    }
+  });
+
+  adminLogout.addEventListener('click', async () => {
+    adminLogout.disabled = true;
+    try {
+      const response = await fetch(`${psoPythonURI}/api/authenticate`, {
+        ...fetchOptions,
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error(await parseResponseMessage(response, 'Unable to sign out right now.'));
+      }
+
+      setAccountLinks(null);
+      setMessage('success', 'Signed out successfully. Returning to the sign-in page...');
+      window.setTimeout(() => {
+        window.location.href = signInUrl;
+      }, 1000);
+    } catch (error) {
+      setMessage('error', error.message);
+      adminLogout.disabled = false;
+    }
+  });
+
+  setFilterButtons(currentFilter);
+  setAccountLinks(null);
+  loadDashboard();
+</script>

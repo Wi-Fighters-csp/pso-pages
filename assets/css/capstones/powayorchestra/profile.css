@@ -1,0 +1,606 @@
+  .pso-profile-shell {
+    padding-top: 2.8rem;
+  }
+
+  .pso-profile-summary-grid,
+  .pso-profile-experience-grid {
+    display: grid;
+    gap: 1.2rem;
+    margin-top: 1.4rem;
+  }
+
+  .pso-profile-summary-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.85fr);
+  }
+
+  .pso-profile-experience-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pso-profile-card {
+    background:
+      linear-gradient(180deg, rgba(20,39,63,0.98), rgba(8,17,31,0.94)),
+      var(--navy-mid);
+    border: 1px solid rgba(200,168,75,0.2);
+    border-radius: 16px;
+    padding: 1.35rem;
+    box-shadow: 0 18px 42px rgba(0,0,0,0.24);
+  }
+
+  .pso-profile-card h2,
+  .pso-profile-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    margin-bottom: 0.45rem;
+  }
+
+  .pso-profile-card h2 {
+    font-size: 1.7rem;
+  }
+
+  .pso-profile-card h3 {
+    font-size: 1.38rem;
+  }
+
+  .pso-profile-card p {
+    color: var(--text-mid);
+  }
+
+  .pso-profile-identity-head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .pso-profile-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--gold-light), #8fd8c8);
+    color: var(--navy);
+    font-family: 'Jost', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.22);
+  }
+
+  .pso-profile-role-pill,
+  .pso-profile-chip,
+  .pso-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pso-profile-role-pill {
+    padding: 0.35rem 0.7rem;
+    background: rgba(226,201,122,0.12);
+    border: 1px solid rgba(226,201,122,0.3);
+    color: var(--gold-light);
+    margin-top: 0.4rem;
+  }
+
+  .pso-profile-field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  [data-member-only][hidden],
+  [data-member-panel][hidden] {
+    display: none !important;
+  }
+
+  .pso-profile-member-gate[hidden] {
+    display: none !important;
+  }
+
+  #pso-admin-dashboard-link[hidden] {
+    display: none !important;
+  }
+
+  .pso-profile-member-gate {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 1rem;
+    padding: 1rem 1.05rem;
+    border-radius: 16px;
+    border: 1px solid rgba(226,201,122,0.24);
+    background: linear-gradient(145deg, rgba(226,201,122,0.08), rgba(143,216,200,0.06));
+  }
+
+  .pso-profile-member-gate.is-unlocked {
+    border-color: rgba(143,216,200,0.38);
+    background: linear-gradient(145deg, rgba(143,216,200,0.12), rgba(226,201,122,0.08));
+  }
+
+  .pso-profile-gate-label {
+    display: block;
+    color: var(--gold-light);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .pso-profile-gate-copy,
+  .pso-profile-locked-copy {
+    margin: 0;
+    color: rgba(250,246,239,0.8);
+    font-size: 0.94rem;
+  }
+
+  .pso-profile-gate-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: flex-end;
+  }
+
+  .pso-profile-member-request {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .pso-profile-request-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .pso-profile-request-note,
+  .pso-profile-pending-copy {
+    margin: 0;
+    color: rgba(250,246,239,0.82);
+    font-size: 0.92rem;
+  }
+
+  .pso-profile-pending-copy {
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(143,216,200,0.28);
+    background: rgba(143,216,200,0.08);
+  }
+
+  .pso-profile-field-grid .pso-field--full {
+    grid-column: 1 / -1;
+  }
+
+  .pso-field input,
+  .pso-field textarea,
+  .pso-field select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    color: var(--white);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.96rem;
+    min-height: 52px;
+    padding: 0.9rem 1rem;
+  }
+
+  .pso-field textarea {
+    min-height: 118px;
+    resize: vertical;
+  }
+
+  .pso-field input:focus,
+  .pso-field select:focus,
+  .pso-field textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200, 168, 75, 0.16);
+    outline: none;
+  }
+
+  .pso-profile-inline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-note {
+    font-size: 0.9rem;
+    color: rgba(250,246,239,0.68);
+  }
+
+  .pso-admin-summary-grid {
+    align-items: start;
+  }
+
+  .pso-admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pso-admin-requests-card {
+    margin-top: 1.4rem;
+  }
+
+  .pso-admin-requests-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .pso-admin-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .pso-admin-filter-row .pso-button.is-active {
+    border-color: rgba(143,216,200,0.42);
+    background: rgba(143,216,200,0.14);
+    color: var(--white);
+  }
+
+  .pso-admin-request-list {
+    display: grid;
+    gap: 0.95rem;
+    margin-top: 1.15rem;
+  }
+
+  .pso-admin-request-card {
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .pso-admin-request-card.is-empty {
+    text-align: center;
+  }
+
+  .pso-admin-request-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .pso-admin-request-head strong {
+    display: block;
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .pso-admin-request-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem 1rem;
+    margin-top: 0.85rem;
+  }
+
+  .pso-admin-request-meta {
+    margin-top: 0.8rem;
+    color: rgba(250,246,239,0.74);
+  }
+
+  .pso-admin-request-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+  }
+
+  .pso-admin-status-pill {
+    margin-top: 0.1rem;
+  }
+
+  .pso-admin-status-pill.is-pending {
+    border-color: rgba(226,201,122,0.3);
+    background: rgba(226,201,122,0.12);
+    color: var(--gold-light);
+  }
+
+  .pso-admin-status-pill.is-approved {
+    border-color: rgba(143,216,200,0.32);
+    background: rgba(143,216,200,0.12);
+    color: #c6f0e7;
+  }
+
+  .pso-admin-status-pill.is-rejected {
+    border-color: rgba(243,143,143,0.32);
+    background: rgba(243,143,143,0.12);
+    color: #ffd1d1;
+  }
+
+  .pso-profile-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-stat {
+    padding: 0.95rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .pso-profile-stat-label {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: rgba(250,246,239,0.7);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pso-profile-stat strong {
+    display: block;
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+  }
+
+  .pso-profile-progress-group {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-progress-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(250,246,239,0.8);
+  }
+
+  .pso-profile-progress-track {
+    position: relative;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .pso-profile-progress-track span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--progress-width, 50%);
+    border-radius: inherit;
+    background: linear-gradient(90deg, #8fd8c8, var(--gold-light));
+  }
+
+  .pso-profile-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-badge {
+    padding: 0.42rem 0.78rem;
+    border: 1px solid rgba(143,216,200,0.3);
+    background: rgba(143,216,200,0.1);
+    color: #c6f0e7;
+  }
+
+  .pso-profile-timeline {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-timeline-item {
+    position: relative;
+    padding: 0.95rem 0.95rem 0.95rem 1.1rem;
+    border-left: 2px solid rgba(226,201,122,0.28);
+    background: rgba(255,255,255,0.025);
+    border-radius: 0 14px 14px 0;
+  }
+
+  .pso-profile-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 1.05rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    box-shadow: 0 0 0 4px rgba(226,201,122,0.12);
+  }
+
+  .pso-profile-timeline-item.is-upcoming::before {
+    background: #8fd8c8;
+    box-shadow: 0 0 0 4px rgba(143,216,200,0.14);
+  }
+
+  .pso-profile-timeline-date {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.35rem;
+  }
+
+  .pso-profile-timeline-item strong {
+    display: block;
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pso-profile-meta-row,
+  .pso-profile-favorites,
+  .pso-profile-resource-links,
+  .pso-profile-settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-chip {
+    padding: 0.42rem 0.78rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(250,246,239,0.88);
+  }
+
+  .pso-profile-seat-map {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .pso-seat-zone {
+    padding: 1rem 0.8rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .pso-seat-zone span {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250,246,239,0.72);
+  }
+
+  .pso-seat-zone strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+  }
+
+  .pso-seat-zone.is-active {
+    border-color: rgba(143,216,200,0.48);
+    background: linear-gradient(145deg, rgba(143,216,200,0.18), rgba(226,201,122,0.08));
+    transform: translateY(-2px);
+  }
+
+  .pso-profile-range-group {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-range-group input[type='range'] {
+    width: 100%;
+    accent-color: var(--gold);
+  }
+
+  .pso-profile-resource-links a,
+  .pso-profile-favorites a,
+  .pso-profile-panel-links a {
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  .pso-profile-resource-links a:hover,
+  .pso-profile-favorites a:hover,
+  .pso-profile-panel-links a:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+
+  .pso-profile-settings {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pso-profile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .pso-profile-toggle label {
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.84rem;
+    letter-spacing: 0.04em;
+  }
+
+  .pso-profile-panel-links {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .pso-profile-locked-copy {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    border: 1px dashed rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.03);
+  }
+
+  @media (max-width: 1100px) {
+    .pso-profile-summary-grid,
+    .pso-profile-experience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .pso-profile-member-gate,
+    .pso-profile-field-grid,
+    .pso-profile-request-grid,
+    .pso-admin-request-grid,
+    .pso-profile-stats,
+    .pso-profile-seat-map {
+      grid-template-columns: 1fr;
+    }
+
+    .pso-admin-requests-head {
+      flex-direction: column;
+    }
+
+    .pso-profile-member-gate {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .pso-profile-gate-actions {
+      justify-content: stretch;
+    }
+
+    .pso-profile-identity-head {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+  }

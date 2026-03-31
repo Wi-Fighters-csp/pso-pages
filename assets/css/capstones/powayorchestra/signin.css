@@ -425,6 +425,11 @@
     text-transform: uppercase;
   }
 
+  .pso-profile-row {
+    padding: 0.35rem 0;
+    color: var(--cream);
+  }
+
   @media (max-width: 900px) {
     .pso-signin-grid {
       grid-template-columns: 1fr;

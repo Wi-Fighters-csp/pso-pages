@@ -4,6 +4,7 @@
   if (!root) return;
 
   var homeSection = root.querySelector('#home');
+  var accountLinks = Array.prototype.slice.call(root.querySelectorAll('[data-pso-account-link]'));
   var homeOnlySections = root.querySelectorAll('.home-only');
   var homeButton = root.querySelector('.pso-home-trigger');
   var topicSections = root.querySelectorAll('.reveal-topic');
@@ -98,6 +99,49 @@
     timpani: '',
     percussion: ''
   };
+  var isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  var psoPythonURI = isLocalHost ? 'http://' + location.hostname + ':8367' : 'https://flask.opencodingsociety.com';
+
+  function setAccountLinks(user) {
+    if (!accountLinks.length) return;
+    accountLinks.forEach(function (link) {
+      var signInHref = link.dataset.signinHref || '{{ "/capstone/powayorchestra/signin/" | relative_url }}';
+      var profileHref = link.dataset.profileHref || '{{ "/capstone/powayorchestra/profile/" | relative_url }}';
+      if (user && user.name) {
+        link.textContent = user.name;
+        link.href = profileHref;
+        link.setAttribute('aria-label', user.name + ' profile');
+      } else {
+        link.textContent = link.dataset.signinLabel || 'Sign In';
+        link.href = signInHref;
+        link.setAttribute('aria-label', link.dataset.signinLabel || 'Sign In');
+      }
+    });
+  }
+
+  function loadAccountIdentity() {
+    if (!accountLinks.length) return;
+    fetch(psoPythonURI + '/api/id', {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Origin': 'client'
+      }
+    }).then(function (response) {
+      if (!response.ok) return null;
+      return response.json();
+    }).then(function (data) {
+      setAccountLinks(data && data.name ? data : null);
+    }).catch(function () {
+      setAccountLinks(null);
+    });
+  }
+
+  setAccountLinks(null);
+  loadAccountIdentity();
 
   if (pageNoteLayer && pageNoteLayer.parentNode !== document.body) {
     document.body.appendChild(pageNoteLayer);

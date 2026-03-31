@@ -51,7 +51,7 @@
       </div>
 
       <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/signin/' | relative_url }}" class="top-nav-link">Sign In</a>
+        <a href="{{ '/capstone/powayorchestra/signin/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/capstone/powayorchestra/signin/' | relative_url }}">Sign In</a>
       </div>
 
       <div class="top-nav-item">
@@ -68,7 +68,7 @@
         <p class="pso-signin-subtitle">Member and Patron Sign In</p>
         <div class="pso-signin-rule"></div>
         <p class="pso-signin-copy">
-          Sign in to continue to orchestra resources, concert updates, and account tools while staying inside the Poway Symphony Orchestra experience.
+          Sign in to continue to orchestra resources, concert updates, and member tools through the dedicated Poway Symphony Orchestra account system.
         </p>
       </div>
 
@@ -76,13 +76,13 @@
         <section class="pso-signin-card">
           <h2>Sign In</h2>
           <p class="pso-signin-section-copy">
-            Use the same account you use across the site. After a successful sign-in, this page will return you to the orchestra homepage automatically.
+            Use your Poway Symphony Orchestra account. After a successful sign-in, this page will return you to the orchestra homepage automatically.
           </p>
 
           <form class="pso-signin-form" id="pso-signin-form">
             <div class="pso-field">
-              <label for="pso-uid">Email</label>
-              <input id="pso-uid" name="uid" type="email" autocomplete="username" placeholder="your email address" required>
+              <label for="pso-uid">User ID</label>
+              <input id="pso-uid" name="uid" type="text" autocomplete="username" placeholder="your orchestra user id" required>
             </div>
 
             <div class="pso-field">
@@ -92,14 +92,14 @@
 
             <div class="pso-form-actions">
               <button class="pso-button pso-button-primary" id="pso-submit-button" type="submit">Sign In</button>
-              <a class="pso-inline-link" href="{{ '/login' | relative_url }}">Open the full site login page</a>
+              <a class="pso-inline-link" href="#pso-signup-form">Need an account? Create one below.</a>
             </div>
           </form>
 
           <p class="pso-auth-message" id="pso-auth-message" role="status" aria-live="polite"></p>
           <div class="pso-auth-actions" id="pso-auth-actions">
             <a class="pso-button pso-button-secondary" href="{{ '/capstone/powayorchestra/' | relative_url }}">Continue to Orchestra Home</a>
-            <a class="pso-button pso-button-secondary" href="{{ '/profile' | relative_url }}">Open Profile</a>
+            <button class="pso-button pso-button-secondary" id="pso-logout-button" type="button">Sign Out</button>
           </div>
         </section>
 
@@ -124,13 +124,35 @@
             </li>
           </ul>
 
-          <h3>Need Help?</h3>
+          <h3>Create Account</h3>
           <p class="pso-signin-section-copy">
-            New here? Create an account first, or head back to the orchestra page for venue, ticketing, and contact information.
+            New to the orchestra site? Create a Poway Symphony Orchestra account here, then continue straight into the main experience.
           </p>
 
+          <form class="pso-signin-form" id="pso-signup-form">
+            <div class="pso-field">
+              <label for="pso-signup-name">Name</label>
+              <input id="pso-signup-name" name="name" type="text" autocomplete="name" placeholder="your full name" required>
+            </div>
+
+            <div class="pso-field">
+              <label for="pso-signup-uid">User ID</label>
+              <input id="pso-signup-uid" name="uid" type="text" autocomplete="username" placeholder="choose a user id" required>
+            </div>
+
+            <div class="pso-field">
+              <label for="pso-signup-password">Password</label>
+              <input id="pso-signup-password" name="password" type="password" autocomplete="new-password" placeholder="at least 8 characters" required>
+            </div>
+
+            <div class="pso-form-actions">
+              <button class="pso-button pso-button-primary" id="pso-signup-button" type="submit">Create Account</button>
+            </div>
+          </form>
+
+          <p class="pso-auth-message" id="pso-signup-message" role="status" aria-live="polite"></p>
+
           <div class="pso-panel-links">
-            <a href="{{ '/signup' | relative_url }}">Create an Account</a>
             <a href="{{ '/capstone/powayorchestra/#contact' | relative_url }}">Orchestra Contact Info</a>
             <a href="https://powaycenter.com" target="_blank" rel="noopener">Poway Center Tickets</a>
           </div>
@@ -141,39 +163,98 @@
 </div>
 
 <script type="module">
-  import { baseurl, pythonURI, javaURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+  import { baseurl, pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
   const form = document.getElementById('pso-signin-form');
+  const signupForm = document.getElementById('pso-signup-form');
   const message = document.getElementById('pso-auth-message');
+  const signupMessage = document.getElementById('pso-signup-message');
   const actions = document.getElementById('pso-auth-actions');
+  const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
   const submitButton = document.getElementById('pso-submit-button');
+  const signupButton = document.getElementById('pso-signup-button');
+  const logoutButton = document.getElementById('pso-logout-button');
+  const adminUrl = `${baseurl}/capstone/powayorchestra/admin/`;
   const homeUrl = `${baseurl}/capstone/powayorchestra/`;
+  const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const psoPythonURI = isLocalHost ? `http://${location.hostname}:8367` : pythonURI;
+
+  function isAdminUser(user) {
+    if (!user) return false;
+    if (user.is_admin === true) return true;
+    return ['admin', 'superadmin'].indexOf(String(user.role || '').toLowerCase()) !== -1;
+  }
+
+  function setAccountLinks(user) {
+    accountLinks.forEach((link) => {
+      if (user && user.name) {
+        link.textContent = user.name;
+        link.href = link.dataset.profileHref;
+      } else {
+        link.textContent = link.dataset.signinLabel || 'Sign In';
+        link.href = link.dataset.signinHref;
+      }
+    });
+  }
+
+  function setStatus(node, type, text) {
+    node.className = `pso-auth-message is-visible is-${type}`;
+    node.textContent = text;
+  }
+
+  function clearStatus(node) {
+    node.className = 'pso-auth-message';
+    node.textContent = '';
+  }
 
   function setMessage(type, text) {
-    message.className = `pso-auth-message is-visible is-${type}`;
-    message.textContent = text;
+    setStatus(message, type, text);
   }
 
   function clearMessage() {
-    message.className = 'pso-auth-message';
-    message.textContent = '';
+    clearStatus(message);
+  }
+
+  function setSignupMessage(type, text) {
+    setStatus(signupMessage, type, text);
+  }
+
+  function clearSignupMessage() {
+    clearStatus(signupMessage);
   }
 
   function showActions() {
     actions.classList.add('is-visible');
   }
 
+  function hideActions() {
+    actions.classList.remove('is-visible');
+  }
+
+  async function parseResponseMessage(response, fallbackMessage) {
+    try {
+      const data = await response.json();
+      return data && data.message ? data.message : fallbackMessage;
+    } catch (error) {
+      return fallbackMessage;
+    }
+  }
+
   async function checkExistingSession() {
     try {
-      const response = await fetch(`${pythonURI}/api/id`, fetchOptions);
+      const response = await fetch(`${psoPythonURI}/api/id`, fetchOptions);
       if (!response.ok) return;
 
       const data = await response.json();
       if (data && data.name) {
+        setAccountLinks(data);
         setMessage('success', `You are already signed in as ${data.name}.`);
         showActions();
+      } else {
+        setAccountLinks(null);
       }
     } catch (error) {
+      setAccountLinks(null);
       console.warn('Unable to verify existing session.', error);
     }
   }
@@ -181,7 +262,8 @@
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     clearMessage();
-    actions.classList.remove('is-visible');
+    clearSignupMessage();
+    hideActions();
     submitButton.disabled = true;
     submitButton.textContent = 'Signing In';
     setMessage('info', 'Signing you in and preparing your orchestra session...');
@@ -192,37 +274,102 @@
     };
 
     try {
-      const pythonRequest = fetch(`${pythonURI}/api/authenticate`, {
+      const response = await fetch(`${psoPythonURI}/api/authenticate`, {
         ...fetchOptions,
         method: 'POST',
         body: JSON.stringify(credentials)
       });
 
-      const javaRequest = fetch(`${javaURI}/authenticate`, {
-        ...fetchOptions,
-        method: 'POST',
-        body: JSON.stringify(credentials)
-      }).catch(() => null);
-
-      const [pythonResult, javaResult] = await Promise.allSettled([pythonRequest, javaRequest]);
-      if (pythonResult.status !== 'fulfilled' || !pythonResult.value.ok) {
-        throw new Error('Sign in failed. Check your credentials and try again.');
+      if (!response.ok) {
+        throw new Error(await parseResponseMessage(response, 'Sign in failed. Check your credentials and try again.'));
       }
 
-      if (javaResult.status === 'fulfilled' && javaResult.value && !javaResult.value.ok) {
-        console.warn('Secondary Spring login did not complete successfully.');
-      }
+      const data = await response.json();
+      const signedInUser = data && data.user ? data.user : { name: credentials.uid, uid: credentials.uid };
+      const destinationUrl = isAdminUser(signedInUser) ? adminUrl : homeUrl;
 
       setMessage('success', 'Sign in successful. Returning you to the orchestra page...');
+      setAccountLinks(signedInUser);
       showActions();
       window.setTimeout(() => {
-        window.location.href = homeUrl;
+        window.location.href = destinationUrl;
       }, 1200);
     } catch (error) {
       setMessage('error', error.message);
     } finally {
       submitButton.disabled = false;
       submitButton.textContent = 'Sign In';
+    }
+  });
+
+  signupForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    clearSignupMessage();
+    clearMessage();
+    hideActions();
+    signupButton.disabled = true;
+    signupButton.textContent = 'Creating Account';
+    setSignupMessage('info', 'Creating your orchestra account...');
+
+    const payload = {
+      name: document.getElementById('pso-signup-name').value.trim(),
+      uid: document.getElementById('pso-signup-uid').value.trim(),
+      password: document.getElementById('pso-signup-password').value
+    };
+
+    try {
+      const response = await fetch(`${psoPythonURI}/api/pso/signup`, {
+        ...fetchOptions,
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error(await parseResponseMessage(response, 'Account creation failed. Please review your information and try again.'));
+      }
+
+      document.getElementById('pso-uid').value = payload.uid;
+      document.getElementById('pso-password').value = payload.password;
+      signupForm.reset();
+      setSignupMessage('success', 'Account created and signed in. Returning you to the orchestra page...');
+      setMessage('success', `Welcome, ${payload.name}. Your orchestra account is ready.`);
+  setAccountLinks({ name: payload.name, uid: payload.uid });
+      showActions();
+      window.setTimeout(() => {
+        window.location.href = homeUrl;
+      }, 1200);
+    } catch (error) {
+      setSignupMessage('error', error.message);
+    } finally {
+      signupButton.disabled = false;
+      signupButton.textContent = 'Create Account';
+    }
+  });
+
+  logoutButton.addEventListener('click', async () => {
+    clearMessage();
+    clearSignupMessage();
+    logoutButton.disabled = true;
+
+    try {
+      const response = await fetch(`${psoPythonURI}/api/authenticate`, {
+        ...fetchOptions,
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error(await parseResponseMessage(response, 'Unable to sign out right now.'));
+      }
+
+      hideActions();
+      form.reset();
+  setAccountLinks(null);
+      setMessage('success', 'You have been signed out of the orchestra account.');
+    } catch (error) {
+      setMessage('error', error.message);
+      showActions();
+    } finally {
+      logoutButton.disabled = false;
     }
   });
 
