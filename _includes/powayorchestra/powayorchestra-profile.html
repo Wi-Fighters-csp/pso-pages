@@ -12,9 +12,10 @@
       <div class="top-nav-item has-submenu">
         <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown">
-          <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-dropdown-link">Our Mission</a>
-          <a href="{{ '/capstone/powayorchestra/#foundation' | relative_url }}" class="top-nav-dropdown-link">Foundation</a>
-          <a href="{{ '/capstone/powayorchestra/#news' | relative_url }}" class="top-nav-dropdown-link">News</a>
+          <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-dropdown-link">Our Story</a>
+          <a href="{{ '/capstone/powayorchestra/#conductor' | relative_url }}" class="top-nav-dropdown-link">Conductor</a>
+          <a href="{{ '/capstone/powayorchestra/#musician-info' | relative_url }}" class="top-nav-dropdown-link">Musicians</a>
+          <a href="{{ '/capstone/powayorchestra/#join-orchestra' | relative_url }}" class="top-nav-dropdown-link">Interested In Joining</a>
         </div>
       </div>
 
@@ -23,24 +24,32 @@
         <div class="top-nav-dropdown">
           <a href="{{ '/capstone/powayorchestra/#concerts' | relative_url }}" class="top-nav-dropdown-link">2025-2026 Season</a>
           <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-dropdown-link">Buy Tickets</a>
-          <a href="{{ '/capstone/powayorchestra/#media' | relative_url }}" class="top-nav-dropdown-link">Videos and Recordings</a>
+          <a href="{{ '/capstone/powayorchestra/#media' | relative_url }}" class="top-nav-dropdown-link">Videos &amp; Recordings</a>
         </div>
       </div>
 
       <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/#contact' | relative_url }}" class="top-nav-link">Contact</a>
+        <a href="{{ '/capstone/powayorchestra/#donate' | relative_url }}" class="top-nav-link">Support</a>
       </div>
 
-      <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/capstone/powayorchestra/signin/' | relative_url }}">Sign In</a>
+      <div class="top-nav-item top-nav-item--games has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#games' | relative_url }}" class="top-nav-link top-nav-link--games">Games <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown top-nav-dropdown--games">
+          <a href="{{ '/capstone/powayorchestra/#games' | relative_url }}" class="top-nav-dropdown-link">Game Hub</a>
+          <a href="{{ '/capstone/powayorchestra/#orchestra-builder' | relative_url }}" class="top-nav-dropdown-link">Orchestra Builder</a>
+        </div>
       </div>
 
-      <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
-      </div>
-
-      <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/#donate' | relative_url }}" class="top-nav-link btn-primary">Donate</a>
+      <div class="top-nav-actions">
+        <div class="top-nav-item">
+          <a href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/capstone/powayorchestra/signin/' | relative_url }}">Sign In</a>
+        </div>
+        <div class="top-nav-item">
+          <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
+        </div>
+        <div class="top-nav-item">
+          <a href="{{ '/capstone/powayorchestra/#donate' | relative_url }}" class="top-nav-link btn-secondary">Donate</a>
+        </div>
       </div>
     </nav>
   </div>
@@ -115,10 +124,8 @@
             <p class="pso-profile-pending-copy" id="pso-member-pending-copy" hidden>
               Your member request is pending admin approval. Member-only profile features will remain hidden until an orchestra admin approves your registration.
             </p>
-            <div class="pso-profile-gate-actions">
-              <button class="pso-button pso-button-primary" id="pso-member-register" type="button">Submit Member Request</button>
-              <button class="pso-button pso-button-secondary" id="pso-member-withdraw" type="button" hidden>Withdraw Request</button>
-              <button class="pso-button pso-button-secondary" id="pso-member-remove" type="button" hidden>Remove Member Status</button>
+            <div class="pso-profile-gate-actions" id="pso-member-gate-actions">
+              <!-- Buttons will be injected by JS only if needed -->
             </div>
           </div>
 
@@ -136,6 +143,7 @@
             <div class="pso-field" data-member-only>
               <label for="pso-profile-section">Section / Ensemble</label>
               <select id="pso-profile-section">
+                <option value="">Select a section</option>
                 <option value="strings">Strings</option>
                 <option value="woodwinds">Woodwinds</option>
                 <option value="brass">Brass</option>
@@ -161,9 +169,9 @@
         </section>
 
         <aside class="pso-profile-card" data-member-panel>
-          <h3>Membership &amp; Participation</h3>
+          <h3>Membership Overview</h3>
           <p class="pso-signin-section-copy">
-            A snapshot of your orchestra participation, attendance rhythm, and current account status.
+            A snapshot of your orchestra membership and current account status.
           </p>
 
           <div class="pso-profile-stats">
@@ -172,24 +180,12 @@
               <strong id="pso-membership-status">Active Member</strong>
             </div>
             <div class="pso-profile-stat">
-              <span class="pso-profile-stat-label">Performance History</span>
-              <strong id="pso-performance-count">5 events</strong>
-            </div>
-            <div class="pso-profile-stat">
               <span class="pso-profile-stat-label">Upcoming Concert</span>
               <strong id="pso-next-concert">Spring Gala</strong>
-            </div>
-            <div class="pso-profile-stat">
-              <span class="pso-profile-stat-label">Participation Level</span>
-              <strong id="pso-points-level">Crescendo</strong>
             </div>
           </div>
 
           <div class="pso-profile-progress-group">
-            <div>
-              <div class="pso-profile-progress-label"><span>Attendance Tracker</span><span id="pso-attendance-value">84%</span></div>
-              <div class="pso-profile-progress-track"><span id="pso-attendance-bar"></span></div>
-            </div>
             <div data-member-only>
               <div class="pso-profile-progress-label"><span>Practice Goal Progress</span><span id="pso-practice-progress-label">3 / 5 hours</span></div>
               <div class="pso-profile-progress-track"><span id="pso-practice-bar"></span></div>
@@ -222,7 +218,7 @@
             </div>
             <div class="pso-field">
               <label for="pso-practice-goal">Weekly Practice Goal</label>
-              <input id="pso-practice-goal" type="range" min="1" max="14" step="1">
+              <input id="pso-practice-goal" type="range" min="0" max="14" step="1">
             </div>
           </div>
 
@@ -236,20 +232,9 @@
         </section>
 
         <section class="pso-profile-card" data-member-panel>
-          <h3>Virtual Seat &amp; Settings</h3>
+          <h3>Account Settings</h3>
           <p class="pso-signin-section-copy">
-            See where your section fits into the orchestra and tune the account preferences that shape your experience.
-          </p>
-
-          <div class="pso-profile-seat-map" id="pso-seat-map" data-member-only>
-            <div class="pso-seat-zone" data-seat-zone="strings"><span>Front Arc</span><strong>Strings</strong></div>
-            <div class="pso-seat-zone" data-seat-zone="woodwinds"><span>Middle Color</span><strong>Woodwinds</strong></div>
-            <div class="pso-seat-zone" data-seat-zone="brass"><span>Back Power</span><strong>Brass</strong></div>
-            <div class="pso-seat-zone" data-seat-zone="percussion"><span>Rear Pulse</span><strong>Percussion</strong></div>
-          </div>
-
-          <p class="pso-profile-locked-copy" id="pso-seat-locked-copy">
-            Register as an orchestra member to unlock section placement and member-specific rehearsal tools.
+            Manage the account preferences that shape your orchestra experience.
           </p>
 
           <div class="pso-profile-settings">
@@ -304,11 +289,11 @@
   const profileSaveButton = document.getElementById('pso-profile-save');
   const adminDashboardLink = document.getElementById('pso-admin-dashboard-link');
   const logoutButton = document.getElementById('pso-profile-logout');
-  const memberRegisterButton = document.getElementById('pso-member-register');
-  const memberWithdrawButton = document.getElementById('pso-member-withdraw');
-  const memberRemoveButton = document.getElementById('pso-member-remove');
+  const memberGateActions = document.getElementById('pso-member-gate-actions');
+  let memberRegisterButton = null;
+  let memberWithdrawButton = null;
+  let memberRemoveButton = null;
   const memberGate = document.getElementById('pso-member-gate');
-  const memberGateActions = document.querySelector('.pso-profile-gate-actions');
   const memberGateLabel = document.getElementById('pso-member-gate-label');
   const memberGateCopy = document.getElementById('pso-member-gate-copy');
   const memberRequestForm = document.getElementById('pso-member-request-form');
@@ -326,25 +311,19 @@
   const rehearsalsToggle = document.getElementById('pso-setting-rehearsals');
   const volunteerToggle = document.getElementById('pso-setting-volunteer');
   const privacyField = document.getElementById('pso-setting-privacy');
-  const attendanceValue = document.getElementById('pso-attendance-value');
-  const attendanceBar = document.getElementById('pso-attendance-bar');
   const practiceProgressLabel = document.getElementById('pso-practice-progress-label');
   const practiceBar = document.getElementById('pso-practice-bar');
   const practiceCopy = document.getElementById('pso-practice-copy');
   const membershipStatus = document.getElementById('pso-membership-status');
-  const performanceCount = document.getElementById('pso-performance-count');
   const nextConcert = document.getElementById('pso-next-concert');
-  const pointsLevel = document.getElementById('pso-points-level');
   const badges = document.getElementById('pso-badges');
   const eventList = document.getElementById('pso-event-list');
   const favorites = document.getElementById('pso-favorites');
-  const seatLockedCopy = document.getElementById('pso-seat-locked-copy');
   const memberOnlyElements = Array.from(document.querySelectorAll('[data-member-only]'));
   const memberPanels = Array.from(document.querySelectorAll('[data-member-panel]'));
   const summaryGrid = document.getElementById('pso-profile-summary-grid');
   const experienceGrid = document.getElementById('pso-profile-experience-grid');
   const concertsCard = document.getElementById('pso-concerts-card');
-  const seatZones = Array.from(document.querySelectorAll('[data-seat-zone]'));
   var currentUser = null;
 
   const orchestraEvents = [
@@ -389,6 +368,7 @@
   }
 
   function membershipStatusForSection(section) {
+    if (!section) return 'Not Set';
     if (section === 'patron') return 'Patron Subscriber';
     if (section === 'volunteer') return 'Volunteer Team';
     return 'Active Ensemble Member';
@@ -409,11 +389,11 @@
   }
 
   function makeDefaultProfile(user) {
-    var section = defaultSectionForRole(user.role);
+    var section = '';
     var memberType = membershipStatusForSection(section);
     return {
       bio: '',
-      instruments: section === 'strings' ? 'Violin' : (section === 'patron' ? 'Listener / Supporter' : 'Community Support'),
+      instruments: '',
       section: section,
       membershipStatus: memberType,
       memberRegistered: false,
@@ -424,13 +404,13 @@
       requestEmail: '',
       requestInstrument: '',
       requestSection: '',
-      practiceHours: section === 'patron' ? 1 : 3,
-      practiceGoal: section === 'patron' ? 2 : 5,
-      attendance: section === 'patron' ? 72 : 84,
-      notifyConcerts: true,
-      notifyRehearsals: section !== 'patron',
-      notifyVolunteer: section === 'volunteer',
-      privacy: 'members'
+      practiceHours: 0,
+      practiceGoal: 0,
+      attendance: 0,
+      notifyConcerts: false,
+      notifyRehearsals: false,
+      notifyVolunteer: false,
+      privacy: 'private'
     };
   }
 
@@ -457,6 +437,7 @@
     profile.membershipStatus = defaults.membershipStatus;
     profile.practiceHours = 0;
     profile.practiceGoal = defaults.practiceGoal;
+    profile.attendance = defaults.attendance;
     return profile;
   }
 
@@ -478,20 +459,13 @@
       requestSection: memberRequestSection.value,
       practiceHours: Number(practiceHoursField.value),
       practiceGoal: Number(practiceGoalField.value),
-      attendance: parseInt(attendanceValue.textContent, 10) || 0,
+      attendance: storedProfile.attendance || 0,
       notifyConcerts: concertsToggle.checked,
       notifyRehearsals: rehearsalsToggle.checked,
       notifyVolunteer: volunteerToggle.checked,
       privacy: privacyField.value
     };
     window.localStorage.setItem(getProfileStorageKey(currentUser.uid), JSON.stringify(profile));
-  }
-
-  function updateSeatMap(section) {
-    var activeZone = ['strings', 'woodwinds', 'brass', 'percussion'].indexOf(section) !== -1 ? section : null;
-    seatZones.forEach((zone) => {
-      zone.classList.toggle('is-active', zone.dataset.seatZone === activeZone);
-    });
   }
 
   function renderFavorites(profile) {
@@ -504,7 +478,6 @@
 
   function renderBadges(profile) {
     var badgeItems = isRegisteredMember(profile) ? ['Poway Member'] : ['Site Account'];
-    if (isRegisteredMember(profile) && (parseInt(attendanceValue.textContent, 10) || 0) >= 80) badgeItems.push('Steady Rehearser');
     if (isRegisteredMember(profile) && Number(profile.practiceHours) >= Number(profile.practiceGoal)) badgeItems.push('Goal Met');
     if (isRegisteredMember(profile) && profile.section === 'patron') badgeItems.push('Patron Circle');
     if (profile.section === 'volunteer' || profile.notifyVolunteer) badgeItems.push('Community Helper');
@@ -512,19 +485,13 @@
   }
 
   function renderStats(profile) {
-    var attendance = Math.max(0, Math.min(100, Number(profile.attendance) || 0));
     var practiceHours = Number(profile.practiceHours) || 0;
-    var practiceGoal = Math.max(1, Number(profile.practiceGoal) || 1);
-    var progressPercent = Math.max(0, Math.min(100, Math.round((practiceHours / practiceGoal) * 100)));
-    var points = attendance + (isRegisteredMember(profile) ? (practiceHours * 8) : 0) + (profile.notifyVolunteer ? 10 : 0);
-    attendanceValue.textContent = attendance + '%';
-    attendanceBar.style.setProperty('--progress-width', attendance + '%');
+    var practiceGoal = Math.max(0, Number(profile.practiceGoal) || 0);
+    var progressPercent = practiceGoal > 0 ? Math.max(0, Math.min(100, Math.round((practiceHours / practiceGoal) * 100))) : 0;
     practiceProgressLabel.textContent = practiceHours + ' / ' + practiceGoal + ' hours';
     practiceBar.style.setProperty('--progress-width', progressPercent + '%');
     membershipStatus.textContent = isRegisteredMember(profile) ? (profile.membershipStatus || membershipStatusForSection(profile.section)) : 'Account Holder';
-    performanceCount.textContent = isRegisteredMember(profile) ? (profile.section === 'patron' ? '3 attended' : '5 performed') : 'Profile access';
     nextConcert.textContent = orchestraEvents[0].title;
-    pointsLevel.textContent = isRegisteredMember(profile) ? (points >= 130 ? 'Fortissimo' : (points >= 100 ? 'Crescendo' : 'Prelude')) : 'Guest';
     renderBadges(profile);
   }
 
@@ -569,7 +536,6 @@
     rehearsalsToggle.checked = Boolean(profile.notifyRehearsals);
     volunteerToggle.checked = Boolean(profile.notifyVolunteer);
     privacyField.value = profile.privacy || 'members';
-    updateSeatMap(sectionField.value);
     renderMemberAccess(profile);
     renderFavorites(profile);
     renderStats(profile);
@@ -593,21 +559,75 @@
     sectionField.disabled = !unlocked;
     practiceHoursField.disabled = !unlocked;
     practiceGoalField.disabled = !unlocked;
-    memberGate.hidden = isAdmin ? true : false;
+    // Hide the entire gate section for registered members and admins — no redundant info
+    memberGate.hidden = unlocked || isAdmin;
     memberGate.classList.toggle('is-unlocked', unlocked);
-    memberRegisterButton.hidden = unlocked || pending;
-    memberRegisterButton.disabled = unlocked || pending;
-    memberWithdrawButton.hidden = !pending;
-    memberWithdrawButton.disabled = !pending;
-    memberRemoveButton.hidden = true;
-    memberRemoveButton.disabled = true;
-    memberGateActions.hidden = unlocked && !pending;
-    memberRequestForm.hidden = unlocked || pending;
-    memberPendingCopy.hidden = !pending;
-    memberRequestName.disabled = unlocked || pending;
-    memberRequestEmail.disabled = unlocked || pending;
-    memberRequestInstrument.disabled = unlocked || pending;
-    memberRequestSection.disabled = unlocked || pending;
+    // Remove all gate action buttons
+    memberGateActions.innerHTML = '';
+    if (!unlocked) {
+      // Only show buttons if not a registered member
+      if (!pending) {
+        memberRegisterButton = document.createElement('button');
+        memberRegisterButton.className = 'pso-button pso-button-primary';
+        memberRegisterButton.id = 'pso-member-register';
+        memberRegisterButton.type = 'button';
+        memberRegisterButton.textContent = 'Submit Member Request';
+        memberGateActions.appendChild(memberRegisterButton);
+        memberRegisterButton.addEventListener('click', async () => {
+          if (!currentUser) return;
+          if (!memberRequestName.value.trim() || !memberRequestEmail.value.trim() || !memberRequestInstrument.value.trim() || !memberRequestSection.value) {
+            setMessage('error', 'Name, email, instrument, and section are all required before you can submit a member request.');
+            return;
+          }
+          memberRegisterButton.disabled = true;
+          var profile = loadLocalProfile(currentUser);
+          profile.bio = bioField.value.trim();
+          try {
+            const response = await fetch(`${psoPythonURI}/api/pso/member-request`, {
+              ...fetchOptions,
+              method: 'POST',
+              body: JSON.stringify({
+                name: memberRequestName.value.trim(),
+                email: memberRequestEmail.value.trim(),
+                instrument: memberRequestInstrument.value.trim(),
+                section: memberRequestSection.value
+              })
+            });
+            if (!response.ok) {
+              throw new Error(await parseResponseMessage(response, 'Unable to submit your member request right now.'));
+            }
+            const data = await response.json();
+            const requestData = data && data.request ? data.request : {};
+            profile.requestName = requestData.name || memberRequestName.value.trim();
+            profile.requestEmail = requestData.email || memberRequestEmail.value.trim();
+            profile.requestInstrument = requestData.instrument || memberRequestInstrument.value.trim();
+            profile.requestSection = requestData.section || memberRequestSection.value;
+            profile.memberRequestPending = true;
+            profile.memberRequestSubmittedAt = requestData.submitted_at || new Date().toISOString();
+            profile.memberRegistered = false;
+            profile.memberRegisteredAt = '';
+            applyProfileState(profile);
+            window.localStorage.setItem(getProfileStorageKey(currentUser.uid), JSON.stringify(profile));
+            setMessage('success', 'Member request submitted. It is now available in the admin dashboard for review.');
+          } catch (error) {
+            setMessage('error', error.message);
+          } finally {
+            memberRegisterButton.disabled = false;
+          }
+        });
+      } else {
+        memberWithdrawButton = document.createElement('button');
+        memberWithdrawButton.className = 'pso-button pso-button-secondary';
+        memberWithdrawButton.id = 'pso-member-withdraw';
+        memberWithdrawButton.type = 'button';
+        memberWithdrawButton.textContent = 'Withdraw Request';
+        memberGateActions.appendChild(memberWithdrawButton);
+        memberWithdrawButton.addEventListener('click', () => {
+          setMessage('info', 'Pending requests are now stored in the backend. Add a withdraw endpoint before enabling request withdrawal from this page.');
+        });
+      }
+      // Remove Member Status button is never shown (legacy, not needed)
+    }
     memberGateLabel.textContent = unlocked ? 'Orchestra Member Access Unlocked' : (pending ? 'Member Approval Pending' : 'Orchestra Member Access Locked');
     memberGateCopy.textContent = unlocked
       ? 'Your member registration is active. Instrument, practice time, and section tools are now available on this profile.'
@@ -617,7 +637,6 @@
     practiceCopy.textContent = unlocked
       ? 'Track your practice goals, rehearsal rhythm, and quick links to listening or study materials.'
       : 'Listening resources stay available here, but practice tracking unlocks only after orchestra member registration.';
-    seatLockedCopy.hidden = unlocked;
   }
 
   function setAccountLinks(user) {
@@ -703,8 +722,9 @@
       : 'Signed in successfully. Register as a member below when you want to unlock instrument, practice, and section tools.';
     profileName.textContent = user.name || '--';
     profileUid.textContent = user.uid || '--';
-    profileRole.textContent = user.role || 'User';
-    profileRolePill.textContent = user.role || 'Member';
+    var displayRole = isAdminUser(user) ? (user.role || 'Admin') : (profile.memberRegistered ? 'Orchestra Member' : (user.role || 'User'));
+    profileRole.textContent = displayRole;
+    profileRolePill.textContent = displayRole;
     profileAvatar.textContent = initialsFromName(user.name);
     adminDashboardLink.hidden = !isAdminUser(user);
     applyProfileState(profile);
@@ -738,71 +758,6 @@
   profileSaveButton.addEventListener('click', () => {
     saveLocalProfile();
     setMessage('success', 'Profile extras saved on this device.');
-  });
-
-  memberRegisterButton.addEventListener('click', async () => {
-    if (!currentUser) return;
-    if (!memberRequestName.value.trim() || !memberRequestEmail.value.trim() || !memberRequestInstrument.value.trim() || !memberRequestSection.value) {
-      setMessage('error', 'Name, email, instrument, and section are all required before you can submit a member request.');
-      return;
-    }
-
-    memberRegisterButton.disabled = true;
-    var profile = loadLocalProfile(currentUser);
-    profile.bio = bioField.value.trim();
-
-    try {
-      const response = await fetch(`${psoPythonURI}/api/pso/member-request`, {
-        ...fetchOptions,
-        method: 'POST',
-        body: JSON.stringify({
-          name: memberRequestName.value.trim(),
-          email: memberRequestEmail.value.trim(),
-          instrument: memberRequestInstrument.value.trim(),
-          section: memberRequestSection.value
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(await parseResponseMessage(response, 'Unable to submit your member request right now.'));
-      }
-
-      const data = await response.json();
-      const requestData = data && data.request ? data.request : {};
-      profile.requestName = requestData.name || memberRequestName.value.trim();
-      profile.requestEmail = requestData.email || memberRequestEmail.value.trim();
-      profile.requestInstrument = requestData.instrument || memberRequestInstrument.value.trim();
-      profile.requestSection = requestData.section || memberRequestSection.value;
-      profile.memberRequestPending = true;
-      profile.memberRequestSubmittedAt = requestData.submitted_at || new Date().toISOString();
-      profile.memberRegistered = false;
-      profile.memberRegisteredAt = '';
-      applyProfileState(profile);
-      window.localStorage.setItem(getProfileStorageKey(currentUser.uid), JSON.stringify(profile));
-      setMessage('success', 'Member request submitted. It is now available in the admin dashboard for review.');
-    } catch (error) {
-      setMessage('error', error.message);
-    } finally {
-      memberRegisterButton.disabled = false;
-    }
-  });
-
-  memberWithdrawButton.addEventListener('click', () => {
-    setMessage('info', 'Pending requests are now stored in the backend. Add a withdraw endpoint before enabling request withdrawal from this page.');
-  });
-
-  memberRemoveButton.addEventListener('click', () => {
-    if (!currentUser) return;
-    var profile = loadLocalProfile(currentUser);
-    profile.bio = bioField.value.trim();
-    profile.notifyConcerts = concertsToggle.checked;
-    profile.notifyRehearsals = rehearsalsToggle.checked;
-    profile.notifyVolunteer = volunteerToggle.checked;
-    profile.privacy = privacyField.value;
-    resetMemberProfile(profile, currentUser);
-    applyProfileState(profile);
-    window.localStorage.setItem(getProfileStorageKey(currentUser.uid), JSON.stringify(profile));
-    setMessage('success', 'Orchestra member status removed on this device. Member-only profile sections are now hidden.');
   });
 
   [sectionField, practiceHoursField, practiceGoalField, concertsToggle, rehearsalsToggle, volunteerToggle, privacyField].forEach((field) => {

@@ -38,6 +38,17 @@
   var musicianSectionTitle = root.querySelector('[data-musician-section-title]');
   var musicianSectionCopy = root.querySelector('[data-musician-section-copy]');
   var musicianMemberGroups = root.querySelector('[data-musician-member-groups]');
+  var memberCardControls = root.querySelector('[data-member-card-controls]');
+  var memberCardAdminCopy = root.querySelector('[data-member-card-admin-copy]');
+  var memberCardEditor = root.querySelector('[data-member-card-editor]');
+  var memberCardEditorTitle = root.querySelector('[data-member-card-editor-title]');
+  var memberCardEditorStatus = root.querySelector('[data-member-card-editor-status]');
+  var memberCardOwnerUidInput = root.querySelector('[data-member-card-owner-uid]');
+  var memberCardOwnerNameInput = root.querySelector('[data-member-card-owner-name]');
+  var memberCardInstrumentInput = root.querySelector('[data-member-card-instrument]');
+  var memberCardImageInput = root.querySelector('[data-member-card-image]');
+  var memberCardBioInput = root.querySelector('[data-member-card-bio]');
+  var memberCardDeleteButton = root.querySelector('[data-member-card-delete]');
   var orchestraBuilder = root.querySelector('[data-orchestra-builder]');
   var builderStatus = root.querySelector('[data-builder-status]');
   var builderPerformance = root.querySelector('[data-builder-performance]');
@@ -53,6 +64,9 @@
   var currentHoverCard = null;
   var activeMusicianSearchQuery = '';
   var musicianSearchMatches = {};
+  var currentAccountUser = null;
+  var activeMusicianSectionId = '';
+  var memberCardEditorState = { mode: 'create', cardId: '' };
   var builderSlotConfig = {
     'first-violins': { instrument: 'First Violins', family: 'strings' },
     'second-violins': { instrument: 'Second Violins', family: 'strings' },
@@ -102,6 +116,81 @@
   var isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   var psoPythonURI = isLocalHost ? 'http://' + location.hostname + ':8367' : 'https://flask.opencodingsociety.com';
 
+  function isAdminUser(user) {
+    if (!user) return false;
+    if (user.is_admin === true) return true;
+    return ['admin', 'superadmin'].indexOf(String(user.role || '').toLowerCase()) !== -1;
+  }
+
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function getMemberCardStorageKey() {
+    return 'pso-member-cards';
+  }
+
+  function normalizeStoredMemberCard(card) {
+    return {
+      id: String(card && card.id || ''),
+      ownerUid: String(card && card.ownerUid || ''),
+      ownerName: String(card && card.ownerName || ''),
+      family: String(card && card.family || ''),
+      sectionId: String(card && card.sectionId || ''),
+      instrumentTitle: String(card && card.instrumentTitle || ''),
+      image: String(card && card.image || ''),
+      bio: String(card && card.bio || ''),
+      createdByUid: String(card && card.createdByUid || ''),
+      updatedAt: String(card && card.updatedAt || '')
+    };
+  }
+
+  function loadStoredMemberCards() {
+    try {
+      var raw = window.localStorage.getItem(getMemberCardStorageKey());
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.map(normalizeStoredMemberCard).filter(function (card) { return card.id; }) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveStoredMemberCards(cards) {
+    window.localStorage.setItem(getMemberCardStorageKey(), JSON.stringify(cards));
+  }
+
+  function canEditMemberCard(card) {
+    if (!card || !currentAccountUser) return false;
+    return isAdminUser(currentAccountUser) || String(currentAccountUser.uid || '') === String(card.ownerUid || '');
+  }
+
+  function getStoredMemberCard(cardId) {
+    return loadStoredMemberCards().find(function (card) { return card.id === cardId; }) || null;
+  }
+
+  function getStoredMemberCardsForSection(familyKey, sectionId) {
+    return loadStoredMemberCards().filter(function (card) {
+      return card.family === familyKey && card.sectionId === sectionId;
+    });
+  }
+
+  function toDisplayMemberCard(card) {
+    return {
+      name: card.ownerName,
+      image: card.image,
+      bio: card.bio,
+      instrumentTitle: card.instrumentTitle,
+      isCustom: true,
+      cardId: card.id,
+      editable: canEditMemberCard(card)
+    };
+  }
+
   function setAccountLinks(user) {
     if (!accountLinks.length) return;
     accountLinks.forEach(function (link) {
@@ -134,9 +223,14 @@
       if (!response.ok) return null;
       return response.json();
     }).then(function (data) {
-      setAccountLinks(data && data.name ? data : null);
+      currentAccountUser = data && data.name ? data : null;
+      setAccountLinks(currentAccountUser);
+      renderMemberCardControls();
+      refreshVisibleMusicianCards();
     }).catch(function () {
+      currentAccountUser = null;
       setAccountLinks(null);
+      renderMemberCardControls();
     });
   }
 
@@ -277,39 +371,64 @@
   }
   function normalizeMember(member) {
     if (typeof member === 'string') {
-      return { name: member, image: '' };
+      return { name: member, image: '', bio: '', instrumentTitle: '', isCustom: false, cardId: '', editable: false };
     }
 
     return {
       name: member.name || '',
-      image: member.image || ''
+      image: member.image || '',
+      bio: member.bio || '',
+      instrumentTitle: member.instrumentTitle || '',
+      isCustom: member.isCustom === true,
+      cardId: member.cardId || '',
+      editable: member.editable === true
     };
   }
   function makeMemberCard(member, instrumentTitle) {
     var person = normalizeMember(member);
-    var samplePath = getInstrumentSamplePath(instrumentTitle);
+    var displayInstrumentTitle = person.instrumentTitle || instrumentTitle;
+    var samplePath = getInstrumentSamplePath(displayInstrumentTitle);
     var imageMarkup = person.image
-      ? '<img src="' + person.image + '" alt="' + person.name + ' portrait" class="musician-member-photo">'
+      ? '<img src="' + escapeHtml(person.image) + '" alt="' + escapeHtml(person.name) + ' portrait" class="musician-member-photo">'
       : '<div class="musician-member-photo musician-member-photo--empty" aria-hidden="true"></div>';
     var sampleButtonMarkup = samplePath
       ? '<button type="button" class="sample-play-sample-btn musician-sample-btn" data-audio="' + samplePath + '" data-default-label="&#9654;" aria-label="Play instrument sample" title="Play instrument sample">&#9654;</button>'
       : '<button type="button" class="sample-play-sample-btn musician-sample-btn is-unavailable" disabled aria-disabled="true" aria-label="Instrument sample coming soon" title="Instrument sample coming soon">&#9654;</button>';
+    var editButtonMarkup = person.editable
+      ? '<button type="button" class="musician-card-edit-btn" data-member-card-edit="' + escapeHtml(person.cardId) + '">Edit</button>'
+      : '';
+    var bioMarkup = person.bio
+      ? '<p class="musician-member-bio">' + escapeHtml(person.bio) + '</p>'
+      : '';
 
     return '<article class="musician-member-card">'
       + '<div class="musician-member-photo-shell">' + imageMarkup + '</div>'
       + '<div class="musician-member-card-copy">'
       + '<div class="musician-member-card-top">'
-      + '<p class="musician-member-instrument">' + instrumentTitle + '</p>'
-      + '<div class="musician-member-card-actions">' + sampleButtonMarkup + '</div>'
+      + '<p class="musician-member-instrument">' + escapeHtml(displayInstrumentTitle) + '</p>'
+      + '<div class="musician-member-card-actions">' + sampleButtonMarkup + editButtonMarkup + '</div>'
       + '</div>'
-      + '<h6 class="musician-member-name">' + person.name + '</h6>'
+      + '<h6 class="musician-member-name">' + escapeHtml(person.name) + '</h6>'
+      + bioMarkup
       + '</div>'
       + '</article>';
   }
-  function makeMemberGroups(groups) {
-    return groups.map(function (group) {
+  function makeMemberGroups(groups, familyKey, sectionId) {
+    var renderedGroups = groups.slice();
+    var customCards = familyKey && sectionId ? getStoredMemberCardsForSection(familyKey, sectionId) : [];
+    if (customCards.length) {
+      renderedGroups.push({
+        title: 'Member Cards',
+        members: customCards.map(toDisplayMemberCard)
+      });
+    }
+
+    return renderedGroups.map(function (group) {
       return '<article class="musician-member-group"><h5>' + group.title + '</h5><div class="musician-member-card-grid">'
-        + group.members.map(function (member) { return makeMemberCard(member, group.title); }).join('')
+        + group.members.map(function (member) {
+          var normalized = normalizeMember(member);
+          return makeMemberCard(normalized, normalized.instrumentTitle || group.title);
+        }).join('')
         + '</div></article>';
     }).join('');
   }
@@ -352,9 +471,111 @@
     }
   }
   function resetSectionButtons() { if (!detailPlayers) return; Array.prototype.forEach.call(detailPlayers.querySelectorAll('.musician-section-chip'), function (button) { button.classList.remove('is-active'); button.setAttribute('aria-pressed', 'false'); }); }
-  function showMusicianSection(sectionId) { if (!selectedFamily || !detailPlayers) return; var family = getFamilyConfig(selectedFamily); if (!family) return; var section = family.sections.find(function (entry) { return entry.id === sectionId; }); if (!section) return; resetSectionButtons(); Array.prototype.forEach.call(detailPlayers.querySelectorAll('.musician-section-chip'), function (button) { var isActive = button.dataset.sectionId === sectionId; button.classList.toggle('is-active', isActive); button.setAttribute('aria-pressed', isActive ? 'true' : 'false'); }); if (musicianRosterEmpty) musicianRosterEmpty.classList.add('is-hidden'); if (musicianRosterDetail) musicianRosterDetail.classList.remove('is-hidden'); if (musicianSectionTitle) musicianSectionTitle.textContent = section.title; if (musicianSectionCopy) musicianSectionCopy.textContent = section.copy; if (musicianMemberGroups) musicianMemberGroups.innerHTML = makeMemberGroups(section.groups); }
-  function resetInstrumentPanel() { selectedFamily = null; instrumentCards.forEach(function (card) { card.classList.remove('is-active'); card.setAttribute('aria-pressed', 'false'); }); if (detailTitle) detailTitle.textContent = 'Choose an instrument family'; if (detailCopy) detailCopy.textContent = 'Nothing is selected yet. Hover over a family card to preview its sound, then click the one you want to explore to see the musicians and instruments in that section.'; if (detailMeta) detailMeta.textContent = 'Each family has its own role in the orchestra, from carrying the melody to building rhythm and dramatic impact.'; if (detailHint) detailHint.textContent = 'Audio previews usually begin after the page receives one click, tap, or key press.'; if (detailPlayers) detailPlayers.innerHTML = ''; if (detailList) detailList.innerHTML = ''; if (musicianRoster) { musicianRoster.classList.add('is-hidden'); musicianRoster.setAttribute('aria-hidden', 'true'); } if (musicianRosterCopy) musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America.'; if (musicianRosterEmpty) { musicianRosterEmpty.classList.remove('is-hidden'); musicianRosterEmpty.innerHTML = '<p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra.</p>'; } if (musicianRosterDetail) musicianRosterDetail.classList.add('is-hidden'); if (musicianSectionTitle) musicianSectionTitle.textContent = 'Select a section'; if (musicianSectionCopy) musicianSectionCopy.textContent = 'Pick a section chip to load the current players.'; if (musicianMemberGroups) musicianMemberGroups.innerHTML = ''; }
-  function updateInstrumentPanel(card, options) { if (!card) return; selectedFamily = card.dataset.family || null; var family = getFamilyConfig(selectedFamily); if (!family) return; var visibleSectionIds = options && options.sectionIds && options.sectionIds.length ? options.sectionIds : null; instrumentCards.forEach(function (item) { item.classList.toggle('is-active', item === card); item.setAttribute('aria-pressed', item === card ? 'true' : 'false'); }); if (detailTitle) detailTitle.textContent = family.title; if (detailCopy) detailCopy.textContent = family.detailCopy; if (detailMeta) detailMeta.textContent = family.detailMeta; if (detailHint) detailHint.textContent = family.soundHint; renderFamilySectionButtons(selectedFamily, visibleSectionIds); if (detailList) detailList.innerHTML = makeChips(family.instruments); if (musicianRoster) { musicianRoster.classList.remove('is-hidden'); musicianRoster.setAttribute('aria-hidden', 'false'); } if (musicianRosterCopy) musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America. Choose a ' + family.title + ' section below to see the players.'; if (musicianRosterEmpty) { musicianRosterEmpty.classList.remove('is-hidden'); if (visibleSectionIds && visibleSectionIds.length > 1) { musicianRosterEmpty.innerHTML = '<p>Select one of the matching section buttons above to narrow the roster.</p>'; } else { musicianRosterEmpty.innerHTML = '<p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra.</p>'; } } if (musicianRosterDetail) musicianRosterDetail.classList.add('is-hidden'); if (musicianMemberGroups) musicianMemberGroups.innerHTML = ''; }
+  function setMemberCardEditorStatus(message) {
+    if (memberCardEditorStatus) memberCardEditorStatus.textContent = message;
+  }
+  function hideMemberCardEditor() {
+    if (memberCardEditor) memberCardEditor.classList.add('is-hidden');
+    memberCardEditorState = { mode: 'create', cardId: '' };
+    setMemberCardEditorStatus('Cards saved here stay in this browser until a backend store is added.');
+  }
+  function renderMemberCardControls() {
+    if (!memberCardControls) return;
+    var hasSection = Boolean(selectedFamily && activeMusicianSectionId);
+    var editorVisible = memberCardEditor && !memberCardEditor.classList.contains('is-hidden');
+
+    memberCardControls.hidden = !(hasSection || editorVisible);
+    if (memberCardAdminCopy) {
+      memberCardAdminCopy.textContent = 'Only the assigned member or an admin can edit a saved member card.';
+    }
+  }
+  function populateMemberCardEditor(card) {
+    if (!memberCardEditor) return;
+    memberCardEditor.classList.remove('is-hidden');
+    memberCardEditorState = card ? { mode: 'edit', cardId: card.id } : { mode: 'create', cardId: '' };
+    if (memberCardEditorTitle) {
+      memberCardEditorTitle.textContent = card ? 'Edit member card' : 'Create a member card';
+    }
+    if (memberCardOwnerUidInput) {
+      memberCardOwnerUidInput.value = card ? card.ownerUid : '';
+      memberCardOwnerUidInput.disabled = Boolean(card) && !isAdminUser(currentAccountUser);
+    }
+    if (memberCardOwnerNameInput) memberCardOwnerNameInput.value = card ? card.ownerName : '';
+    if (memberCardInstrumentInput) memberCardInstrumentInput.value = card ? card.instrumentTitle : '';
+    if (memberCardImageInput) memberCardImageInput.value = card ? card.image : '';
+    if (memberCardBioInput) memberCardBioInput.value = card ? card.bio : '';
+    if (memberCardDeleteButton) memberCardDeleteButton.hidden = !card;
+    setMemberCardEditorStatus(card
+      ? 'Only this member or an admin can edit the card.'
+      : 'Cards saved here stay in this browser until a backend store is added.');
+    renderMemberCardControls();
+  }
+  function openMemberCardEditorForEdit(cardId) {
+    var card = getStoredMemberCard(cardId);
+    if (!card || !canEditMemberCard(card)) return;
+    populateMemberCardEditor(card);
+  }
+  function refreshVisibleMusicianCards() {
+    if (activeMusicianSearchQuery) {
+      applyMusicianSearch(activeMusicianSearchQuery);
+      return;
+    }
+    if (selectedFamily && activeMusicianSectionId) {
+      showMusicianSection(activeMusicianSectionId);
+      return;
+    }
+    renderMemberCardControls();
+  }
+  function showMusicianSection(sectionId) {
+    if (!selectedFamily || !detailPlayers) return;
+    var family = getFamilyConfig(selectedFamily);
+    if (!family) return;
+    var section = family.sections.find(function (entry) { return entry.id === sectionId; });
+    if (!section) return;
+    activeMusicianSectionId = sectionId;
+    resetSectionButtons();
+    Array.prototype.forEach.call(detailPlayers.querySelectorAll('.musician-section-chip'), function (button) {
+      var isActive = button.dataset.sectionId === sectionId;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    if (musicianRosterEmpty) musicianRosterEmpty.classList.add('is-hidden');
+    if (musicianRosterDetail) musicianRosterDetail.classList.remove('is-hidden');
+    if (musicianSectionTitle) musicianSectionTitle.textContent = section.title;
+    if (musicianSectionCopy) musicianSectionCopy.textContent = section.copy;
+    if (musicianMemberGroups) musicianMemberGroups.innerHTML = makeMemberGroups(section.groups, selectedFamily, sectionId);
+    renderMemberCardControls();
+  }
+  function resetInstrumentPanel() {
+    selectedFamily = null;
+    activeMusicianSectionId = '';
+    instrumentCards.forEach(function (card) {
+      card.classList.remove('is-active');
+      card.setAttribute('aria-pressed', 'false');
+    });
+    if (detailTitle) detailTitle.textContent = 'Choose an instrument family';
+    if (detailCopy) detailCopy.textContent = 'Nothing is selected yet. Hover over a family card to preview its sound, then click the one you want to explore to see the musicians and instruments in that section.';
+    if (detailMeta) detailMeta.textContent = 'Each family has its own role in the orchestra, from carrying the melody to building rhythm and dramatic impact.';
+    if (detailHint) detailHint.textContent = 'Audio previews usually begin after the page receives one click, tap, or key press.';
+    if (detailPlayers) detailPlayers.innerHTML = '';
+    if (detailList) detailList.innerHTML = '';
+    if (musicianRoster) {
+      musicianRoster.classList.add('is-hidden');
+      musicianRoster.setAttribute('aria-hidden', 'true');
+    }
+    if (musicianRosterCopy) musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America.';
+    if (musicianRosterEmpty) {
+      musicianRosterEmpty.classList.remove('is-hidden');
+      musicianRosterEmpty.innerHTML = '<p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra.</p>';
+    }
+    if (musicianRosterDetail) musicianRosterDetail.classList.add('is-hidden');
+    if (musicianSectionTitle) musicianSectionTitle.textContent = 'Select a section';
+    if (musicianSectionCopy) musicianSectionCopy.textContent = 'Pick a section chip to load the current players.';
+    if (musicianMemberGroups) musicianMemberGroups.innerHTML = '';
+    hideMemberCardEditor();
+    renderMemberCardControls();
+  }
+  function updateInstrumentPanel(card, options) { if (!card) return; selectedFamily = card.dataset.family || null; activeMusicianSectionId = ''; var family = getFamilyConfig(selectedFamily); if (!family) return; var visibleSectionIds = options && options.sectionIds && options.sectionIds.length ? options.sectionIds : null; instrumentCards.forEach(function (item) { item.classList.toggle('is-active', item === card); item.setAttribute('aria-pressed', item === card ? 'true' : 'false'); }); if (detailTitle) detailTitle.textContent = family.title; if (detailCopy) detailCopy.textContent = family.detailCopy; if (detailMeta) detailMeta.textContent = family.detailMeta; if (detailHint) detailHint.textContent = family.soundHint; renderFamilySectionButtons(selectedFamily, visibleSectionIds); if (detailList) detailList.innerHTML = makeChips(family.instruments); if (musicianRoster) { musicianRoster.classList.remove('is-hidden'); musicianRoster.setAttribute('aria-hidden', 'false'); } if (musicianRosterCopy) musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America. Choose a ' + family.title + ' section below to see the players.'; if (musicianRosterEmpty) { musicianRosterEmpty.classList.remove('is-hidden'); if (visibleSectionIds && visibleSectionIds.length > 1) { musicianRosterEmpty.innerHTML = '<p>Select one of the matching section buttons above to narrow the roster.</p>'; } else { musicianRosterEmpty.innerHTML = '<p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra.</p>'; } } if (musicianRosterDetail) musicianRosterDetail.classList.add('is-hidden'); if (musicianMemberGroups) musicianMemberGroups.innerHTML = ''; hideMemberCardEditor(); renderMemberCardControls(); }
   function collectMusicianSearchResults(query) {
     var results = [];
     var seen = {};
@@ -398,6 +619,29 @@
             });
           });
         });
+      });
+    });
+
+    loadStoredMemberCards().forEach(function (card) {
+      var searchableText = normalizeSearchText([
+        card.ownerName,
+        card.instrumentTitle,
+        card.bio,
+        card.sectionId,
+        card.family
+      ].join(' '));
+
+      if (searchableText.indexOf(query) === -1) return;
+
+      var customKey = 'custom::' + card.id;
+      if (seen[customKey]) return;
+      seen[customKey] = true;
+
+      results.push({
+        member: toDisplayMemberCard(card),
+        instrumentTitle: card.instrumentTitle,
+        family: card.family,
+        sectionId: card.sectionId
       });
     });
 
@@ -457,6 +701,74 @@
     if (musicianMemberGroups) {
       musicianMemberGroups.innerHTML = makeSearchResultCards(results);
     }
+    renderMemberCardControls();
+  }
+  function saveMemberCard(event) {
+    event.preventDefault();
+    var cards = loadStoredMemberCards();
+    var ownerUid = String(memberCardOwnerUidInput && memberCardOwnerUidInput.value || '').trim();
+    var ownerName = String(memberCardOwnerNameInput && memberCardOwnerNameInput.value || '').trim();
+    var instrumentTitle = String(memberCardInstrumentInput && memberCardInstrumentInput.value || '').trim();
+    var image = String(memberCardImageInput && memberCardImageInput.value || '').trim();
+    var bio = String(memberCardBioInput && memberCardBioInput.value || '').trim();
+
+    if (!ownerUid || !ownerName || !instrumentTitle) {
+      setMemberCardEditorStatus('Member UID, member name, and instrument title are required.');
+      return;
+    }
+
+    if (memberCardEditorState.mode === 'edit') {
+      var existingCard = cards.find(function (card) { return card.id === memberCardEditorState.cardId; });
+      if (!existingCard || !canEditMemberCard(existingCard)) {
+        setMemberCardEditorStatus('You do not have permission to edit this member card.');
+        return;
+      }
+
+      existingCard.ownerUid = isAdminUser(currentAccountUser) ? ownerUid : existingCard.ownerUid;
+      existingCard.ownerName = ownerName;
+      existingCard.instrumentTitle = instrumentTitle;
+      existingCard.image = image;
+      existingCard.bio = bio;
+      existingCard.updatedAt = new Date().toISOString();
+      saveStoredMemberCards(cards);
+      hideMemberCardEditor();
+      refreshVisibleMusicianCards();
+      return;
+    }
+
+    if (!isAdminUser(currentAccountUser) || !selectedFamily || !activeMusicianSectionId) {
+      setMemberCardEditorStatus('Only admins can create member cards for a selected section.');
+      return;
+    }
+
+    cards.push(normalizeStoredMemberCard({
+      id: 'card-' + Date.now(),
+      ownerUid: ownerUid,
+      ownerName: ownerName,
+      family: selectedFamily,
+      sectionId: activeMusicianSectionId,
+      instrumentTitle: instrumentTitle,
+      image: image,
+      bio: bio,
+      createdByUid: currentAccountUser && currentAccountUser.uid ? currentAccountUser.uid : '',
+      updatedAt: new Date().toISOString()
+    }));
+    saveStoredMemberCards(cards);
+    hideMemberCardEditor();
+    refreshVisibleMusicianCards();
+  }
+  function deleteMemberCard() {
+    if (memberCardEditorState.mode !== 'edit') return;
+    var cards = loadStoredMemberCards();
+    var existingCard = cards.find(function (card) { return card.id === memberCardEditorState.cardId; });
+    if (!existingCard || !canEditMemberCard(existingCard)) {
+      setMemberCardEditorStatus('You do not have permission to delete this member card.');
+      return;
+    }
+
+    saveStoredMemberCards(cards.filter(function (card) { return card.id !== memberCardEditorState.cardId; }));
+    hideMemberCardEditor();
+    refreshVisibleMusicianCards();
   }
   function unlockAudio() { audioReady = true; }
   function stopHoverPreview(card) { if (!currentHoverAudio) return; if (card && currentHoverCard !== card) return; currentHoverAudio.pause(); currentHoverAudio.currentTime = 0; currentHoverAudio = null; currentHoverCard = null; }
@@ -648,6 +960,19 @@
   document.addEventListener('touchstart', function (event) { var touch = event.touches && event.touches[0]; if (touch) spawnFloatingNote(touch.clientX, touch.clientY); }, { passive: true });
   if (detailPlayers) detailPlayers.addEventListener('click', function (event) { var button = event.target.closest('.musician-section-chip'); if (!button) return; showMusicianSection(button.dataset.sectionId); });
   if (musicianSearchInput) musicianSearchInput.addEventListener('input', function () { applyMusicianSearch(musicianSearchInput.value); });
+  if (memberCardEditor) memberCardEditor.addEventListener('submit', saveMemberCard);
+  if (memberCardDeleteButton) memberCardDeleteButton.addEventListener('click', function () { deleteMemberCard(); });
+  if (memberCardEditor) memberCardEditor.addEventListener('click', function (event) {
+    var cancelButton = event.target.closest('[data-member-card-cancel]');
+    if (!cancelButton) return;
+    hideMemberCardEditor();
+    renderMemberCardControls();
+  });
+  if (musicianMemberGroups) musicianMemberGroups.addEventListener('click', function (event) {
+    var editButton = event.target.closest('[data-member-card-edit]');
+    if (!editButton) return;
+    openMemberCardEditorForEdit(editButton.getAttribute('data-member-card-edit'));
+  });
   root.addEventListener('click', function (event) {
     var playBtn = event.target.closest('.sample-play-sample-btn[data-audio]');
     if (!playBtn || playBtn.disabled || !root.contains(playBtn)) return;

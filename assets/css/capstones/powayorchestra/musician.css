@@ -589,6 +589,124 @@
     flex-shrink: 0;
   }
 
+  .musician-member-bio {
+    margin: 0;
+    color: rgba(250,246,239,0.74);
+    line-height: 1.55;
+    font-size: 0.92rem;
+  }
+
+  .musician-member-card-controls {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .musician-member-card-admin-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .musician-member-card-admin-copy,
+  .musician-member-card-editor-status {
+    margin: 0;
+    color: rgba(250,246,239,0.72);
+    line-height: 1.6;
+  }
+
+  .musician-member-card-editor {
+    border: 1px solid rgba(226,201,122,0.16);
+    border-radius: 14px;
+    padding: 1rem;
+    background: rgba(8, 19, 38, 0.58);
+    display: grid;
+    gap: 0.95rem;
+  }
+
+  .musician-member-card-editor-head {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .musician-member-card-editor-head h5 {
+    margin: 0;
+    color: rgba(250,246,239,0.94);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+  }
+
+  .musician-member-card-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .musician-member-card-form-grid label {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .musician-member-card-form-grid span {
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .musician-member-card-form-grid input,
+  .musician-member-card-form-grid textarea,
+  .musician-card-edit-btn {
+    border-radius: 10px;
+    border: 1px solid rgba(226,201,122,0.18);
+    background: rgba(255,255,255,0.04);
+    color: rgba(250,246,239,0.92);
+    font: inherit;
+  }
+
+  .musician-member-card-form-grid input,
+  .musician-member-card-form-grid textarea {
+    padding: 0.75rem 0.85rem;
+  }
+
+  .musician-member-card-form-grid textarea {
+    resize: vertical;
+    min-height: 6.5rem;
+  }
+
+  .musician-member-card-form-full {
+    grid-column: 1 / -1;
+  }
+
+  .musician-member-card-editor-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .musician-card-edit-btn {
+    padding: 0.32rem 0.7rem;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .musician-card-edit-btn:hover,
+  .musician-card-edit-btn:focus-visible,
+  .musician-member-card-form-grid input:focus-visible,
+  .musician-member-card-form-grid textarea:focus-visible {
+    outline: none;
+    border-color: rgba(226,201,122,0.42);
+    background: rgba(226,201,122,0.12);
+    color: rgba(250,246,239,0.98);
+  }
+
   .sample-play-sample-btn {
     appearance: none;
     display: inline-flex;

@@ -12,9 +12,10 @@
       <div class="top-nav-item has-submenu">
         <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown">
-          <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-dropdown-link">Our Mission</a>
-          <a href="{{ '/capstone/powayorchestra/#foundation' | relative_url }}" class="top-nav-dropdown-link">Foundation</a>
-          <a href="{{ '/capstone/powayorchestra/#news' | relative_url }}" class="top-nav-dropdown-link">News</a>
+          <a href="{{ '/capstone/powayorchestra/#about' | relative_url }}" class="top-nav-dropdown-link">Our Story</a>
+          <a href="{{ '/capstone/powayorchestra/#conductor' | relative_url }}" class="top-nav-dropdown-link">Conductor</a>
+          <a href="{{ '/capstone/powayorchestra/#musician-info' | relative_url }}" class="top-nav-dropdown-link">Musicians</a>
+          <a href="{{ '/capstone/powayorchestra/#join-orchestra' | relative_url }}" class="top-nav-dropdown-link">Interested In Joining</a>
         </div>
       </div>
 
@@ -23,20 +24,29 @@
         <div class="top-nav-dropdown">
           <a href="{{ '/capstone/powayorchestra/#concerts' | relative_url }}" class="top-nav-dropdown-link">2025-2026 Season</a>
           <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-dropdown-link">Buy Tickets</a>
-          <a href="{{ '/capstone/powayorchestra/#media' | relative_url }}" class="top-nav-dropdown-link">Videos and Recordings</a>
+          <a href="{{ '/capstone/powayorchestra/#media' | relative_url }}" class="top-nav-dropdown-link">Videos &amp; Recordings</a>
         </div>
       </div>
 
       <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/#contact' | relative_url }}" class="top-nav-link">Contact</a>
+        <a href="{{ '/capstone/powayorchestra/#donate' | relative_url }}" class="top-nav-link">Support</a>
       </div>
 
-      <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/capstone/powayorchestra/signin/' | relative_url }}">Sign In</a>
+      <div class="top-nav-item top-nav-item--games has-submenu">
+        <a href="{{ '/capstone/powayorchestra/#games' | relative_url }}" class="top-nav-link top-nav-link--games">Games <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown top-nav-dropdown--games">
+          <a href="{{ '/capstone/powayorchestra/#games' | relative_url }}" class="top-nav-dropdown-link">Game Hub</a>
+          <a href="{{ '/capstone/powayorchestra/#orchestra-builder' | relative_url }}" class="top-nav-dropdown-link">Orchestra Builder</a>
+        </div>
       </div>
 
-      <div class="top-nav-item">
-        <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
+      <div class="top-nav-actions">
+        <div class="top-nav-item">
+          <a href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/capstone/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/capstone/powayorchestra/signin/' | relative_url }}">Sign In</a>
+        </div>
+        <div class="top-nav-item">
+          <a href="{{ '/capstone/powayorchestra/#tickets' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
+        </div>
       </div>
     </nav>
   </div>
@@ -131,6 +141,69 @@
           </article>
         </div>
       </section>
+
+      <section class="pso-profile-card pso-admin-member-card-panel">
+        <div class="pso-admin-requests-head">
+          <div>
+            <h3>Member Card Creator</h3>
+            <p class="pso-signin-section-copy">
+              Create a musician card for an approved member. Their name and instrument fill in automatically from the approved request, and that member can edit their own card afterward.
+            </p>
+          </div>
+          <span class="pso-profile-role-pill">Admin Only</span>
+        </div>
+
+        <div class="pso-profile-field-grid pso-admin-member-card-grid">
+          <div class="pso-field">
+            <label for="pso-member-card-request">Approved Member</label>
+            <select id="pso-member-card-request">
+              <option value="">Choose an approved member</option>
+            </select>
+          </div>
+          <div class="pso-field">
+            <label for="pso-member-card-owner-uid">Member UID</label>
+            <input id="pso-member-card-owner-uid" type="text" placeholder="Member user id">
+          </div>
+          <div class="pso-field">
+            <label for="pso-member-card-owner-name">Member Name</label>
+            <input id="pso-member-card-owner-name" type="text" placeholder="Member name">
+          </div>
+          <div class="pso-field">
+            <label for="pso-member-card-instrument">Instrument</label>
+            <input id="pso-member-card-instrument" type="text" placeholder="Bass, Violin, Clarinet">
+          </div>
+          <div class="pso-field">
+            <label for="pso-member-card-family">Instrument Family</label>
+            <select id="pso-member-card-family">
+              <option value="">Choose a family</option>
+              <option value="strings">Strings</option>
+              <option value="woodwinds">Woodwinds</option>
+              <option value="brass">Brass</option>
+              <option value="percussion">Percussion</option>
+            </select>
+          </div>
+          <div class="pso-field">
+            <label for="pso-member-card-section-id">Roster Section</label>
+            <select id="pso-member-card-section-id">
+              <option value="">Choose a roster section</option>
+            </select>
+          </div>
+          <div class="pso-field pso-field--full">
+            <label for="pso-member-card-image">Image URL</label>
+            <input id="pso-member-card-image" type="url" placeholder="https://... or /images/...">
+          </div>
+          <div class="pso-field pso-field--full">
+            <label for="pso-member-card-bio">Short Bio</label>
+            <textarea id="pso-member-card-bio" placeholder="Short member bio"></textarea>
+          </div>
+        </div>
+
+        <div class="pso-profile-inline-actions">
+          <button class="pso-button pso-button-primary" id="pso-member-card-save" type="button">Save Member Card</button>
+          <button class="pso-button pso-button-secondary" id="pso-member-card-reset" type="button">Clear Form</button>
+          <span class="pso-profile-note" id="pso-member-card-status">Choose an approved member to prefill the card form.</span>
+        </div>
+      </section>
       </div>
     </div>
   </section>
@@ -162,9 +235,45 @@
   const totalCount = document.getElementById('pso-admin-total-count');
   const requestList = document.getElementById('pso-admin-request-list');
   const filterButtons = Array.from(document.querySelectorAll('[data-request-filter]'));
+  const memberCardRequest = document.getElementById('pso-member-card-request');
+  const memberCardOwnerUid = document.getElementById('pso-member-card-owner-uid');
+  const memberCardOwnerName = document.getElementById('pso-member-card-owner-name');
+  const memberCardInstrument = document.getElementById('pso-member-card-instrument');
+  const memberCardFamily = document.getElementById('pso-member-card-family');
+  const memberCardSectionId = document.getElementById('pso-member-card-section-id');
+  const memberCardImage = document.getElementById('pso-member-card-image');
+  const memberCardBio = document.getElementById('pso-member-card-bio');
+  const memberCardSave = document.getElementById('pso-member-card-save');
+  const memberCardReset = document.getElementById('pso-member-card-reset');
+  const memberCardStatus = document.getElementById('pso-member-card-status');
   let currentFilter = 'pending';
   let allRequests = [];
   let currentUser = null;
+
+  const rosterSectionOptions = {
+    strings: [
+      { value: 'violinists', label: 'Violinists' },
+      { value: 'violists', label: 'Violists' },
+      { value: 'cellists', label: 'Cellists' },
+      { value: 'bassists', label: 'Bassists' }
+    ],
+    woodwinds: [
+      { value: 'flutists', label: 'Flutists' },
+      { value: 'oboists', label: 'Oboists' },
+      { value: 'clarinetists', label: 'Clarinetists' },
+      { value: 'bassoonists', label: 'Bassoonists' }
+    ],
+    brass: [
+      { value: 'trumpeters', label: 'Trumpeters' },
+      { value: 'horn-players', label: 'Horn Players' },
+      { value: 'trombonists', label: 'Trombonists' },
+      { value: 'tubists', label: 'Tubists' }
+    ],
+    percussion: [
+      { value: 'timpanists', label: 'Timpanists' },
+      { value: 'percussionists', label: 'Percussionists' }
+    ]
+  };
 
   function setAccountLinks(user) {
     accountLinks.forEach((link) => {
@@ -183,6 +292,10 @@
     adminMessage.textContent = text;
   }
 
+  function setMemberCardStatus(text) {
+    memberCardStatus.textContent = text;
+  }
+
   function initialsFromName(name) {
     return String(name || 'Admin')
       .split(/\s+/)
@@ -196,6 +309,90 @@
     if (!user) return false;
     if (user.is_admin === true) return true;
     return ['admin', 'superadmin'].indexOf(String(user.role || '').toLowerCase()) !== -1;
+  }
+
+  function getMemberCardStorageKey() {
+    return 'pso-member-cards';
+  }
+
+  function loadStoredMemberCards() {
+    try {
+      const raw = window.localStorage.getItem(getMemberCardStorageKey());
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveStoredMemberCards(cards) {
+    window.localStorage.setItem(getMemberCardStorageKey(), JSON.stringify(cards));
+  }
+
+  function inferFamilyAndSection(instrument, fallbackFamily) {
+    const normalized = String(instrument || '').toLowerCase();
+    const family = fallbackFamily || '';
+
+    if (/bass/.test(normalized)) return { family: family || 'strings', sectionId: 'bassists' };
+    if (/cello/.test(normalized)) return { family: family || 'strings', sectionId: 'cellists' };
+    if (/viola/.test(normalized)) return { family: family || 'strings', sectionId: 'violists' };
+    if (/violin/.test(normalized)) return { family: family || 'strings', sectionId: 'violinists' };
+    if (/flute|piccolo/.test(normalized)) return { family: family || 'woodwinds', sectionId: 'flutists' };
+    if (/oboe|english horn/.test(normalized)) return { family: family || 'woodwinds', sectionId: 'oboists' };
+    if (/clarinet/.test(normalized)) return { family: family || 'woodwinds', sectionId: 'clarinetists' };
+    if (/bassoon/.test(normalized)) return { family: family || 'woodwinds', sectionId: 'bassoonists' };
+    if (/trumpet/.test(normalized)) return { family: family || 'brass', sectionId: 'trumpeters' };
+    if (/horn/.test(normalized)) return { family: family || 'brass', sectionId: 'horn-players' };
+    if (/trombone/.test(normalized)) return { family: family || 'brass', sectionId: 'trombonists' };
+    if (/tuba/.test(normalized)) return { family: family || 'brass', sectionId: 'tubists' };
+    if (/timpani/.test(normalized)) return { family: family || 'percussion', sectionId: 'timpanists' };
+    if (/percussion|drum|cymbal|mallet/.test(normalized)) return { family: family || 'percussion', sectionId: 'percussionists' };
+
+    return { family: family || '', sectionId: '' };
+  }
+
+  function renderRosterSectionOptions(family, selectedValue) {
+    const options = rosterSectionOptions[family] || [];
+    memberCardSectionId.innerHTML = '<option value="">Choose a roster section</option>' + options.map((option) => {
+      const selected = option.value === selectedValue ? ' selected' : '';
+      return `<option value="${option.value}"${selected}>${option.label}</option>`;
+    }).join('');
+  }
+
+  function approvedRequests() {
+    return allRequests.filter((request) => request.status === 'approved');
+  }
+
+  function fillMemberCardFormFromRequest(request) {
+    if (!request) return;
+    const inferred = inferFamilyAndSection(request.instrument, request.section);
+    memberCardOwnerUid.value = request.uid || '';
+    memberCardOwnerName.value = request.name || '';
+    memberCardInstrument.value = request.instrument || '';
+    memberCardFamily.value = inferred.family || request.section || '';
+    renderRosterSectionOptions(memberCardFamily.value, inferred.sectionId);
+    memberCardImage.value = '';
+    memberCardBio.value = '';
+    setMemberCardStatus('Review the prefilled member card details, then save the card.');
+  }
+
+  function renderApprovedMemberOptions() {
+    const approved = approvedRequests();
+    memberCardRequest.innerHTML = '<option value="">Choose an approved member</option>' + approved.map((request) => {
+      return `<option value="${request.id}">${request.name} · ${request.instrument}</option>`;
+    }).join('');
+  }
+
+  function resetMemberCardForm() {
+    memberCardRequest.value = '';
+    memberCardOwnerUid.value = '';
+    memberCardOwnerName.value = '';
+    memberCardInstrument.value = '';
+    memberCardFamily.value = '';
+    renderRosterSectionOptions('', '');
+    memberCardImage.value = '';
+    memberCardBio.value = '';
+    setMemberCardStatus('Choose an approved member to prefill the card form.');
   }
 
   async function parseResponseMessage(response, fallbackMessage) {
@@ -252,6 +449,9 @@
     requestList.innerHTML = visibleRequests.map((request) => {
       const reviewedBy = request.reviewed_by_name ? `Reviewed by ${request.reviewed_by_name}` : 'Awaiting review';
       const reviewedAt = request.reviewed_at ? request.reviewed_at : 'Not reviewed yet';
+      const memberCardButton = request.status === 'approved'
+        ? `<button class="pso-button pso-button-secondary" data-request-card-create="${request.id}" type="button">Create Member Card</button>`
+        : '';
       return '<article class="pso-admin-request-card">' +
         '<div class="pso-admin-request-head">' +
           `<div><strong>${request.name}</strong><span class="pso-profile-role-pill pso-admin-status-pill is-${request.status}">${request.status}</span></div>` +
@@ -266,7 +466,7 @@
           `<div class="pso-profile-row"><span class="pso-panel-label">Review</span><span>${reviewedAt}</span></div>` +
         '</div>' +
         `<p class="pso-admin-request-meta">${reviewedBy}</p>` +
-        requestActionButtons(request) +
+        requestActionButtons(request) + memberCardButton +
         '</article>';
     }).join('');
   }
@@ -281,6 +481,7 @@
     allRequests = Array.isArray(data.requests) ? data.requests : [];
     updateStats(allRequests);
     renderRequests();
+    renderApprovedMemberOptions();
   }
 
   async function reviewRequest(requestId, action) {
@@ -355,6 +556,18 @@
   });
 
   requestList.addEventListener('click', async (event) => {
+    const createCardButton = event.target.closest('[data-request-card-create]');
+    if (createCardButton) {
+      const requestId = createCardButton.dataset.requestCardCreate;
+      const request = allRequests.find((entry) => String(entry.id) === String(requestId));
+      if (request) {
+        memberCardRequest.value = String(request.id);
+        fillMemberCardFormFromRequest(request);
+        document.querySelector('.pso-admin-member-card-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+
     const actionButton = event.target.closest('[data-request-action]');
     if (!actionButton) return;
     const requestId = actionButton.dataset.requestId;
@@ -369,6 +582,61 @@
     } finally {
       actionButton.disabled = false;
     }
+  });
+
+  memberCardRequest.addEventListener('change', () => {
+    const request = allRequests.find((entry) => String(entry.id) === String(memberCardRequest.value));
+    if (!request) {
+      resetMemberCardForm();
+      return;
+    }
+    fillMemberCardFormFromRequest(request);
+  });
+
+  memberCardFamily.addEventListener('change', () => {
+    renderRosterSectionOptions(memberCardFamily.value, '');
+  });
+
+  memberCardSave.addEventListener('click', () => {
+    const ownerUid = memberCardOwnerUid.value.trim();
+    const ownerName = memberCardOwnerName.value.trim();
+    const instrument = memberCardInstrument.value.trim();
+    const family = memberCardFamily.value;
+    const sectionId = memberCardSectionId.value;
+
+    if (!ownerUid || !ownerName || !instrument || !family || !sectionId) {
+      setMemberCardStatus('Member UID, name, instrument, family, and roster section are all required.');
+      return;
+    }
+
+    const cards = loadStoredMemberCards();
+    const existingCardIndex = cards.findIndex((card) => String(card.ownerUid) === ownerUid);
+    const nextCard = {
+      id: existingCardIndex >= 0 ? cards[existingCardIndex].id : `card-${Date.now()}`,
+      ownerUid,
+      ownerName,
+      family,
+      sectionId,
+      instrumentTitle: instrument,
+      image: memberCardImage.value.trim(),
+      bio: memberCardBio.value.trim(),
+      createdByUid: currentUser && currentUser.uid ? currentUser.uid : '',
+      updatedAt: new Date().toISOString()
+    };
+
+    if (existingCardIndex >= 0) {
+      cards[existingCardIndex] = Object.assign({}, cards[existingCardIndex], nextCard);
+      setMemberCardStatus('Member card updated. The assigned member can now edit it from the musician roster.');
+    } else {
+      cards.push(nextCard);
+      setMemberCardStatus('Member card created. The assigned member can now edit it from the musician roster.');
+    }
+
+    saveStoredMemberCards(cards);
+  });
+
+  memberCardReset.addEventListener('click', () => {
+    resetMemberCardForm();
   });
 
   adminLogout.addEventListener('click', async () => {
@@ -396,5 +664,6 @@
 
   setFilterButtons(currentFilter);
   setAccountLinks(null);
+  renderRosterSectionOptions('', '');
   loadDashboard();
 </script>

@@ -71,6 +71,55 @@
                 </div>
 
                 <div class="musician-member-groups" data-musician-member-groups></div>
+
+                <div class="musician-member-card-controls" data-member-card-controls hidden>
+                  <div class="musician-member-card-admin-bar">
+                    <p class="musician-member-card-admin-copy" data-member-card-admin-copy>
+                      Only the assigned member or an admin can edit a saved member card.
+                    </p>
+                  </div>
+
+                  <form class="musician-member-card-editor is-hidden" data-member-card-editor>
+                    <div class="musician-member-card-editor-head">
+                      <div>
+                        <p class="instrument-detail-subheading">Member Card Editor</p>
+                        <h5 data-member-card-editor-title>Create a member card</h5>
+                      </div>
+                      <p class="musician-member-card-editor-status" data-member-card-editor-status>
+                        Cards saved here stay in this browser until a backend store is added.
+                      </p>
+                    </div>
+
+                    <div class="musician-member-card-form-grid">
+                      <label>
+                        <span>Member UID</span>
+                        <input type="text" data-member-card-owner-uid placeholder="User ID tied to this member">
+                      </label>
+                      <label>
+                        <span>Member Name</span>
+                        <input type="text" data-member-card-owner-name placeholder="Full name shown on the card">
+                      </label>
+                      <label>
+                        <span>Instrument Title</span>
+                        <input type="text" data-member-card-instrument placeholder="Bass, Violin I, Clarinet">
+                      </label>
+                      <label>
+                        <span>Image URL</span>
+                        <input type="url" data-member-card-image placeholder="https://... or /images/...">
+                      </label>
+                      <label class="musician-member-card-form-full">
+                        <span>Short Bio</span>
+                        <textarea rows="4" data-member-card-bio placeholder="Short member bio or description"></textarea>
+                      </label>
+                    </div>
+
+                    <div class="musician-member-card-editor-actions">
+                      <button class="btn btn-primary" type="submit" data-member-card-save>Save Card</button>
+                      <button class="btn btn-secondary" type="button" data-member-card-cancel>Cancel</button>
+                      <button class="btn btn-secondary" type="button" data-member-card-delete hidden>Delete Card</button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
 
