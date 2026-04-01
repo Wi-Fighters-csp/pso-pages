@@ -3,40 +3,40 @@
 
 <div class="pso-signin-page">
   <div class="pso-topbar">
-    <a class="pso-home-trigger" href="{{ '/powayorchestra/' | relative_url }}">
+    <a class="pso-home-trigger" href="{{ '/' | relative_url }}">
       <span class="pso-treble">𝄞</span>
       <span>PSO</span>
     </a>
 
     <nav class="pso-topbar-nav" aria-label="Main navigation">
       <div class="top-nav-item has-submenu">
-        <a href="{{ '/powayorchestra/#about' | relative_url }}" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
+        <a href="{{ '/about/' | relative_url }}" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown">
-          <a href="{{ '/powayorchestra/#about' | relative_url }}" class="top-nav-dropdown-link">Our Story</a>
-          <a href="{{ '/powayorchestra/#conductor' | relative_url }}" class="top-nav-dropdown-link">Conductor</a>
-          <a href="{{ '/powayorchestra/#musician-info' | relative_url }}" class="top-nav-dropdown-link">Musicians</a>
-          <a href="{{ '/powayorchestra/#join-orchestra' | relative_url }}" class="top-nav-dropdown-link">Interested In Joining</a>
+          <a href="{{ '/about/' | relative_url }}" class="top-nav-dropdown-link">Our Story</a>
+          <a href="{{ '/conductor/' | relative_url }}" class="top-nav-dropdown-link">Conductor</a>
+          <a href="{{ '/musicians/' | relative_url }}" class="top-nav-dropdown-link">Musicians</a>
+          <a href="{{ '/join/' | relative_url }}" class="top-nav-dropdown-link">Interested In Joining</a>
         </div>
       </div>
 
       <div class="top-nav-item has-submenu">
-        <a href="{{ '/powayorchestra/#concerts' | relative_url }}" class="top-nav-link">Concerts <span class="top-nav-caret">&#9662;</span></a>
+        <a href="{{ '/concerts/' | relative_url }}" class="top-nav-link">Concerts <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown">
-          <a href="{{ '/powayorchestra/#concerts' | relative_url }}" class="top-nav-dropdown-link">2025-2026 Season</a>
-          <a href="{{ '/powayorchestra/#tickets' | relative_url }}" class="top-nav-dropdown-link">Buy Tickets</a>
-          <a href="{{ '/powayorchestra/#media' | relative_url }}" class="top-nav-dropdown-link">Videos &amp; Recordings</a>
+          <a href="{{ '/concerts/' | relative_url }}" class="top-nav-dropdown-link">2025-2026 Season</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="top-nav-dropdown-link">Buy Tickets</a>
+          <a href="{{ '/media/' | relative_url }}" class="top-nav-dropdown-link">Videos &amp; Recordings</a>
         </div>
       </div>
 
       <div class="top-nav-item">
-        <a href="{{ '/powayorchestra/#donate' | relative_url }}" class="top-nav-link">Support</a>
+        <a href="{{ '/support/' | relative_url }}" class="top-nav-link">Support</a>
       </div>
 
       <div class="top-nav-item top-nav-item--games has-submenu">
-        <a href="{{ '/powayorchestra/#games' | relative_url }}" class="top-nav-link top-nav-link--games">Games <span class="top-nav-caret">&#9662;</span></a>
+        <a href="{{ '/games/' | relative_url }}" class="top-nav-link top-nav-link--games">Games <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown top-nav-dropdown--games">
-          <a href="{{ '/powayorchestra/#games' | relative_url }}" class="top-nav-dropdown-link">Game Hub</a>
-          <a href="{{ '/powayorchestra/#orchestra-builder' | relative_url }}" class="top-nav-dropdown-link">Orchestra Builder</a>
+          <a href="{{ '/games/' | relative_url }}" class="top-nav-dropdown-link">Game Hub</a>
+          <a href="{{ '/orchestra-builder/' | relative_url }}" class="top-nav-dropdown-link">Orchestra Builder</a>
         </div>
       </div>
 
@@ -45,10 +45,10 @@
           <a href="{{ '/powayorchestra/profile/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/powayorchestra/signin/' | relative_url }}">Sign In</a>
         </div>
         <div class="top-nav-item">
-          <a href="{{ '/powayorchestra/#tickets' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
         </div>
         <div class="top-nav-item">
-          <a href="{{ '/powayorchestra/#donate' | relative_url }}" class="top-nav-link btn-secondary">Donate</a>
+          <a href="{{ '/donate/' | relative_url }}" class="top-nav-link btn-secondary">Donate</a>
         </div>
       </div>
     </nav>
@@ -56,16 +56,6 @@
 
   <section class="pso-signin-shell pso-profile-shell">
     <div class="pso-signin-inner">
-      <div class="pso-signin-hero">
-        <p class="pso-signin-eyebrow">Poway Symphony Orchestra Account</p>
-        <h1 id="pso-profile-title">Your Profile</h1>
-        <p class="pso-signin-subtitle">Member and Patron Access</p>
-        <div class="pso-signin-rule"></div>
-        <p class="pso-signin-copy" id="pso-profile-copy">
-          Reviewing your Poway Symphony Orchestra account details and quick links.
-        </p>
-      </div>
-
       <div class="pso-profile-summary-grid" id="pso-profile-summary-grid">
         <section class="pso-profile-card">
           <div class="pso-profile-identity-head">
@@ -163,7 +153,7 @@
           <p class="pso-auth-message" id="pso-profile-message" role="status" aria-live="polite"></p>
 
           <div class="pso-auth-actions is-visible">
-            <a class="pso-button pso-button-secondary" href="{{ '/powayorchestra/' | relative_url }}">Return to Orchestra Home</a>
+            <a class="pso-button pso-button-secondary" href="{{ '/' | relative_url }}">Return to Orchestra Home</a>
             <button class="pso-button pso-button-secondary" id="pso-profile-logout" type="button">Sign Out</button>
           </div>
         </section>
@@ -185,13 +175,6 @@
             </div>
           </div>
 
-          <div class="pso-profile-progress-group">
-            <div data-member-only>
-              <div class="pso-profile-progress-label"><span>Practice Goal Progress</span><span id="pso-practice-progress-label">3 / 5 hours</span></div>
-              <div class="pso-profile-progress-track"><span id="pso-practice-bar"></span></div>
-            </div>
-          </div>
-
           <div class="pso-profile-badges" id="pso-badges"></div>
         </aside>
       </div>
@@ -204,68 +187,6 @@
           </p>
           <div class="pso-profile-timeline" id="pso-event-list"></div>
         </section>
-
-        <section class="pso-profile-card" data-member-panel>
-          <h3>Practice &amp; Resources</h3>
-          <p class="pso-signin-section-copy" id="pso-practice-copy">
-            Track your practice goals, rehearsal rhythm, and quick links to listening or study materials.
-          </p>
-
-          <div class="pso-profile-range-group" data-member-only>
-            <div class="pso-field">
-              <label for="pso-practice-hours">Practice Hours This Week</label>
-              <input id="pso-practice-hours" type="range" min="0" max="14" step="1">
-            </div>
-            <div class="pso-field">
-              <label for="pso-practice-goal">Weekly Practice Goal</label>
-              <input id="pso-practice-goal" type="range" min="0" max="14" step="1">
-            </div>
-          </div>
-
-          <div class="pso-profile-resource-links">
-            <a href="{{ '/powayorchestra/#media' | relative_url }}">Featured recordings</a>
-            <a href="https://archive.org/details/PowaySymphonyOrchestra" target="_blank" rel="noopener">Archive.org listening</a>
-            <a href="{{ '/powayorchestra/#musician-info' | relative_url }}">Instrument guide</a>
-          </div>
-
-          <div class="pso-profile-favorites" id="pso-favorites"></div>
-        </section>
-
-        <section class="pso-profile-card" data-member-panel>
-          <h3>Account Settings</h3>
-          <p class="pso-signin-section-copy">
-            Manage the account preferences that shape your orchestra experience.
-          </p>
-
-          <div class="pso-profile-settings">
-            <div class="pso-profile-toggle">
-              <label for="pso-setting-concerts">Concert reminders</label>
-              <input id="pso-setting-concerts" type="checkbox">
-            </div>
-            <div class="pso-profile-toggle">
-              <label for="pso-setting-rehearsals">Rehearsal updates</label>
-              <input id="pso-setting-rehearsals" type="checkbox">
-            </div>
-            <div class="pso-profile-toggle">
-              <label for="pso-setting-volunteer">Volunteer opportunities</label>
-              <input id="pso-setting-volunteer" type="checkbox">
-            </div>
-            <div class="pso-field">
-              <label for="pso-setting-privacy">Privacy Setting</label>
-              <select id="pso-setting-privacy">
-                <option value="members">Visible to orchestra members</option>
-                <option value="staff">Visible to staff only</option>
-                <option value="private">Private profile details</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="pso-profile-panel-links">
-            <a href="{{ '/powayorchestra/#concerts' | relative_url }}">Concert Season</a>
-            <a href="{{ '/powayorchestra/#games' | relative_url }}">Orchestra Games</a>
-            <a href="{{ '/powayorchestra/#contact' | relative_url }}">Contact the Orchestra</a>
-          </div>
-        </section>
       </div>
     </div>
   </section>
@@ -277,8 +198,6 @@
   const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   const psoPythonURI = isLocalHost ? `http://${location.hostname}:8324` : pythonURI;
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
-  const profileTitle = document.getElementById('pso-profile-title');
-  const profileCopy = document.getElementById('pso-profile-copy');
   const profileStatus = document.getElementById('pso-profile-status');
   const profileName = document.getElementById('pso-profile-name');
   const profileUid = document.getElementById('pso-profile-uid');
@@ -305,20 +224,10 @@
   const bioField = document.getElementById('pso-profile-bio');
   const instrumentsField = document.getElementById('pso-profile-instruments');
   const sectionField = document.getElementById('pso-profile-section');
-  const practiceHoursField = document.getElementById('pso-practice-hours');
-  const practiceGoalField = document.getElementById('pso-practice-goal');
-  const concertsToggle = document.getElementById('pso-setting-concerts');
-  const rehearsalsToggle = document.getElementById('pso-setting-rehearsals');
-  const volunteerToggle = document.getElementById('pso-setting-volunteer');
-  const privacyField = document.getElementById('pso-setting-privacy');
-  const practiceProgressLabel = document.getElementById('pso-practice-progress-label');
-  const practiceBar = document.getElementById('pso-practice-bar');
-  const practiceCopy = document.getElementById('pso-practice-copy');
   const membershipStatus = document.getElementById('pso-membership-status');
   const nextConcert = document.getElementById('pso-next-concert');
   const badges = document.getElementById('pso-badges');
   const eventList = document.getElementById('pso-event-list');
-  const favorites = document.getElementById('pso-favorites');
   const memberOnlyElements = Array.from(document.querySelectorAll('[data-member-only]'));
   const memberPanels = Array.from(document.querySelectorAll('[data-member-panel]'));
   const summaryGrid = document.getElementById('pso-profile-summary-grid');
@@ -457,39 +366,28 @@
       requestEmail: memberRequestEmail.value.trim(),
       requestInstrument: memberRequestInstrument.value.trim(),
       requestSection: memberRequestSection.value,
-      practiceHours: Number(practiceHoursField.value),
-      practiceGoal: Number(practiceGoalField.value),
+      practiceHours: Number(storedProfile.practiceHours) || 0,
+      practiceGoal: Number(storedProfile.practiceGoal) || 0,
       attendance: storedProfile.attendance || 0,
-      notifyConcerts: concertsToggle.checked,
-      notifyRehearsals: rehearsalsToggle.checked,
-      notifyVolunteer: volunteerToggle.checked,
-      privacy: privacyField.value
+      notifyConcerts: Boolean(storedProfile.notifyConcerts),
+      notifyRehearsals: Boolean(storedProfile.notifyRehearsals),
+      notifyVolunteer: Boolean(storedProfile.notifyVolunteer),
+      privacy: storedProfile.privacy || 'private'
     };
     window.localStorage.setItem(getProfileStorageKey(currentUser.uid), JSON.stringify(profile));
-  }
-
-  function renderFavorites(profile) {
-    var items = [];
-    if (isRegisteredMember(profile) && profile.instruments) items.push(profile.instruments);
-    items.push(isRegisteredMember(profile) ? (profile.section === 'patron' ? 'Favorite recordings' : 'Section listening path') : 'Concert listening guide');
-    items.push(profile.section === 'volunteer' ? 'Volunteer callboard' : 'Archive playlists');
-    favorites.innerHTML = items.map((item) => `<span class="pso-profile-chip">${item}</span>`).join('');
   }
 
   function renderBadges(profile) {
     var badgeItems = isRegisteredMember(profile) ? ['Poway Member'] : ['Site Account'];
     if (isRegisteredMember(profile) && Number(profile.practiceHours) >= Number(profile.practiceGoal)) badgeItems.push('Goal Met');
     if (isRegisteredMember(profile) && profile.section === 'patron') badgeItems.push('Patron Circle');
-    if (profile.section === 'volunteer' || profile.notifyVolunteer) badgeItems.push('Community Helper');
+    if (profile.section === 'volunteer') badgeItems.push('Community Helper');
     badges.innerHTML = badgeItems.map((item) => `<span class="pso-profile-badge">${item}</span>`).join('');
   }
 
   function renderStats(profile) {
     var practiceHours = Number(profile.practiceHours) || 0;
     var practiceGoal = Math.max(0, Number(profile.practiceGoal) || 0);
-    var progressPercent = practiceGoal > 0 ? Math.max(0, Math.min(100, Math.round((practiceHours / practiceGoal) * 100))) : 0;
-    practiceProgressLabel.textContent = practiceHours + ' / ' + practiceGoal + ' hours';
-    practiceBar.style.setProperty('--progress-width', progressPercent + '%');
     membershipStatus.textContent = isRegisteredMember(profile) ? (profile.membershipStatus || membershipStatusForSection(profile.section)) : 'Account Holder';
     nextConcert.textContent = orchestraEvents[0].title;
     renderBadges(profile);
@@ -530,14 +428,7 @@
     memberRequestSection.value = profile.requestSection || '';
     instrumentsField.value = profile.instruments || '';
     sectionField.value = profile.section || 'strings';
-    practiceHoursField.value = Number(profile.practiceHours) || 0;
-    practiceGoalField.value = Number(profile.practiceGoal) || 1;
-    concertsToggle.checked = Boolean(profile.notifyConcerts);
-    rehearsalsToggle.checked = Boolean(profile.notifyRehearsals);
-    volunteerToggle.checked = Boolean(profile.notifyVolunteer);
-    privacyField.value = profile.privacy || 'members';
     renderMemberAccess(profile);
-    renderFavorites(profile);
     renderStats(profile);
     renderTimeline(profile);
   }
@@ -557,8 +448,6 @@
     });
     instrumentsField.disabled = !unlocked;
     sectionField.disabled = !unlocked;
-    practiceHoursField.disabled = !unlocked;
-    practiceGoalField.disabled = !unlocked;
     // Hide the entire gate section for registered members and admins — no redundant info
     memberGate.hidden = unlocked || isAdmin;
     memberGate.classList.toggle('is-unlocked', unlocked);
@@ -630,13 +519,10 @@
     }
     memberGateLabel.textContent = unlocked ? 'Orchestra Member Access Unlocked' : (pending ? 'Member Approval Pending' : 'Orchestra Member Access Locked');
     memberGateCopy.textContent = unlocked
-      ? 'Your member registration is active. Instrument, practice time, and section tools are now available on this profile.'
+      ? 'Your member registration is active. Instrument and section details are now available on this profile.'
       : (pending
         ? 'Your registration request is waiting for admin approval. Member-only features stay locked until an orchestra admin confirms your membership.'
         : 'Submit your name, email, instrument, and section to request orchestra membership. Member-only tools stay locked until an admin approves the request.');
-    practiceCopy.textContent = unlocked
-      ? 'Track your practice goals, rehearsal rhythm, and quick links to listening or study materials.'
-      : 'Listening resources stay available here, but practice tracking unlocks only after orchestra member registration.';
   }
 
   function setAccountLinks(user) {
@@ -713,10 +599,6 @@
     var profile = loadLocalProfile(user);
     profile = await loadServerMemberState(user, profile);
     setAccountLinks(user);
-    profileTitle.textContent = user.name;
-    profileCopy.textContent = isAdminUser(user)
-      ? 'Your Poway Symphony Orchestra admin account includes direct access to member tools and the admin dashboard.'
-      : 'Your Poway Symphony Orchestra account is active and ready for personalized concert tools, with member-only features available after orchestra registration.';
     profileStatus.textContent = isAdminUser(user)
       ? 'Signed in successfully with admin access. Orchestra member request steps are skipped for admin accounts.'
       : 'Signed in successfully. Register as a member below when you want to unlock instrument, practice, and section tools.';
@@ -760,7 +642,7 @@
     setMessage('success', 'Profile extras saved on this device.');
   });
 
-  [sectionField, practiceHoursField, practiceGoalField, concertsToggle, rehearsalsToggle, volunteerToggle, privacyField].forEach((field) => {
+  [sectionField].forEach((field) => {
     field.addEventListener('input', () => {
       if (!currentUser) return;
       var profile = loadLocalProfile(currentUser);
@@ -769,12 +651,6 @@
       profile.section = sectionField.value;
       profile.membershipStatus = membershipStatusForSection(profile.section);
       profile.memberRegistered = profile.memberRegistered !== false;
-      profile.practiceHours = Number(practiceHoursField.value);
-      profile.practiceGoal = Number(practiceGoalField.value);
-      profile.notifyConcerts = concertsToggle.checked;
-      profile.notifyRehearsals = rehearsalsToggle.checked;
-      profile.notifyVolunteer = volunteerToggle.checked;
-      profile.privacy = privacyField.value;
       applyProfileState(profile);
       saveLocalProfile();
     });

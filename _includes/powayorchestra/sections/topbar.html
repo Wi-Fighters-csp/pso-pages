@@ -1,39 +1,39 @@
   <div class="page-note-layer" aria-hidden="true"></div>
 
   <div class="pso-topbar">
-    <button class="pso-home-trigger" type="button" aria-label="Go to home">
+    <a class="pso-home-trigger" href="{{ '/' | relative_url }}" data-allow-navigation="true" aria-label="Go to home">
       <span class="pso-treble">𝄞</span>
       <span>PSO</span>
-    </button>
+    </a>
     <nav class="pso-topbar-nav" aria-label="Main navigation">
       <div class="top-nav-item has-submenu">
-        <a href="#about" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
+        <a href="{{ '/about/' | relative_url }}" class="top-nav-link" data-allow-navigation="true">About <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown">
-          <a href="#about" class="top-nav-dropdown-link">Our Story</a>
-          <a href="#conductor" class="top-nav-dropdown-link">Conductor</a>
-          <a href="#musician-info" class="top-nav-dropdown-link">Musicians</a>
-          <a href="#join-orchestra" class="top-nav-dropdown-link">Interested In Joining</a>
+          <a href="{{ '/about/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Our Story</a>
+          <a href="{{ '/conductor/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Conductor</a>
+          <a href="{{ '/musicians/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Musicians</a>
+          <a href="{{ '/join/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Interested In Joining</a>
         </div>
       </div>
 
       <div class="top-nav-item has-submenu">
-        <a href="#concerts" class="top-nav-link">Concerts <span class="top-nav-caret">&#9662;</span></a>
+        <a href="{{ '/concerts/' | relative_url }}" class="top-nav-link" data-allow-navigation="true">Concerts <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown">
-          <a href="#concerts" class="top-nav-dropdown-link">2025–2026 Season</a>
-          <a href="#tickets" class="top-nav-dropdown-link">Buy Tickets</a>
-          <a href="#media" class="top-nav-dropdown-link">Videos &amp; Recordings</a>
+          <a href="{{ '/concerts/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">2025–2026 Season</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Buy Tickets</a>
+          <a href="{{ '/media/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Videos &amp; Recordings</a>
         </div>
       </div>
 
       <div class="top-nav-item">
-        <a href="#donate" class="top-nav-link cta-reveal" data-reveal="donate,contact">Support</a>
+        <a href="{{ '/support/' | relative_url }}" class="top-nav-link" data-allow-navigation="true">Support</a>
       </div>
 
       <div class="top-nav-item top-nav-item--games has-submenu">
-        <a href="#games" class="top-nav-link top-nav-link--games">Games <span class="top-nav-caret">&#9662;</span></a>
+        <a href="{{ '/games/' | relative_url }}" class="top-nav-link top-nav-link--games" data-allow-navigation="true">Games <span class="top-nav-caret">&#9662;</span></a>
         <div class="top-nav-dropdown top-nav-dropdown--games">
-          <a href="#games" class="top-nav-dropdown-link">Game Hub</a>
-          <a href="#orchestra-builder" class="top-nav-dropdown-link">Orchestra Builder</a>
+          <a href="{{ '/games/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Game Hub</a>
+          <a href="{{ '/orchestra-builder/' | relative_url }}" class="top-nav-dropdown-link" data-allow-navigation="true">Orchestra Builder</a>
         </div>
       </div>
 
@@ -42,10 +42,10 @@
           <a href="{{ '/powayorchestra/signin/' | relative_url }}" class="top-nav-link" data-allow-navigation="true" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/powayorchestra/signin/' | relative_url }}">Sign In</a>
         </div>
         <div class="top-nav-item">
-          <a href="#tickets" class="top-nav-link btn-primary">Buy Tickets</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="top-nav-link btn-primary" data-allow-navigation="true">Buy Tickets</a>
         </div>
         <div class="top-nav-item">
-          <a href="#donate" class="top-nav-link btn-secondary cta-reveal" data-reveal="donate,contact">Donate</a>
+          <a href="{{ '/donate/' | relative_url }}" class="top-nav-link btn-secondary" data-allow-navigation="true">Donate</a>
         </div>
       </div>
     </nav>
@@ -53,5 +53,5 @@
 
   <div class="matching-banner home-only" id="matching-banner">
     🎶 <strong>Matching Gift Opportunity!</strong> A generous donor will match all gifts up to $25,000 — your support goes twice as far! &nbsp;
-    <a href="#donate" class="cta-reveal" data-reveal="donate,contact">Learn More or Donate Now →</a>
+    <a href="{{ '/donate/' | relative_url }}" data-allow-navigation="true">Learn More or Donate Now →</a>
   </div>

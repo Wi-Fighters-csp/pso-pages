@@ -56,6 +56,7 @@
   var builderPerformanceFrame = root.querySelector('[data-builder-performance-frame]');
   var pageNoteLayer = root.querySelector('.page-note-layer');
   var heroSparkleLayer = root.querySelector('.hero-sparkle-layer');
+  var initialSections = String(root.dataset.initialSections || '').split(',').map(function (value) { return value.trim(); }).filter(Boolean);
   var selectedFamily = null;
   var audioReady = false;
   var previewCooldown = new WeakMap();
@@ -1152,9 +1153,9 @@
   function showHomeAndScrollTo(target) { showHome(); if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   function renderSeasonCalendar(index) { if (!seasonCalendarMonths.length) return; var normalizedIndex = ((index % seasonCalendarMonths.length) + seasonCalendarMonths.length) % seasonCalendarMonths.length; seasonCalendarMonths.forEach(function (month, monthIndex) { var isActive = monthIndex === normalizedIndex; month.classList.toggle('is-active', isActive); month.setAttribute('aria-hidden', isActive ? 'false' : 'true'); }); seasonCalendar.dataset.activeMonth = String(normalizedIndex); }
   function initSeasonCalendar() { if (!seasonCalendar || !seasonCalendarMonths.length) return; renderSeasonCalendar(Number(seasonCalendar.dataset.activeMonth || 0)); seasonCalendarNavButtons.forEach(function (button) { button.addEventListener('click', function () { var currentIndex = Number(seasonCalendar.dataset.activeMonth || 0); var direction = button.dataset.calendarNav === 'prev' ? -1 : 1; renderSeasonCalendar(currentIndex + direction); }); }); }
-  ctaButtons.forEach(function (btn) { btn.addEventListener('click', function (e) { e.preventDefault(); showTopics((btn.dataset.reveal || '').split(',').filter(Boolean)); }); });
-  root.querySelectorAll('a:not(.cta-reveal)').forEach(function (link) { link.addEventListener('click', function (e) { if (link.dataset.allowNavigation === 'true') return; var href = (link.getAttribute('href') || '').trim(); if (!href) return; if (/^https?:/i.test(href) || /^tel:/i.test(href) || /^mailto:/i.test(href)) return; if (href === '#home') { e.preventDefault(); showHome(); return; } if (href.charAt(0) === '#') { e.preventDefault(); var id = href.slice(1); var target = id ? root.querySelector('#' + id) : null; if (target && target.classList.contains('reveal-topic')) showTopics([id]); else if (target) showHomeAndScrollTo(target); else showHome(); return; } if (href.charAt(0) === '/') { e.preventDefault(); showBlank(); } }); });
-  if (homeButton) homeButton.addEventListener('click', function (e) { e.preventDefault(); showHome(); });
+  ctaButtons.forEach(function (btn) { btn.addEventListener('click', function (e) { var href = (btn.getAttribute('href') || '').trim(); if (!href || href.charAt(0) !== '#') return; e.preventDefault(); showTopics((btn.dataset.reveal || '').split(',').filter(Boolean)); }); });
+  root.querySelectorAll('a:not(.cta-reveal)').forEach(function (link) { link.addEventListener('click', function (e) { if (link.dataset.allowNavigation === 'true') return; var href = (link.getAttribute('href') || '').trim(); if (!href) return; if (/^https?:/i.test(href) || /^tel:/i.test(href) || /^mailto:/i.test(href)) return; if (href === '#home') { e.preventDefault(); showHome(); return; } if (href.charAt(0) === '#') { e.preventDefault(); var id = href.slice(1); var target = id ? root.querySelector('#' + id) : null; if (target && target.classList.contains('reveal-topic')) showTopics([id]); else if (target) showHomeAndScrollTo(target); else showHome(); return; } }); });
+  if (homeButton && homeButton.tagName !== 'A') homeButton.addEventListener('click', function (e) { e.preventDefault(); showHome(); });
   renderInstrumentCards();
   bindInstrumentCardEvents();
   if (instrumentCards.length) resetInstrumentPanel();
@@ -1165,6 +1166,8 @@
   mediaCards.forEach(function (card, index) { card.setAttribute('aria-pressed', index === 0 ? 'true' : 'false'); card.addEventListener('click', function () { setActiveMedia(card, true); }); });
   if (mediaCards.length) setActiveMedia(mediaCards[0], false);
   var hash = window.location.hash ? window.location.hash.replace('#', '') : '';
-  if (hash) { var direct = root.querySelector('#' + hash); if (direct && direct.classList.contains('reveal-topic')) { showTopics([hash]); return; } var matchBtn = root.querySelector('.cta-reveal[href="#' + hash + '"]'); if (matchBtn) showTopics((matchBtn.dataset.reveal || '').split(',').filter(Boolean)); else if (direct) showHomeAndScrollTo(direct); else showHome(); } else { showHome(); }
+  if (hash) { var direct = root.querySelector('#' + hash); if (direct && direct.classList.contains('reveal-topic')) { showTopics([hash]); return; } var matchBtn = root.querySelector('.cta-reveal[href="#' + hash + '"]'); if (matchBtn) showTopics((matchBtn.dataset.reveal || '').split(',').filter(Boolean)); else if (direct) showHomeAndScrollTo(direct); else if (initialSections.length) showTopics(initialSections); else showHome(); }
+  else if (initialSections.length) { showTopics(initialSections); }
+  else { showHome(); }
 })();
 </script>

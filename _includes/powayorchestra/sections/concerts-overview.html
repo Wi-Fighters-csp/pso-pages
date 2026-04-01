@@ -57,7 +57,7 @@
             <li>Mendelssohn: Violin Concerto in E Minor — YuEun Gemma Kim, soloist</li>
             <li>Beethoven: Overture to Fidelio</li>
           </ul>
-          <a href="#tickets" class="btn btn-primary" style="margin-top:0.5rem">Buy Tickets</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="btn btn-primary" style="margin-top:0.5rem" data-allow-navigation="true">Buy Tickets</a>
         </div>
 
         <div class="concert-card upcoming">
@@ -76,13 +76,13 @@
             <li>Bernstein: Selections from West Side Story</li>
             <li>Dan Yu, piano soloist</li>
           </ul>
-          <a href="#tickets" class="btn btn-primary" style="margin-top:0.5rem">Buy Tickets</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="btn btn-primary" style="margin-top:0.5rem" data-allow-navigation="true">Buy Tickets</a>
         </div>
       </div>
 
       <div class="section-cta-row">
-        <a href="#concerts" class="btn btn-secondary">View Season Calendar</a>
-        <a href="#tickets" class="btn btn-primary">Ticket Information</a>
+        <a href="{{ '/concerts/' | relative_url }}" class="btn btn-secondary" data-allow-navigation="true">View Season Calendar</a>
+        <a href="{{ '/tickets/' | relative_url }}" class="btn btn-primary" data-allow-navigation="true">Ticket Information</a>
       </div>
     </div>
   </section>

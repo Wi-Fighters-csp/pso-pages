@@ -1,0 +1,8 @@
+---
+layout: null
+title: Poway Symphony Orchestra Media
+description: Watch videos and recordings from the Poway Symphony Orchestra.
+permalink: /media/
+pso_initial_sections: media
+---
+{% include powayorchestra/powayorchestra-capstone-infograph.html %}

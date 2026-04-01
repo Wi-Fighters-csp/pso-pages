@@ -36,7 +36,7 @@
         <div class="ticket-option">
           <h3>In Person</h3>
           <p>Poway Center for the Performing Arts box office.</p>
-          <a href="#contact" class="btn btn-secondary">Get Directions</a>
+          <a href="{{ '/contact/' | relative_url }}" class="btn btn-secondary" data-allow-navigation="true">Get Directions</a>
         </div>
       </div>
 
@@ -48,8 +48,8 @@
       </ul>
 
       <div class="section-cta-row">
-        <a href="#concerts" class="btn btn-secondary">View Full Season</a>
-        <a href="#donate" class="btn btn-primary cta-reveal" data-reveal="donate,contact">Make a Donation</a>
+        <a href="{{ '/concerts/' | relative_url }}" class="btn btn-secondary" data-allow-navigation="true">View Full Season</a>
+        <a href="{{ '/donate/' | relative_url }}" class="btn btn-primary" data-allow-navigation="true">Make a Donation</a>
       </div>
     </div>
   </section>

@@ -199,13 +199,14 @@
     background:
       radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200, 168, 75, 0.08) 0%, transparent 70%),
       linear-gradient(180deg, var(--navy) 0%, #0a1526 100%);
-    padding: 3.5rem 2rem 4rem;
+    padding: 3.5rem 0 4rem;
   }
 
   .pso-signin-inner {
     width: 100%;
-    max-width: 1380px;
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
   }
 
   .pso-signin-hero {
@@ -488,11 +489,12 @@
     }
 
     .pso-signin-shell {
-      padding: 2.5rem 1.2rem 3rem;
+      padding: 2.5rem 0 3rem;
     }
 
     .pso-signin-inner {
       width: 100%;
+      padding: 0;
     }
 
     .pso-signin-card,
