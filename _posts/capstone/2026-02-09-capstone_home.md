@@ -313,11 +313,11 @@ Below are the capstone infographic pages created by student groups. Click an ima
 
    <!-- Poway Symphony Orchestra (CSP) -->
    <div class="flex items-start space-x-4 p-4 border rounded-lg capstone-item CSP">
-       <a href="{% post_url capstone/poway_symphony_content/2026-03-05-home %}">
+       <a href="{% post_url poway_symphony/2026-03-05-home %}">
            <img src="/images/pso_logo.png" alt="Poway Symphony Orchestra - Site Analysis" class="w-28 h-28 object-cover rounded" />
        </a>
        <div>
-           <h3 class="text-lg font-semibold"><a href="{% post_url capstone/poway_symphony_content/2026-03-05-home %}">Poway Symphony Orchestra</a></h3>
+           <h3 class="text-lg font-semibold"><a href="{% post_url poway_symphony/2026-03-05-home %}">Poway Symphony Orchestra</a></h3>
            <p class="text-sm text-gray-700">We analyzed the Poway Symphony Orchestra website to identify UX gaps and design improvements that better serve concertgoers, donors, and prospective musicians.</p>
            <p class="text-xs text-gray-500 mt-2">Team: Anishka Sanghvi, Michelle Ji, Krishna Visvanath</p>
        </div>
