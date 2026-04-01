@@ -1,17 +1,13 @@
   <section class="reveal-topic is-hidden" id="musician-info">
-    <div class="section">
-      <h2>Meet the Musicians</h2>
-      <div class="section-divider"></div>
+    <div class="section musician-section">
+      <h2>Musicians</h2>
       <p class="section-intro">
-        Meet the instrument families that shape the orchestra's sound and connect each section with the musicians who
-        perform it.
+        Search the roster or jump straight to a section to meet the players.
       </p>
 
-      <div class="instrument-discovery" aria-labelledby="instrument-explorer-title">
-        <h3 id="instrument-explorer-title" class="conductor-title" style="text-align:center; margin-bottom:0.8rem;">Interactive Instrument Guide</h3>
+      <div class="instrument-discovery" aria-label="Musician roster explorer">
         <p class="instrument-discovery-intro">
-          Explore the orchestra by family. Hover over a section to hear a short audio preview,
-          watch the card tilt in 3D, and click to reveal the musicians and instruments that bring each sound to life.
+          Search for an instrument or musician, or start with the section chooser below to jump directly into the current roster.
         </p>
 
         <div class="instrument-search-shell">
@@ -27,16 +23,16 @@
             Search by musician or instrument to jump to the matching orchestra section.
           </p>
         </div>
-
-        <div class="instrument-grid" data-instrument-grid></div>
-
         <div class="instrument-detail-panel" aria-live="polite">
           <div>
             <p class="instrument-detail-eyebrow">Start Here</p>
-            <h3 class="instrument-detail-title" data-instrument-title>Choose an instrument family</h3>
+            <h3 class="instrument-detail-title" data-instrument-title>Choose a section</h3>
             <p class="instrument-detail-copy" data-instrument-copy>
-              Nothing is selected yet. Hover over a family card to preview its sound, then click the one you want to explore to see the musicians and instruments in that section.
+              Start with a section chip to load the current players, then use the search bar if you want to jump to a specific instrument or musician.
             </p>
+            <div class="musician-panel-actions is-hidden" data-musician-panel-actions>
+              <button type="button" class="musician-panel-back" data-musician-reset-sections>Back to all sections</button>
+            </div>
             <p class="instrument-detail-subheading">Choose a section to meet the musicians</p>
             <div class="instrument-chip-list" data-instrument-players></div>
           </div>
@@ -60,7 +56,9 @@
 
             <div class="musician-roster-grid">
               <div class="musician-roster-empty" data-musician-roster-empty>
-                <p>Choose one of the section buttons above, such as Violinists, Violists, Cellists, or Bassists, to reveal the musicians in that part of the orchestra.</p>
+                <p class="musician-roster-empty-prompt">Click a section below to meet the musicians.</p>
+                <p class="musician-roster-empty-copy">Start with any part of the orchestra. Each chip opens the matching family and loads the current players for that section.</p>
+                <div class="musician-roster-family-grid" data-musician-roster-family-grid></div>
               </div>
 
               <div class="musician-roster-detail is-hidden" data-musician-roster-detail>

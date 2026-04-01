@@ -243,6 +243,41 @@
     margin: 0;
   }
 
+  .concert-program-notes {
+    margin-top: 1rem;
+    padding: 0.95rem 1rem;
+    border: 1px solid rgba(226,201,122,0.14);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 42%),
+      rgba(8, 19, 38, 0.48);
+  }
+
+  .concert-program-notes--calendar {
+    margin-top: 0.9rem;
+  }
+
+  .concert-program-notes-label {
+    display: inline-block;
+    margin-bottom: 0.45rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .concert-program-notes p {
+    margin: 0;
+    color: rgba(250,246,239,0.78);
+    font-size: 0.94rem;
+    line-height: 1.7;
+  }
+
+  .concert-program-notes p + p {
+    margin-top: 0.7rem;
+  }
+
   @media (max-width: 720px) {
     .season-calendar-viewer-header {
       align-items: flex-start;
