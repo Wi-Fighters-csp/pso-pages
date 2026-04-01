@@ -16,10 +16,13 @@
   var mediaCards = Array.prototype.slice.call(root.querySelectorAll('.media-video-card[data-video-id]'));
   var mediaPlayer = root.querySelector('[data-media-player]');
   var mediaPlayers = Array.prototype.slice.call(root.querySelectorAll('iframe[data-media-player], iframe[data-home-performance-player]'));
+  var concertCountdowns = Array.prototype.slice.call(root.querySelectorAll('[data-concert-countdown]'));
   var mediaTitle = root.querySelector('[data-media-title]');
   var mediaComposer = root.querySelector('[data-media-composer]');
   var mediaCopy = root.querySelector('[data-media-copy]');
   var mediaExternal = root.querySelector('[data-media-external]');
+  var heroVideoFrame = root.querySelector('[data-hero-video-frame]');
+  var heroVideoAudioToggle = root.querySelector('[data-hero-video-audio-toggle]');
   var instrumentDiscovery = root.querySelector('.instrument-discovery');
   var instrumentGrid = root.querySelector('[data-instrument-grid]');
   var instrumentDetailPanel = root.querySelector('.instrument-detail-panel');
@@ -59,6 +62,11 @@
   var initialSections = String(root.dataset.initialSections || '').split(',').map(function (value) { return value.trim(); }).filter(Boolean);
   var selectedFamily = null;
   var audioReady = false;
+  var heroBackgroundPlayer = null;
+  var heroBackgroundPlayerReady = false;
+  var heroBackgroundActive = true;
+  var heroBackgroundUserMuted = false;
+  var heroBackgroundVolume = 18;
   var previewCooldown = new WeakMap();
   var lastFloatingNoteTime = 0;
   var currentHoverAudio = null;
@@ -278,7 +286,7 @@
       instrumentTitle: card.instrumentTitle,
       isCustom: true,
       cardId: card.id,
-      editable: canEditMemberCard(card)
+      editable: canManageMemberCardEditor() && canEditMemberCard(card)
     };
   }
 
@@ -591,23 +599,36 @@
     if (memberCardEditorStatus) memberCardEditorStatus.textContent = message;
   }
   function hideMemberCardEditor() {
-    if (memberCardEditor) memberCardEditor.classList.add('is-hidden');
+    if (memberCardEditor) {
+      memberCardEditor.classList.add('is-hidden');
+      memberCardEditor.hidden = true;
+    }
     memberCardEditorState = { mode: 'create', cardId: '' };
     setMemberCardEditorStatus('Cards saved here stay in this browser until a backend store is added.');
+  }
+  function canManageMemberCardEditor() {
+    return isAdminUser(currentAccountUser);
   }
   function renderMemberCardControls() {
     if (!memberCardControls) return;
     var hasSection = Boolean(selectedFamily && activeMusicianSectionId);
-    var editorVisible = memberCardEditor && !memberCardEditor.classList.contains('is-hidden');
+    var canManage = canManageMemberCardEditor();
+    var editorVisible = canManage && memberCardEditor && !memberCardEditor.classList.contains('is-hidden');
 
-    memberCardControls.hidden = !(hasSection || editorVisible);
+    memberCardControls.hidden = !(canManage && (hasSection || editorVisible));
+    if (memberCardEditor && !canManage) {
+      memberCardEditor.classList.add('is-hidden');
+      memberCardEditor.hidden = true;
+      memberCardEditorState = { mode: 'create', cardId: '' };
+    }
     if (memberCardAdminCopy) {
-      memberCardAdminCopy.textContent = 'Only the assigned member or an admin can edit a saved member card.';
+      memberCardAdminCopy.textContent = 'Only admins can create or edit saved member cards.';
     }
   }
   function populateMemberCardEditor(card) {
-    if (!memberCardEditor) return;
+    if (!memberCardEditor || !canManageMemberCardEditor()) return;
     memberCardEditor.classList.remove('is-hidden');
+    memberCardEditor.hidden = false;
     memberCardEditorState = card ? { mode: 'edit', cardId: card.id } : { mode: 'create', cardId: '' };
     if (memberCardEditorTitle) {
       memberCardEditorTitle.textContent = card ? 'Edit member card' : 'Create a member card';
@@ -622,11 +643,12 @@
     if (memberCardBioInput) memberCardBioInput.value = card ? card.bio : '';
     if (memberCardDeleteButton) memberCardDeleteButton.hidden = !card;
     setMemberCardEditorStatus(card
-      ? 'Only this member or an admin can edit the card.'
+      ? 'Only admins can edit this saved member card.'
       : 'Cards saved here stay in this browser until a backend store is added.');
     renderMemberCardControls();
   }
   function openMemberCardEditorForEdit(cardId) {
+    if (!canManageMemberCardEditor()) return;
     var card = getStoredMemberCard(cardId);
     if (!card || !canEditMemberCard(card)) return;
     populateMemberCardEditor(card);
@@ -905,6 +927,72 @@
     }
   }
   function unlockAudio() { audioReady = true; }
+  function updateHeroVideoAudioToggle() {
+    if (!heroVideoAudioToggle) return;
+    var isAudible = Boolean(audioReady && heroBackgroundActive && !heroBackgroundUserMuted);
+    heroVideoAudioToggle.textContent = isAudible ? 'Mute' : 'Unmute';
+    heroVideoAudioToggle.setAttribute('aria-label', isAudible ? 'Mute background audio' : 'Turn on background audio');
+    heroVideoAudioToggle.setAttribute('aria-pressed', isAudible ? 'true' : 'false');
+    heroVideoAudioToggle.title = isAudible ? 'Mute background audio' : 'Turn on background audio';
+  }
+  function syncHeroBackgroundAudio() {
+    updateHeroVideoAudioToggle();
+    if (!heroBackgroundPlayerReady || !heroBackgroundPlayer) return;
+    heroBackgroundPlayer.setVolume(heroBackgroundVolume);
+    if (!heroBackgroundActive) {
+      heroBackgroundPlayer.mute();
+      heroBackgroundPlayer.pauseVideo();
+      return;
+    }
+    heroBackgroundPlayer.playVideo();
+    if (audioReady && !heroBackgroundUserMuted) heroBackgroundPlayer.unMute();
+    else heroBackgroundPlayer.mute();
+  }
+  function setHeroBackgroundActive(isActive) {
+    heroBackgroundActive = Boolean(isActive);
+    syncHeroBackgroundAudio();
+  }
+  function loadYouTubeIframeApi() {
+    if (window.YT && typeof window.YT.Player === 'function') {
+      return Promise.resolve(window.YT);
+    }
+    if (window.__psoYouTubeIframeApiPromise) {
+      return window.__psoYouTubeIframeApiPromise;
+    }
+    window.__psoYouTubeIframeApiPromise = new Promise(function (resolve) {
+      var previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () {
+        if (typeof previousReady === 'function') previousReady();
+        resolve(window.YT);
+      };
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        var script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    });
+    return window.__psoYouTubeIframeApiPromise;
+  }
+  function initHeroBackgroundVideo() {
+    if (!heroVideoFrame) {
+      updateHeroVideoAudioToggle();
+      return;
+    }
+    loadYouTubeIframeApi().then(function () {
+      if (!window.YT || typeof window.YT.Player !== 'function') return;
+      heroBackgroundPlayer = new window.YT.Player(heroVideoFrame, {
+        events: {
+          onReady: function () {
+            heroBackgroundPlayerReady = true;
+            syncHeroBackgroundAudio();
+          }
+        }
+      });
+    }).catch(function () {
+      updateHeroVideoAudioToggle();
+    });
+  }
   function stopHoverPreview(card) { if (!currentHoverAudio) return; if (card && currentHoverCard !== card) return; currentHoverAudio.pause(); currentHoverAudio.currentTime = 0; currentHoverAudio = null; currentHoverCard = null; }
   function stopMediaPlayback() { mediaPlayers.forEach(function (player) { if (!player || !player.contentWindow) return; try { player.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'); } catch (error) {} }); }
   var currentAudio = null; var currentButton = null;
@@ -1089,7 +1177,7 @@
       card.addEventListener('blur', function () { stopHoverPreview(card); });
     });
   }
-  ['pointerdown', 'keydown', 'touchstart'].forEach(function (eventName) { root.addEventListener(eventName, function () { unlockAudio(); }, { once: true, passive: true }); });
+  ['pointerdown', 'keydown', 'touchstart'].forEach(function (eventName) { root.addEventListener(eventName, function () { unlockAudio(); syncHeroBackgroundAudio(); }, { once: true, passive: true }); });
   document.addEventListener('pointermove', function (event) { spawnFloatingNote(event.clientX, event.clientY); }, { passive: true });
   document.addEventListener('touchstart', function (event) { var touch = event.touches && event.touches[0]; if (touch) spawnFloatingNote(touch.clientX, touch.clientY); }, { passive: true });
   if (detailPlayers) detailPlayers.addEventListener('click', function (event) { var button = event.target.closest('.musician-section-chip'); if (!button) return; showMusicianSection(button.dataset.sectionId); });
@@ -1108,6 +1196,18 @@
     openMemberCardEditorForEdit(editButton.getAttribute('data-member-card-edit'));
   });
   root.addEventListener('click', function (event) {
+    var heroAudioToggle = event.target.closest('[data-hero-video-audio-toggle]');
+    if (heroAudioToggle && root.contains(heroAudioToggle)) {
+      if (!audioReady || heroBackgroundUserMuted) {
+        audioReady = true;
+        heroBackgroundUserMuted = false;
+      } else {
+        heroBackgroundUserMuted = true;
+      }
+      syncHeroBackgroundAudio();
+      return;
+    }
+
     var playBtn = event.target.closest('.sample-play-sample-btn[data-audio]');
     if (!playBtn || playBtn.disabled || !root.contains(playBtn)) return;
 
@@ -1147,15 +1247,48 @@
     });
   });
   function hideAllTopics() { topicSections.forEach(function (s) { s.classList.add('is-hidden'); }); }
-  function showHome() { stopAllSectionAudio(); hideAllTopics(); homeOnlySections.forEach(function (s) { s.classList.remove('is-hidden'); }); if (homeSection) { homeSection.classList.remove('is-hidden'); homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
-  function showTopics(ids) { stopAllSectionAudio(); hideAllTopics(); homeOnlySections.forEach(function (s) { s.classList.add('is-hidden'); }); if (homeSection) homeSection.classList.add('is-hidden'); if (ids.some(function (id) { return id.trim() === 'musician-info'; })) resetInstrumentPanel(); ids.forEach(function (id) { var section = root.querySelector('#' + id.trim()); if (section) section.classList.remove('is-hidden'); }); var first = ids.length ? root.querySelector('#' + ids[0].trim()) : null; if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  function showBlank() { stopAllSectionAudio(); hideAllTopics(); homeOnlySections.forEach(function (s) { s.classList.add('is-hidden'); }); if (homeSection) homeSection.classList.add('is-hidden'); var blank = root.querySelector('#blank-view'); if (blank) { blank.classList.remove('is-hidden'); blank.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
+  function showHome() { stopAllSectionAudio(); hideAllTopics(); setHeroBackgroundActive(true); homeOnlySections.forEach(function (s) { s.classList.remove('is-hidden'); }); if (homeSection) { homeSection.classList.remove('is-hidden'); homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
+  function showTopics(ids) { stopAllSectionAudio(); hideAllTopics(); setHeroBackgroundActive(false); homeOnlySections.forEach(function (s) { s.classList.add('is-hidden'); }); if (homeSection) homeSection.classList.add('is-hidden'); if (ids.some(function (id) { return id.trim() === 'musician-info'; })) resetInstrumentPanel(); ids.forEach(function (id) { var section = root.querySelector('#' + id.trim()); if (section) section.classList.remove('is-hidden'); }); var first = ids.length ? root.querySelector('#' + ids[0].trim()) : null; if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  function showBlank() { stopAllSectionAudio(); hideAllTopics(); setHeroBackgroundActive(false); homeOnlySections.forEach(function (s) { s.classList.add('is-hidden'); }); if (homeSection) homeSection.classList.add('is-hidden'); var blank = root.querySelector('#blank-view'); if (blank) { blank.classList.remove('is-hidden'); blank.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
   function showHomeAndScrollTo(target) { showHome(); if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   function renderSeasonCalendar(index) { if (!seasonCalendarMonths.length) return; var normalizedIndex = ((index % seasonCalendarMonths.length) + seasonCalendarMonths.length) % seasonCalendarMonths.length; seasonCalendarMonths.forEach(function (month, monthIndex) { var isActive = monthIndex === normalizedIndex; month.classList.toggle('is-active', isActive); month.setAttribute('aria-hidden', isActive ? 'false' : 'true'); }); seasonCalendar.dataset.activeMonth = String(normalizedIndex); }
   function initSeasonCalendar() { if (!seasonCalendar || !seasonCalendarMonths.length) return; renderSeasonCalendar(Number(seasonCalendar.dataset.activeMonth || 0)); seasonCalendarNavButtons.forEach(function (button) { button.addEventListener('click', function () { var currentIndex = Number(seasonCalendar.dataset.activeMonth || 0); var direction = button.dataset.calendarNav === 'prev' ? -1 : 1; renderSeasonCalendar(currentIndex + direction); }); }); }
+  function renderConcertCountdown() {
+    if (!concertCountdowns.length) return;
+    var now = new Date();
+
+    concertCountdowns.forEach(function (countdown) {
+      var valueNode = countdown.querySelector('[data-concert-countdown-value]');
+      if (!valueNode) return;
+
+      var concertName = countdown.dataset.concertName || 'the next concert';
+      var concertDate = new Date(countdown.dataset.concertDate || '');
+      if (String(concertDate) === 'Invalid Date') {
+        valueNode.textContent = 'Concert date coming soon';
+        return;
+      }
+
+      var diff = concertDate.getTime() - now.getTime();
+      if (diff <= 0) {
+        valueNode.textContent = concertName + ' has arrived.';
+        return;
+      }
+
+      var totalSeconds = Math.floor(diff / 1000);
+      var days = Math.floor(totalSeconds / 86400);
+      var hours = Math.floor((totalSeconds % 86400) / 3600);
+      var minutes = Math.floor((totalSeconds % 3600) / 60);
+
+      valueNode.textContent = days + 'd ' + hours + 'h ' + minutes + 'm until ' + concertName;
+    });
+  }
   ctaButtons.forEach(function (btn) { btn.addEventListener('click', function (e) { var href = (btn.getAttribute('href') || '').trim(); if (!href || href.charAt(0) !== '#') return; e.preventDefault(); showTopics((btn.dataset.reveal || '').split(',').filter(Boolean)); }); });
   root.querySelectorAll('a:not(.cta-reveal)').forEach(function (link) { link.addEventListener('click', function (e) { if (link.dataset.allowNavigation === 'true') return; var href = (link.getAttribute('href') || '').trim(); if (!href) return; if (/^https?:/i.test(href) || /^tel:/i.test(href) || /^mailto:/i.test(href)) return; if (href === '#home') { e.preventDefault(); showHome(); return; } if (href.charAt(0) === '#') { e.preventDefault(); var id = href.slice(1); var target = id ? root.querySelector('#' + id) : null; if (target && target.classList.contains('reveal-topic')) showTopics([id]); else if (target) showHomeAndScrollTo(target); else showHome(); return; } }); });
   if (homeButton && homeButton.tagName !== 'A') homeButton.addEventListener('click', function (e) { e.preventDefault(); showHome(); });
+  initHeroBackgroundVideo();
+  updateHeroVideoAudioToggle();
+  renderConcertCountdown();
+  if (concertCountdowns.length) window.setInterval(renderConcertCountdown, 60000);
   renderInstrumentCards();
   bindInstrumentCardEvents();
   if (instrumentCards.length) resetInstrumentPanel();

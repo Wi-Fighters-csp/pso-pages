@@ -3,16 +3,36 @@
     <div class="hero-note-layer" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <p class="hero-eyebrow">Poway Center for the Performing Arts · Est. 2004</p>
-      <h1>Poway Symphony Orchestra</h1>
-      <p class="hero-subtitle">John LoPiccolo, Conductor and Music Director</p>
-      <div class="hero-rule"></div>
-      <p class="hero-description">
-        For over 20 years, the semi-professional Poway Symphony Orchestra has brought
-        world-class symphonic music to San Diego's North County Inland communities.
-        About 67 musicians perform three inspiring concerts each season at the
-        Poway Center for the Performing Arts.
-      </p>
+      <div class="hero-title-stage">
+        <div class="hero-video-shell" aria-hidden="true">
+          <iframe
+            id="hero-background-video"
+            class="hero-video-frame"
+            data-hero-video-frame
+            src="https://www.youtube-nocookie.com/embed/npmu4m4iGeY?start=20&autoplay=1&mute=1&controls=0&loop=1&playlist=npmu4m4iGeY&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1"
+            title=""
+            tabindex="-1"
+            loading="eager"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+        </div>
+        <button type="button" class="hero-video-audio-toggle" data-hero-video-audio-toggle aria-pressed="false" aria-label="Turn on background audio">
+          Unmute
+        </button>
+        <div class="hero-title-copy">
+          <p class="hero-eyebrow">Poway Center for the Performing Arts · Est. 2004</p>
+          <h1>Poway Symphony Orchestra</h1>
+          <p class="hero-subtitle">John LoPiccolo, Conductor and Music Director</p>
+          <div class="hero-rule"></div>
+          <p class="hero-description">
+            For over 20 years, the semi-professional Poway Symphony Orchestra has brought
+            world-class symphonic music to San Diego's North County Inland communities.
+            About 67 musicians perform three inspiring concerts each season at the
+            Poway Center for the Performing Arts.
+          </p>
+        </div>
+      </div>
 
       {% include powayorchestra/sections/concerts-overview.html %}
     </div>

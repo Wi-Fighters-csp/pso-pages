@@ -53,23 +53,21 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    color: var(--gold-light);
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    letter-spacing: 0.04em;
     text-decoration: none;
     flex-shrink: 0;
     padding: 0;
   }
 
-  .pso-home-trigger .pso-treble {
-    font-size: 1.6rem;
-    line-height: 1;
-    color: var(--gold);
+  .pso-home-logo {
+    display: block;
+    height: 42px;
+    width: auto;
+    object-fit: contain;
   }
 
-  .pso-home-trigger:hover { color: var(--gold); }
+  .pso-home-trigger:hover {
+    opacity: 0.92;
+  }
 
   .pso-topbar-nav {
     display: flex;

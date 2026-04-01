@@ -1,0 +1,97 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title | default: 'John LoPiccolo | Poway Symphony Orchestra' }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/capstones/powayorchestra/home-page.css' | relative_url }}">
+</head>
+<body>
+
+<div class="pso-foundation pso-conductor-page">
+{% include powayorchestra/sections/topbar.html %}
+
+  <main class="pso-conductor-shell">
+    <section class="pso-conductor-hero-panel">
+      <div class="pso-conductor-photo-column">
+        <img src="{{ '/images/capstone/powaysymphonyorchestra/orch11.png' | relative_url }}" alt="John LoPiccolo conducting the Poway Symphony Orchestra" class="pso-conductor-photo-large">
+      </div>
+
+      <div class="pso-conductor-copy-column">
+        <p class="pso-conductor-eyebrow">Poway Symphony Orchestra</p>
+        <h1>John LoPiccolo</h1>
+        <p class="conductor-title">Conductor and Music Director</p>
+        <p class="pso-conductor-lead">
+          John LoPiccolo returns for his 11th season as Conductor and Music Director of the Poway Symphony Orchestra, where his leadership has helped elevate the ensemble through record attendance, sold-out performances, expanded musician participation, and the introduction of distinguished guest artists to the Poway stage.
+        </p>
+        <p>
+          Known for creative programming and a strong commitment to artistic excellence, LoPiccolo blends major symphonic masterworks with engaging, audience-friendly selections that make orchestral music more accessible to the community while strengthening the orchestra's long-term presence in North County.
+        </p>
+
+        <div class="pso-conductor-actions">
+          <a href="{{ '/concerts/' | relative_url }}" class="btn btn-primary">Upcoming Concerts</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="btn btn-secondary">Buy Tickets</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="pso-conductor-detail-grid">
+      <article class="pso-conductor-detail-card">
+        <p class="pso-conductor-section-kicker">Biography</p>
+        <h2>Artistic Leadership</h2>
+        <p>
+          At Poway, LoPiccolo has helped shape a season model that balances symphonic masterworks with approachable, audience-centered programming. His work emphasizes musical excellence on stage while also building a deeper relationship between the orchestra and the North County community it serves.
+        </p>
+        <p>
+          His career includes music director posts with the Idaho Falls Symphony, Helena Symphony, and Waterloo/Cedar Falls Symphony, along with extensive work as a guest conductor and educator. Across those roles, he has collaborated with internationally recognized soloists and ensembles in the United States and abroad.
+        </p>
+        <p>
+          That combination of artistic rigor, broad repertoire knowledge, and community focus continues to define his work with the Poway Symphony Orchestra.
+        </p>
+      </article>
+
+      <aside class="pso-conductor-detail-card pso-conductor-statement-card">
+        <p class="pso-conductor-section-kicker">Artistic Statement</p>
+        <h2>Programming With Purpose</h2>
+        <p class="pso-conductor-statement">
+          LoPiccolo's work with the orchestra centers on pairing major symphonic repertoire with welcoming, audience-friendly presentation, so that live orchestral music feels both ambitious and accessible to the wider community.
+        </p>
+      </aside>
+    </section>
+
+    <section class="pso-conductor-history-grid">
+      <article class="pso-conductor-detail-card">
+        <p class="pso-conductor-section-kicker">Past Positions</p>
+        <h2>Previous Music Director Posts</h2>
+        <ul class="pso-conductor-list">
+          <li>Idaho Falls Symphony</li>
+          <li>Helena Symphony</li>
+          <li>Waterloo/Cedar Falls Symphony</li>
+          <li>Guest conducting and educational work with ensembles across the United States and abroad</li>
+        </ul>
+      </article>
+
+      <article class="pso-conductor-detail-card">
+        <p class="pso-conductor-section-kicker">Upcoming</p>
+        <h2>Next Performance</h2>
+        <div class="ticket-next-performance pso-conductor-upcoming-card">
+          <span class="ticket-next-performance-label">Next Concert</span>
+          <h3>An American Celebration</h3>
+          <p class="ticket-next-performance-meta">Sunday, May 31, 2026 · 4:00 PM · Poway Center for the Performing Arts</p>
+          <p>
+            Explore the full season details or go directly to ticket information for the orchestra's next performance.
+          </p>
+        </div>
+        <div class="pso-conductor-actions">
+          <a href="{{ '/concerts/' | relative_url }}" class="btn btn-secondary">View Concert Details</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="btn btn-primary">Ticket Information</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+{% include powayorchestra/sections/footer.html %}
+</div>
+
+{% include powayorchestra/powayorchestra-capstone-script.html %}
+</body>
