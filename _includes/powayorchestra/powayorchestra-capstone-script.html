@@ -65,6 +65,7 @@
   var activeMusicianSearchQuery = '';
   var musicianSearchMatches = {};
   var currentAccountUser = null;
+  var memberCardsCache = [];
   var activeMusicianSectionId = '';
   var memberCardEditorState = { mode: 'create', cardId: '' };
   var builderSlotConfig = {
@@ -131,37 +132,126 @@
       .replace(/'/g, '&#39;');
   }
 
-  function getMemberCardStorageKey() {
-    return 'pso-member-cards';
-  }
-
   function normalizeStoredMemberCard(card) {
     return {
       id: String(card && card.id || ''),
-      ownerUid: String(card && card.ownerUid || ''),
-      ownerName: String(card && card.ownerName || ''),
+      ownerUid: String(card && (card.ownerUid || card.owner_uid) || ''),
+      ownerName: String(card && (card.ownerName || card.owner_name) || ''),
       family: String(card && card.family || ''),
-      sectionId: String(card && card.sectionId || ''),
-      instrumentTitle: String(card && card.instrumentTitle || ''),
-      image: String(card && card.image || ''),
+      sectionId: String(card && (card.sectionId || card.section_id) || ''),
+      instrumentTitle: String(card && (card.instrumentTitle || card.instrument_title) || ''),
+      image: String(card && (card.image || card.image_url) || ''),
       bio: String(card && card.bio || ''),
-      createdByUid: String(card && card.createdByUid || ''),
-      updatedAt: String(card && card.updatedAt || '')
+      createdByUid: String(card && (card.createdByUid || card.created_by_uid) || ''),
+      updatedAt: String(card && (card.updatedAt || card.updated_at) || '')
     };
   }
 
   function loadStoredMemberCards() {
-    try {
-      var raw = window.localStorage.getItem(getMemberCardStorageKey());
-      var parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed.map(normalizeStoredMemberCard).filter(function (card) { return card.id; }) : [];
-    } catch (error) {
-      return [];
-    }
+    return memberCardsCache.slice();
   }
 
   function saveStoredMemberCards(cards) {
-    window.localStorage.setItem(getMemberCardStorageKey(), JSON.stringify(cards));
+    memberCardsCache = cards.map(normalizeStoredMemberCard).filter(function (card) { return card.id; });
+    return loadStoredMemberCards();
+  }
+
+  function upsertStoredMemberCard(card) {
+    var cards = loadStoredMemberCards();
+    var nextCard = normalizeStoredMemberCard(card);
+    var existingCardIndex = cards.findIndex(function (entry) { return entry.id === nextCard.id; });
+
+    if (existingCardIndex >= 0) {
+      cards[existingCardIndex] = nextCard;
+    } else {
+      cards.push(nextCard);
+    }
+
+    return saveStoredMemberCards(cards);
+  }
+
+  function fetchStoredMemberCards() {
+    return fetch(psoPythonURI + '/api/pso/member-cards', {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Origin': 'client'
+      }
+    }).then(function (response) {
+      if (!response.ok) throw new Error('Unable to load member cards.');
+      return response.json();
+    }).then(function (data) {
+      var cards = Array.isArray(data && data.cards) ? data.cards : [];
+      memberCardsCache = cards.map(normalizeStoredMemberCard).filter(function (card) { return card.id; });
+      return loadStoredMemberCards();
+    }).catch(function () {
+      memberCardsCache = [];
+      return [];
+    });
+  }
+
+  function createMemberCard(cardInput) {
+    return fetch(psoPythonURI + '/api/pso/admin/member-cards', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        owner_uid: cardInput.ownerUid,
+        owner_name: cardInput.ownerName,
+        family: cardInput.family,
+        section_id: cardInput.sectionId,
+        instrument_title: cardInput.instrumentTitle || '',
+        image_url: cardInput.imageUrl || '',
+        bio: cardInput.bio || ''
+      })
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (data) {
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to create member card');
+        }
+        return normalizeStoredMemberCard(data.card || {});
+      });
+    });
+  }
+
+  function updateMemberCard(cardId, cardInput) {
+    return fetch(psoPythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cardInput)
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (data) {
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to update member card');
+        }
+        return normalizeStoredMemberCard(data.card || {});
+      });
+    });
+  }
+
+  function removeMemberCard(cardId) {
+    return fetch(psoPythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (data) {
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to delete member card');
+        }
+        return data;
+      });
+    });
   }
 
   function canEditMemberCard(card) {
@@ -194,8 +284,8 @@
   function setAccountLinks(user) {
     if (!accountLinks.length) return;
     accountLinks.forEach(function (link) {
-      var signInHref = link.dataset.signinHref || '{{ "/capstone/powayorchestra/signin/" | relative_url }}';
-      var profileHref = link.dataset.profileHref || '{{ "/capstone/powayorchestra/profile/" | relative_url }}';
+      var signInHref = link.dataset.signinHref || '{{ "/powayorchestra/signin/" | relative_url }}';
+      var profileHref = link.dataset.profileHref || '{{ "/powayorchestra/profile/" | relative_url }}';
       if (user && user.name) {
         link.textContent = user.name;
         link.href = profileHref;
@@ -236,6 +326,9 @@
 
   setAccountLinks(null);
   loadAccountIdentity();
+  fetchStoredMemberCards().then(function () {
+    refreshVisibleMusicianCards();
+  });
 
   if (pageNoteLayer && pageNoteLayer.parentNode !== document.body) {
     document.body.appendChild(pageNoteLayer);
@@ -414,12 +507,34 @@
       + '</article>';
   }
   function makeMemberGroups(groups, familyKey, sectionId) {
-    var renderedGroups = groups.slice();
+    var renderedGroups = groups.map(function (group) {
+      return {
+        title: group.title,
+        members: Array.isArray(group.members) ? group.members.slice() : []
+      };
+    });
     var customCards = familyKey && sectionId ? getStoredMemberCardsForSection(familyKey, sectionId) : [];
     if (customCards.length) {
-      renderedGroups.push({
-        title: 'Member Cards',
-        members: customCards.map(toDisplayMemberCard)
+      customCards.forEach(function (card) {
+        var displayCard = toDisplayMemberCard(card);
+        var normalizedInstrumentTitle = normalizeInstrumentKey(card.instrumentTitle);
+        var targetGroupIndex = renderedGroups.findIndex(function (group) {
+          return normalizeInstrumentKey(group.title) === normalizedInstrumentTitle;
+        });
+
+        if (targetGroupIndex === -1 && renderedGroups.length) {
+          targetGroupIndex = 0;
+        }
+
+        if (targetGroupIndex === -1) {
+          renderedGroups.push({
+            title: card.instrumentTitle || 'Members',
+            members: [displayCard]
+          });
+          return;
+        }
+
+        renderedGroups[targetGroupIndex].members.push(displayCard);
       });
     }
 
@@ -703,9 +818,8 @@
     }
     renderMemberCardControls();
   }
-  function saveMemberCard(event) {
+  async function saveMemberCard(event) {
     event.preventDefault();
-    var cards = loadStoredMemberCards();
     var ownerUid = String(memberCardOwnerUidInput && memberCardOwnerUidInput.value || '').trim();
     var ownerName = String(memberCardOwnerNameInput && memberCardOwnerNameInput.value || '').trim();
     var instrumentTitle = String(memberCardInstrumentInput && memberCardInstrumentInput.value || '').trim();
@@ -718,21 +832,34 @@
     }
 
     if (memberCardEditorState.mode === 'edit') {
-      var existingCard = cards.find(function (card) { return card.id === memberCardEditorState.cardId; });
+      var existingCard = getStoredMemberCard(memberCardEditorState.cardId);
       if (!existingCard || !canEditMemberCard(existingCard)) {
         setMemberCardEditorStatus('You do not have permission to edit this member card.');
         return;
       }
 
-      existingCard.ownerUid = isAdminUser(currentAccountUser) ? ownerUid : existingCard.ownerUid;
-      existingCard.ownerName = ownerName;
-      existingCard.instrumentTitle = instrumentTitle;
-      existingCard.image = image;
-      existingCard.bio = bio;
-      existingCard.updatedAt = new Date().toISOString();
-      saveStoredMemberCards(cards);
-      hideMemberCardEditor();
-      refreshVisibleMusicianCards();
+      var updatePayload = {
+        owner_name: ownerName,
+        instrument_title: instrumentTitle,
+        image_url: image,
+        bio: bio
+      };
+
+      if (isAdminUser(currentAccountUser)) {
+        updatePayload.owner_uid = ownerUid;
+        updatePayload.family = selectedFamily || existingCard.family;
+        updatePayload.section_id = activeMusicianSectionId || existingCard.sectionId;
+      }
+
+      try {
+        var updatedCard = await updateMemberCard(existingCard.id, updatePayload);
+        upsertStoredMemberCard(updatedCard);
+        await fetchStoredMemberCards();
+        hideMemberCardEditor();
+        refreshVisibleMusicianCards();
+      } catch (error) {
+        setMemberCardEditorStatus(error.message || 'Failed to update member card.');
+      }
       return;
     }
 
@@ -741,34 +868,40 @@
       return;
     }
 
-    cards.push(normalizeStoredMemberCard({
-      id: 'card-' + Date.now(),
-      ownerUid: ownerUid,
-      ownerName: ownerName,
-      family: selectedFamily,
-      sectionId: activeMusicianSectionId,
-      instrumentTitle: instrumentTitle,
-      image: image,
-      bio: bio,
-      createdByUid: currentAccountUser && currentAccountUser.uid ? currentAccountUser.uid : '',
-      updatedAt: new Date().toISOString()
-    }));
-    saveStoredMemberCards(cards);
-    hideMemberCardEditor();
-    refreshVisibleMusicianCards();
+    try {
+      var createdCard = await createMemberCard({
+        ownerUid: ownerUid,
+        ownerName: ownerName,
+        family: selectedFamily,
+        sectionId: activeMusicianSectionId,
+        instrumentTitle: instrumentTitle,
+        imageUrl: image,
+        bio: bio
+      });
+      upsertStoredMemberCard(createdCard);
+      await fetchStoredMemberCards();
+      hideMemberCardEditor();
+      refreshVisibleMusicianCards();
+    } catch (error) {
+      setMemberCardEditorStatus(error.message || 'Failed to create member card.');
+    }
   }
-  function deleteMemberCard() {
+  async function deleteMemberCard() {
     if (memberCardEditorState.mode !== 'edit') return;
-    var cards = loadStoredMemberCards();
-    var existingCard = cards.find(function (card) { return card.id === memberCardEditorState.cardId; });
+    var existingCard = getStoredMemberCard(memberCardEditorState.cardId);
     if (!existingCard || !canEditMemberCard(existingCard)) {
       setMemberCardEditorStatus('You do not have permission to delete this member card.');
       return;
     }
 
-    saveStoredMemberCards(cards.filter(function (card) { return card.id !== memberCardEditorState.cardId; }));
-    hideMemberCardEditor();
-    refreshVisibleMusicianCards();
+    try {
+      await removeMemberCard(existingCard.id);
+      await fetchStoredMemberCards();
+      hideMemberCardEditor();
+      refreshVisibleMusicianCards();
+    } catch (error) {
+      setMemberCardEditorStatus(error.message || 'Failed to delete member card.');
+    }
   }
   function unlockAudio() { audioReady = true; }
   function stopHoverPreview(card) { if (!currentHoverAudio) return; if (card && currentHoverCard !== card) return; currentHoverAudio.pause(); currentHoverAudio.currentTime = 0; currentHoverAudio = null; currentHoverCard = null; }
