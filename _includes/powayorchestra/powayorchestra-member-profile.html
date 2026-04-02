@@ -95,12 +95,9 @@
 <script>
 (function () {
   var isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-    psoPythonURI = "http://localhost:8324";  // Same URI for localhost or 127.0.0.1
-} else {
-    psoPythonURI = "https://wifighters.opencodingsociety.com";
-
-}
+  var psoPythonURI = isLocalHost
+    ? 'http://localhost:8324'
+    : 'https://wifighters.opencodingsociety.com';
   var accountLinks = Array.prototype.slice.call(document.querySelectorAll('[data-pso-account-link]'));
   var nameNode = document.getElementById('pso-member-profile-name');
   var fullNameNode = document.getElementById('pso-member-profile-full-name');

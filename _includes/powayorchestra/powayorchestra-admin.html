@@ -206,15 +206,12 @@
 </div>
 
 <script type="module">
-  import { baseurl, pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+  import { baseurl, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
   const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-    psoPythonURI = "http://localhost:8324";  // Same URI for localhost or 127.0.0.1
-} else {
-    psoPythonURI = "https://wifighters.opencodingsociety.com";
-
-}
+  const psoPythonURI = isLocalHost
+    ? 'http://localhost:8324'
+    : 'https://wifighters.opencodingsociety.com';
   const signInUrl = `${baseurl}/powayorchestra/signin/`;
   const profileUrl = `${baseurl}/powayorchestra/profile/`;
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));

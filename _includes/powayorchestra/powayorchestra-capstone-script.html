@@ -137,12 +137,9 @@
     percussion: ''
   };
   var isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-    psoPythonURI = "http://localhost:8324";  // Same URI for localhost or 127.0.0.1
-} else {
-    psoPythonURI = "https://wifighters.opencodingsociety.com";
-
-}
+  var psoPythonURI = isLocalHost
+    ? 'http://localhost:8324'
+    : 'https://wifighters.opencodingsociety.com';
   function isAdminUser(user) {
     if (!user) return false;
     if (user.is_admin === true) return true;
