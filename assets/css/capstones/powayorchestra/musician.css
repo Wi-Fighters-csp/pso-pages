@@ -59,16 +59,16 @@
     gap: 1rem;
     margin: 0 0 1rem;
     padding: 0.8rem 1rem;
-    border: 1px solid rgba(226,201,122,0.18);
+    border: 1px solid rgba(217,119,6,0.16);
     border-radius: 10px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 50%),
-      rgba(8, 19, 38, 0.62);
+      linear-gradient(180deg, rgba(250,243,224,0.18), transparent 50%),
+      rgba(181, 156, 130, 0.94);
   }
 
   .family-audio-player-copy p {
     margin: 0;
-    color: rgba(250,246,239,0.84);
+    color: rgba(62,39,35,0.82);
     font-size: 0.96rem;
   }
 
@@ -86,8 +86,8 @@
     appearance: none;
     border: 1px solid rgba(226,201,122,0.26);
     border-radius: 999px;
-    background: rgba(250,246,239,0.04);
-    color: var(--gold-light);
+    background: rgba(250,243,224,0.82);
+    color: rgba(62,39,35,0.86);
     font-family: 'Jost', sans-serif;
     font-size: 0.72rem;
     letter-spacing: 0.14em;
@@ -103,7 +103,7 @@
     transform: translateY(-1px);
     border-color: rgba(226,201,122,0.72);
     background: rgba(226,201,122,0.12);
-    color: var(--white);
+    color: rgba(62,39,35,0.92);
   }
 
   .musician-directory-shell {
@@ -116,12 +116,12 @@
   .musician-filter-sidebar-inner {
     position: sticky;
     top: 84px;
-    border: 1px solid rgba(226,201,122,0.14);
+    border: 1px solid rgba(217,119,6,0.16);
     border-radius: 12px;
     padding: 1rem;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 44%),
-      rgba(8, 19, 38, 0.6);
+      linear-gradient(180deg, rgba(250,243,224,0.16), transparent 44%),
+      rgba(176, 151, 126, 0.92);
   }
 
   .musician-filter-group + .musician-filter-group {
@@ -168,20 +168,21 @@
 
   .musician-directory-status {
     margin: 0;
-    color: rgba(62,39,35,0.72);
+    color: rgba(62,39,35,0.78);
     line-height: 1.65;
   }
 
   .musician-directory-empty {
-    border: 1px solid rgba(226,201,122,0.14);
+    border: 1px solid rgba(217,119,6,0.16);
     border-radius: 10px;
     padding: 1rem;
-    background: rgba(8, 19, 38, 0.56);
+    background: rgba(176, 151, 126, 0.9);
     margin-bottom: 1rem;
   }
 
   .musician-directory-empty p {
     margin: 0;
+    color: rgba(62,39,35,0.82);
   }
 
   .musician-directory-groups {
@@ -191,12 +192,12 @@
   }
 
   .musician-directory-group {
-    border: 1px solid rgba(226,201,122,0.14);
+    border: 1px solid rgba(217,119,6,0.16);
     border-radius: 12px;
     padding: 0.85rem;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%),
-      rgba(8, 19, 38, 0.5);
+      linear-gradient(180deg, rgba(250,243,224,0.15), transparent 40%),
+      rgba(171, 146, 121, 0.9);
   }
 
   .musician-directory-group-head {
@@ -214,7 +215,7 @@
 
   .musician-directory-group-head h4 {
     margin: 0;
-    color: var(--white);
+    color: var(--crimson-deep);
     font-size: 1.1rem;
   }
 
@@ -259,8 +260,8 @@
     min-height: 54px;
     padding: 0.95rem 1rem;
     border-radius: 12px;
-    border: 1px solid rgba(226,201,122,0.24);
-    background: rgba(223,204,180,0.9);
+    border: 1px solid rgba(139, 30, 45, 0.16);
+    background: rgba(250, 243, 224, 0.92);
     color: var(--ink);
     font-family: 'Jost', sans-serif;
     font-size: 0.98rem;
@@ -273,14 +274,14 @@
 
   .instrument-search-input:focus {
     outline: none;
-    border-color: rgba(226,201,122,0.72);
-    box-shadow: 0 0 0 3px rgba(226,201,122,0.12);
-    background: rgba(231,216,194,0.94);
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.16);
+    background: rgba(250, 243, 224, 0.98);
   }
 
   .instrument-search-status {
     margin-top: 0.7rem;
-    color: rgba(62,39,35,0.72);
+    color: rgba(243,235,220,0.78);
     font-size: 0.92rem;
     line-height: 1.6;
     text-align: left;
@@ -333,15 +334,15 @@
     position: relative;
     overflow: hidden;
     text-align: left;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(242,166,160,0.22);
     border-radius: 6px;
     background:
-      linear-gradient(160deg, rgba(200,168,75,0.08), transparent 45%),
-      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 38%),
-      rgba(223,204,180,0.92);
+      radial-gradient(circle at top right, rgba(242,166,160,0.12), transparent 34%),
+      linear-gradient(160deg, rgba(200,168,75,0.06), transparent 45%),
+      linear-gradient(180deg, rgba(125, 51, 47, 0.92), rgba(88, 54, 48, 0.96));
     padding: 1rem;
     min-height: 190px;
-    color: var(--ink);
+    color: rgba(243,235,220,0.88);
     cursor: pointer;
     transition: transform 0.28s ease, border-color 0.2s ease, box-shadow 0.28s ease;
     transform-style: preserve-3d;
@@ -422,7 +423,7 @@
   .instrument-card:focus-visible,
   .instrument-card.is-active {
     transform: perspective(1000px) rotateX(4deg) rotateY(-6deg) translateY(-4px);
-    border-color: rgba(226,201,122,0.75);
+    border-color: rgba(242,166,160,0.34);
     box-shadow: 0 14px 36px rgba(0,0,0,0.28);
     outline: none;
   }
@@ -446,14 +447,14 @@
   .instrument-card h3 {
     font-family: 'Playfair Display', serif;
     font-size: 1.2rem;
-    color: var(--crimson-deep);
+    color: var(--white);
     margin-bottom: 0.55rem;
   }
 
   .instrument-card p {
     font-size: 0.92rem;
     line-height: 1.55;
-    color: rgba(35,29,27,0.74);
+    color: rgba(243,235,220,0.78);
     max-width: 32ch;
   }
 
@@ -464,7 +465,7 @@
     font-size: 0.69rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(94,54,45,0.74);
+    color: rgba(243,235,220,0.72);
   }
 
   .instrument-visual {
@@ -515,11 +516,11 @@
   }
 
   .instrument-detail-panel {
-    border: 1px solid var(--border);
+    border: 1px solid rgba(242,166,160,0.22);
     border-radius: 6px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.02), transparent 50%),
-      rgba(223,204,180,0.92);
+      radial-gradient(circle at top right, rgba(242,166,160,0.1), transparent 34%),
+      linear-gradient(180deg, rgba(105, 58, 53, 0.92), rgba(86, 48, 44, 0.96));
     padding: 1.6rem;
     display: grid;
     grid-template-columns: minmax(0, 1.35fr) minmax(280px, 1fr);
@@ -539,12 +540,12 @@
   .instrument-detail-title {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    color: var(--crimson-deep);
+    color: var(--white);
     margin-bottom: 0.75rem;
   }
 
   .instrument-detail-copy {
-    color: rgba(35,29,27,0.77);
+    color: rgba(243,235,220,0.8);
     font-size: 1rem;
     line-height: 1.75;
     margin-bottom: 1rem;
@@ -556,7 +557,7 @@
     font-size: 0.74rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(94,54,45,0.76);
+    color: rgba(243,235,220,0.74);
     margin-bottom: 0.65rem;
   }
 
@@ -572,9 +573,9 @@
     justify-content: center;
     padding: 0.45rem 0.75rem;
     border-radius: 999px;
-    border: 1px solid rgba(226,201,122,0.26);
-    background: rgba(139,30,45,0.04);
-    color: rgba(35,29,27,0.86);
+    border: 1px solid rgba(242,166,160,0.24);
+    background: rgba(242,166,160,0.14);
+    color: var(--white);
     font-family: 'Jost', sans-serif;
     font-size: 0.74rem;
     letter-spacing: 0.08em;
@@ -582,14 +583,14 @@
   }
 
   .instrument-detail-meta {
-    border: 1px solid rgba(226,201,122,0.18);
+    border: 1px solid rgba(242,166,160,0.22);
     border-radius: 5px;
-    background: rgba(211,188,162,0.64);
+    background: rgba(70, 42, 39, 0.6);
     padding: 1rem;
   }
 
   .instrument-detail-meta p {
-    color: rgba(35,29,27,0.72);
+    color: rgba(243,235,220,0.76);
     font-size: 0.97rem;
     line-height: 1.7;
   }
@@ -599,7 +600,7 @@
   }
 
   .instrument-audio-hint {
-    color: rgba(94,54,45,0.72);
+    color: rgba(243,235,220,0.72);
     font-size: 0.88rem;
   }
 
@@ -607,12 +608,11 @@
     grid-column: 1 / -1;
     margin-top: 0.4rem;
     padding: 1.5rem;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(242,166,160,0.22);
     border-radius: 6px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 30%),
-      linear-gradient(135deg, rgba(200,168,75,0.08), transparent 48%),
-      rgba(223,204,180,0.92);
+      radial-gradient(circle at top right, rgba(242,166,160,0.12), transparent 34%),
+      linear-gradient(180deg, rgba(125, 51, 47, 0.92), rgba(88, 54, 48, 0.96));
   }
 
   .musician-roster-header {
@@ -632,12 +632,12 @@
 
   .musician-roster-header h3 {
     margin-bottom: 0.45rem;
-    color: var(--crimson-deep);
+    color: var(--white);
   }
 
   .musician-roster-header p {
     margin: 0;
-    color: rgba(35,29,27,0.76);
+    color: rgba(243,235,220,0.78);
   }
 
   .musician-roster-grid {
@@ -653,10 +653,10 @@
 
   .musician-section-chip {
     appearance: none;
-    border: 1px solid rgba(226,201,122,0.26);
+    border: 1px solid rgba(242,166,160,0.24);
     border-radius: 999px;
-    background: rgba(139,30,45,0.04);
-    color: rgba(35,29,27,0.86);
+    background: rgba(242,166,160,0.14);
+    color: rgba(243,235,220,0.9);
     font-family: 'Jost', sans-serif;
     font-size: 0.74rem;
     letter-spacing: 0.08em;
@@ -669,27 +669,27 @@
   .musician-section-chip:hover,
   .musician-section-chip:focus-visible {
     transform: translateY(-1px);
-    border-color: rgba(226,201,122,0.72);
-    background: rgba(226,201,122,0.12);
+    border-color: rgba(217,119,6,0.4);
+    background: rgba(217,119,6,0.18);
     outline: none;
   }
 
   .musician-section-chip.is-active {
-    background: var(--gold);
-    color: var(--navy-dark);
-    border-color: var(--gold);
+    background: linear-gradient(145deg, rgba(125, 51, 47, 0.88), rgba(105, 58, 53, 0.9));
+    color: var(--white);
+    border-color: rgba(242,166,160,0.34);
   }
 
   .musician-roster-empty {
-    border: 1px solid rgba(226,201,122,0.14);
+    border: 1px solid rgba(242,166,160,0.22);
     border-radius: 5px;
     padding: 1rem 1rem 0.9rem;
-    background: rgba(211,188,162,0.66);
+    background: rgba(70, 42, 39, 0.6);
   }
 
   .musician-roster-empty p {
     margin: 0;
-    color: rgba(35,29,27,0.78);
+    color: rgba(243,235,220,0.78);
     line-height: 1.7;
   }
 
@@ -699,21 +699,21 @@
   }
 
   .musician-roster-detail-header {
-    border: 1px solid rgba(226,201,122,0.14);
+    border: 1px solid rgba(242,166,160,0.22);
     border-radius: 5px;
     padding: 1rem;
-    background: rgba(211,188,162,0.66);
+    background: rgba(70, 42, 39, 0.6);
   }
 
   .musician-roster-detail-header h4 {
     margin-bottom: 0.7rem;
-    color: var(--gold-light);
+    color: var(--white);
     font-size: 1rem;
   }
 
   .musician-roster-detail-header p {
     margin: 0;
-    color: rgba(35,29,27,0.76);
+    color: rgba(243,235,220,0.78);
     line-height: 1.7;
   }
 
@@ -724,15 +724,17 @@
   }
 
   .musician-member-group {
-    border: 1px solid rgba(226,201,122,0.14);
+    border: 1px solid rgba(242,166,160,0.22);
     border-radius: 5px;
     padding: 1rem 1rem 0.9rem;
-    background: rgba(223,204,180,0.9);
+    background:
+      radial-gradient(circle at top right, rgba(242,166,160,0.12), transparent 34%),
+      linear-gradient(180deg, rgba(125, 51, 47, 0.9), rgba(88, 54, 48, 0.94));
   }
 
   .musician-member-group h5 {
     margin-bottom: 0.7rem;
-    color: var(--gold-light);
+    color: rgba(243,235,220,0.88);
     font-size: 0.92rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -752,11 +754,12 @@
   }
 
   .musician-member-card {
-    border: 1px solid rgba(226,201,122,0.12);
+    border: 1px solid rgba(242,166,160,0.2);
     border-radius: 9px;
     overflow: hidden;
-    background: rgba(223,204,180,0.94);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.13);
+    background:
+      linear-gradient(180deg, rgba(105, 58, 53, 0.94), rgba(86, 48, 44, 0.96));
+    box-shadow: 0 8px 18px rgba(0,0,0,0.18);
     cursor: pointer;
     transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
   }
@@ -765,14 +768,14 @@
   .musician-member-card:focus-visible {
     outline: none;
     transform: translateY(-2px);
-    border-color: rgba(226,201,122,0.34);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+    border-color: rgba(242,166,160,0.34);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.24);
   }
 
   .musician-member-photo-shell {
     aspect-ratio: 0.95 / 1;
-    background: linear-gradient(180deg, rgba(226,201,122,0.16), rgba(139,30,45,0.14));
-    border-bottom: 1px solid rgba(226,201,122,0.12);
+    background: linear-gradient(180deg, rgba(242,166,160,0.16), rgba(86,48,44,0.34));
+    border-bottom: 1px solid rgba(242,166,160,0.12);
   }
 
   .musician-member-photo {
@@ -786,8 +789,8 @@
     width: 100%;
     height: 100%;
     background:
-      linear-gradient(135deg, rgba(226,201,122,0.08), rgba(255,255,255,0.02)),
-      rgba(8,19,38,0.82);
+      linear-gradient(135deg, rgba(242,166,160,0.08), rgba(255,255,255,0.02)),
+      rgba(70,42,39,0.9);
   }
 
   .musician-member-card-copy {
@@ -809,12 +812,12 @@
     font-size: 0.58rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--crimson);
+    color: var(--gold-light);
   }
 
   .musician-member-name {
     margin: 0;
-    color: rgba(35,29,27,0.9);
+    color: var(--white);
     font-family: 'Playfair Display', serif;
     font-size: 0.82rem;
     line-height: 1.3;
@@ -822,7 +825,7 @@
 
   .musician-roster-note {
     margin-top: 1rem;
-    color: rgba(62,39,35,0.76);
+    color: rgba(243,235,220,0.78);
     font-size: 0.94rem;
   }
 
@@ -835,7 +838,7 @@
 
   .musician-member-bio {
     margin: 0;
-    color: rgba(62,39,35,0.78);
+    color: rgba(243,235,220,0.78);
     line-height: 1.45;
     font-size: 0.76rem;
   }
@@ -862,10 +865,10 @@
   }
 
   .musician-member-card-editor {
-    border: 1px solid rgba(226,201,122,0.16);
+    border: 1px solid rgba(242,166,160,0.2);
     border-radius: 14px;
     padding: 1rem;
-    background: rgba(8, 19, 38, 0.58);
+    background: linear-gradient(145deg, rgba(86, 48, 44, 0.82), rgba(70, 42, 39, 0.86));
     display: grid;
     gap: 0.95rem;
   }
@@ -877,7 +880,7 @@
 
   .musician-member-card-editor-head h5 {
     margin: 0;
-    color: rgba(250,246,239,0.94);
+    color: var(--white);
     font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
   }
@@ -894,7 +897,7 @@
   }
 
   .musician-member-card-form-grid span {
-    color: var(--gold-light);
+    color: rgba(243,235,220,0.82);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -905,9 +908,9 @@
   .musician-member-card-form-grid textarea,
   .musician-card-edit-btn {
     border-radius: 10px;
-    border: 1px solid rgba(226,201,122,0.18);
-    background: rgba(255,255,255,0.04);
-    color: rgba(250,246,239,0.92);
+    border: 1px solid rgba(139, 30, 45, 0.16);
+    background: rgba(250, 243, 224, 0.92);
+    color: var(--ink);
     font: inherit;
   }
 
@@ -939,6 +942,8 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    background: rgba(250, 243, 224, 0.92);
+    color: var(--ink);
   }
 
   .musician-card-edit-btn:hover,
@@ -946,9 +951,10 @@
   .musician-member-card-form-grid input:focus-visible,
   .musician-member-card-form-grid textarea:focus-visible {
     outline: none;
-    border-color: rgba(226,201,122,0.42);
-    background: rgba(226,201,122,0.12);
-    color: rgba(250,246,239,0.98);
+    border-color: var(--gold);
+    background: rgba(250, 243, 224, 0.98);
+    color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.16);
   }
 
   .sample-play-sample-btn {
@@ -959,7 +965,7 @@
     width: 1.7rem;
     height: 1.7rem;
     min-width: 1.7rem;
-    border: 1px solid rgba(226,201,122,0.24);
+    border: 1px solid rgba(242,166,160,0.24);
     padding: 0;
     border-radius: 999px;
     cursor: pointer;
@@ -970,14 +976,14 @@
     text-transform: none;
     transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, opacity 0.2s;
     background: rgba(242,166,160,0.14);
-    color: var(--crimson-deep);
+    color: rgba(243,235,220,0.92);
     line-height: 1;
     opacity: 0.82;
   }
 
   .sample-play-sample-btn:hover,
   .sample-play-sample-btn:focus-visible {
-    background: rgba(226,201,122,0.2);
+    background: rgba(217,119,6,0.22);
     border-color: rgba(226,201,122,0.45);
     color: var(--gold-light);
     transform: scale(1.04);
