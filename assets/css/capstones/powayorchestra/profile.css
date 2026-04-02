@@ -2,6 +2,79 @@
     padding-top: 2.8rem;
   }
 
+  .pso-profile-member-card-editor {
+    margin-top: 1.15rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(242,166,160,0.28);
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .pso-profile-member-card-head h4 {
+    margin: 0 0 0.3rem;
+    color: var(--crimson-deep);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.08rem;
+  }
+
+  .pso-profile-member-card-head p {
+    margin: 0;
+  }
+
+  .pso-profile-member-card-status,
+  .pso-profile-member-card-empty {
+    padding: 0.85rem 0.95rem;
+    border-radius: 14px;
+    border: 1px solid rgba(217,119,6,0.16);
+    background: rgba(242,166,160,0.14);
+    color: rgba(35,29,27,0.8);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .pso-profile-member-card-status.is-error {
+    border-color: rgba(159,74,70,0.28);
+    background: rgba(159,74,70,0.08);
+    color: #7f2d29;
+  }
+
+  .pso-profile-member-card-empty[hidden],
+  .pso-profile-member-card-form[hidden] {
+    display: none !important;
+  }
+
+  .pso-profile-member-card-form {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .pso-profile-card-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
+    padding: 0.85rem 0.95rem;
+    border-radius: 14px;
+    border: 1px solid rgba(217,119,6,0.16);
+    background: rgba(223,204,180,0.88);
+  }
+
+  .pso-profile-card-summary div {
+    min-width: 0;
+  }
+
+  .pso-profile-card-summary strong {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--crimson-deep);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .pso-profile-member-card-actions {
+    display: flex;
+    justify-content: flex-start;
+  }
+
   .pso-profile-summary-grid,
   .pso-profile-experience-grid {
     display: grid;
@@ -17,20 +90,24 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .pso-profile-card-summary {
+    grid-template-columns: 1fr;
+  }
+
   .pso-profile-card {
     background:
-      linear-gradient(180deg, rgba(20,39,63,0.98), rgba(8,17,31,0.94)),
-      var(--navy-mid);
-    border: 1px solid rgba(200,168,75,0.2);
-    border-radius: 16px;
+      linear-gradient(180deg, rgba(231,216,194,0.92), rgba(223,204,180,0.8)),
+      var(--surface);
+    border: 1px solid rgba(217,119,6,0.18);
+    border-radius: 22px;
     padding: 1.35rem;
-    box-shadow: 0 18px 42px rgba(0,0,0,0.24);
+    box-shadow: 0 18px 42px rgba(28,28,28,0.08);
   }
 
   .pso-profile-card h2,
   .pso-profile-card h3 {
     font-family: 'Playfair Display', serif;
-    color: var(--white);
+    color: var(--crimson-deep);
     margin-bottom: 0.45rem;
   }
 
@@ -60,8 +137,8 @@
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: linear-gradient(135deg, var(--gold-light), #8fd8c8);
-    color: var(--navy);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-pale));
+    color: var(--white);
     font-family: 'Jost', sans-serif;
     font-size: 1.35rem;
     font-weight: 600;
@@ -84,9 +161,9 @@
 
   .pso-profile-role-pill {
     padding: 0.35rem 0.7rem;
-    background: rgba(226,201,122,0.12);
-    border: 1px solid rgba(226,201,122,0.3);
-    color: var(--gold-light);
+    background: rgba(242,166,160,0.16);
+    border: 1px solid rgba(242,166,160,0.28);
+    color: var(--crimson-deep);
     margin-top: 0.4rem;
   }
 
@@ -119,18 +196,18 @@
     margin-top: 1rem;
     padding: 1rem 1.05rem;
     border-radius: 16px;
-    border: 1px solid rgba(226,201,122,0.24);
-    background: linear-gradient(145deg, rgba(226,201,122,0.08), rgba(143,216,200,0.06));
+    border: 1px solid rgba(217,119,6,0.22);
+    background: linear-gradient(145deg, rgba(242,166,160,0.18), rgba(217,119,6,0.08));
   }
 
   .pso-profile-member-gate.is-unlocked {
-    border-color: rgba(143,216,200,0.38);
-    background: linear-gradient(145deg, rgba(143,216,200,0.12), rgba(226,201,122,0.08));
+    border-color: rgba(217,119,6,0.32);
+    background: linear-gradient(145deg, rgba(242,166,160,0.22), rgba(217,119,6,0.12));
   }
 
   .pso-profile-gate-label {
     display: block;
-    color: var(--gold-light);
+    color: var(--crimson);
     font-family: 'Jost', sans-serif;
     font-size: 0.74rem;
     letter-spacing: 0.14em;
@@ -141,7 +218,7 @@
   .pso-profile-gate-copy,
   .pso-profile-locked-copy {
     margin: 0;
-    color: rgba(250,246,239,0.8);
+    color: rgba(35,29,27,0.8);
     font-size: 0.94rem;
   }
 
@@ -166,15 +243,15 @@
   .pso-profile-request-note,
   .pso-profile-pending-copy {
     margin: 0;
-    color: rgba(250,246,239,0.82);
+    color: rgba(35,29,27,0.82);
     font-size: 0.92rem;
   }
 
   .pso-profile-pending-copy {
     padding: 0.9rem 1rem;
     border-radius: 14px;
-    border: 1px solid rgba(143,216,200,0.28);
-    background: rgba(143,216,200,0.08);
+    border: 1px solid rgba(242,166,160,0.28);
+    background: rgba(242,166,160,0.16);
   }
 
   .pso-profile-field-grid .pso-field--full {
@@ -184,10 +261,10 @@
   .pso-field input,
   .pso-field textarea,
   .pso-field select {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 253, 248, 0.92);
+    border: 1px solid rgba(139, 30, 45, 0.16);
     border-radius: 12px;
-    color: var(--white);
+    color: var(--ink);
     font-family: 'Jost', sans-serif;
     font-size: 0.96rem;
     min-height: 52px;
@@ -203,7 +280,7 @@
   .pso-field select:focus,
   .pso-field textarea:focus {
     border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(200, 168, 75, 0.16);
+    box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.16);
     outline: none;
   }
 
@@ -217,7 +294,7 @@
 
   .pso-profile-note {
     font-size: 0.9rem;
-    color: rgba(250,246,239,0.68);
+    color: rgba(35,29,27,0.68);
   }
 
   .pso-admin-summary-grid {
@@ -246,9 +323,9 @@
   }
 
   .pso-admin-filter-row .pso-button.is-active {
-    border-color: rgba(143,216,200,0.42);
-    background: rgba(143,216,200,0.14);
-    color: var(--white);
+    border-color: rgba(242,166,160,0.34);
+    background: rgba(242,166,160,0.18);
+    color: var(--crimson-deep);
   }
 
   .pso-admin-request-list {
@@ -260,8 +337,8 @@
   .pso-admin-request-card {
     padding: 1rem;
     border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(217,119,6,0.16);
+    background: rgba(223,204,180,0.88);
   }
 
   .pso-admin-request-card.is-empty {
@@ -277,7 +354,7 @@
 
   .pso-admin-request-head strong {
     display: block;
-    color: var(--white);
+    color: var(--crimson-deep);
     font-family: 'Playfair Display', serif;
     font-size: 1.2rem;
     margin-bottom: 0.35rem;
@@ -292,7 +369,7 @@
 
   .pso-admin-request-meta {
     margin-top: 0.8rem;
-    color: rgba(250,246,239,0.74);
+    color: rgba(35,29,27,0.74);
   }
 
   .pso-admin-request-actions {
@@ -307,21 +384,21 @@
   }
 
   .pso-admin-status-pill.is-pending {
-    border-color: rgba(226,201,122,0.3);
-    background: rgba(226,201,122,0.12);
-    color: var(--gold-light);
+    border-color: rgba(217,119,6,0.24);
+    background: rgba(217,119,6,0.14);
+    color: #8a4a06;
   }
 
   .pso-admin-status-pill.is-approved {
-    border-color: rgba(143,216,200,0.32);
-    background: rgba(143,216,200,0.12);
-    color: #c6f0e7;
+    border-color: rgba(83,127,95,0.28);
+    background: rgba(83,127,95,0.1);
+    color: var(--success);
   }
 
   .pso-admin-status-pill.is-rejected {
-    border-color: rgba(243,143,143,0.32);
-    background: rgba(243,143,143,0.12);
-    color: #ffd1d1;
+    border-color: rgba(159,74,70,0.24);
+    background: rgba(159,74,70,0.1);
+    color: var(--error);
   }
 
   .pso-profile-stats {
@@ -334,14 +411,14 @@
   .pso-profile-stat {
     padding: 0.95rem;
     border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(217,119,6,0.16);
+    background: rgba(223,204,180,0.88);
   }
 
   .pso-profile-stat-label {
     display: block;
     margin-bottom: 0.3rem;
-    color: rgba(250,246,239,0.7);
+    color: rgba(35,29,27,0.7);
     font-family: 'Jost', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.14em;
@@ -350,7 +427,7 @@
 
   .pso-profile-stat strong {
     display: block;
-    color: var(--white);
+    color: var(--crimson-deep);
     font-family: 'Playfair Display', serif;
     font-size: 1.25rem;
   }
@@ -369,7 +446,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(250,246,239,0.8);
+    color: rgba(35,29,27,0.78);
   }
 
   .pso-profile-progress-track {
@@ -377,7 +454,7 @@
     height: 10px;
     border-radius: 999px;
     overflow: hidden;
-    background: rgba(255,255,255,0.08);
+    background: rgba(35,29,27,0.08);
   }
 
   .pso-profile-progress-track span {
@@ -385,21 +462,21 @@
     inset: 0 auto 0 0;
     width: var(--progress-width, 50%);
     border-radius: inherit;
-    background: linear-gradient(90deg, #8fd8c8, var(--gold-light));
+    background: linear-gradient(90deg, var(--crimson), var(--gold-light));
   }
 
   .pso-profile-badges {
-    display: flex;
-    flex-wrap: wrap;
+    border: 1px solid rgba(242,166,160,0.26);
+    background: rgba(242,166,160,0.16);
     gap: 0.6rem;
     margin-top: 1rem;
   }
 
   .pso-profile-badge {
     padding: 0.42rem 0.78rem;
-    border: 1px solid rgba(143,216,200,0.3);
-    background: rgba(143,216,200,0.1);
-    color: #c6f0e7;
+    border: 1px solid rgba(242,166,160,0.26);
+    background: rgba(242,166,160,0.16);
+    color: var(--crimson-deep);
   }
 
   .pso-profile-timeline {
@@ -411,8 +488,8 @@
   .pso-profile-timeline-item {
     position: relative;
     padding: 0.95rem 0.95rem 0.95rem 1.1rem;
-    border-left: 2px solid rgba(226,201,122,0.28);
-    background: rgba(255,255,255,0.025);
+    border-left: 2px solid rgba(217,119,6,0.22);
+    background: rgba(223,204,180,0.82);
     border-radius: 0 14px 14px 0;
   }
 
@@ -425,12 +502,12 @@
     height: 12px;
     border-radius: 50%;
     background: var(--gold-light);
-    box-shadow: 0 0 0 4px rgba(226,201,122,0.12);
+    box-shadow: 0 0 0 4px rgba(217,119,6,0.12);
   }
 
   .pso-profile-timeline-item.is-upcoming::before {
-    background: #8fd8c8;
-    box-shadow: 0 0 0 4px rgba(143,216,200,0.14);
+    background: var(--crimson);
+    box-shadow: 0 0 0 4px rgba(242,166,160,0.18);
   }
 
   .pso-profile-timeline-date {
@@ -445,7 +522,7 @@
 
   .pso-profile-timeline-item strong {
     display: block;
-    color: var(--white);
+    color: var(--crimson-deep);
     font-family: 'Playfair Display', serif;
     font-size: 1.15rem;
     margin-bottom: 0.25rem;
@@ -463,9 +540,9 @@
 
   .pso-profile-chip {
     padding: 0.42rem 0.78rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: rgba(250,246,239,0.88);
+    background: rgba(242,166,160,0.12);
+    border: 1px solid rgba(242,166,160,0.24);
+    color: var(--crimson-deep);
   }
 
   .pso-profile-seat-map {
@@ -478,8 +555,8 @@
   .pso-seat-zone {
     padding: 1rem 0.8rem;
     border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(217,119,6,0.16);
+    background: rgba(223,204,180,0.88);
     text-align: center;
     transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
@@ -490,20 +567,20 @@
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(250,246,239,0.72);
+    color: rgba(35,29,27,0.7);
   }
 
   .pso-seat-zone strong {
     display: block;
     margin-top: 0.45rem;
-    color: var(--white);
+    color: var(--crimson-deep);
     font-family: 'Playfair Display', serif;
     font-size: 1.15rem;
   }
 
   .pso-seat-zone.is-active {
-    border-color: rgba(143,216,200,0.48);
-    background: linear-gradient(145deg, rgba(143,216,200,0.18), rgba(226,201,122,0.08));
+    border-color: rgba(242,166,160,0.34);
+    background: linear-gradient(145deg, rgba(242,166,160,0.2), rgba(217,119,6,0.12));
     transform: translateY(-2px);
   }
 
@@ -521,14 +598,14 @@
   .pso-profile-resource-links a,
   .pso-profile-favorites a,
   .pso-profile-panel-links a {
-    color: var(--gold-light);
+    color: var(--crimson);
     text-decoration: none;
   }
 
   .pso-profile-resource-links a:hover,
   .pso-profile-favorites a:hover,
   .pso-profile-panel-links a:hover {
-    color: var(--white);
+    color: var(--crimson-deep);
     text-decoration: underline;
   }
 
@@ -544,12 +621,12 @@
     gap: 1rem;
     padding: 0.8rem 0.9rem;
     border-radius: 14px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(223,204,180,0.88);
+    border: 1px solid rgba(217,119,6,0.16);
   }
 
   .pso-profile-toggle label {
-    color: var(--cream);
+    color: var(--ink);
     font-family: 'Jost', sans-serif;
     font-size: 0.84rem;
     letter-spacing: 0.04em;

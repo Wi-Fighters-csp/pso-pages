@@ -1,61 +1,83 @@
   <section class="reveal-topic is-hidden" id="tickets">
     <div class="section">
-      <h2>Buy Tickets</h2>
+      <h2>Tickets &amp; Season Subscriptions</h2>
       <div class="section-divider"></div>
       <p class="section-intro">
-        Individual concert tickets are available for all upcoming performances.
-        Season subscriptions for 2025–2026 are no longer available — watch for
-        2026–2027 announcements later this year.
+        The Poway Symphony Orchestra offers both individual concert tickets and season subscription packages.
       </p>
 
-      <div class="concert-countdown" data-concert-countdown data-concert-name="An American Celebration" data-concert-date="2026-05-31T16:00:00">
-        <span class="concert-countdown-label">Next Concert Countdown</span>
-        <h3>An American Celebration</h3>
-        <p class="concert-countdown-meta">Sunday, May 31, 2026 · 4:00 PM · Poway Center for the Performing Arts</p>
-        <p class="concert-countdown-value" data-concert-countdown-value>Loading countdown…</p>
-      </div>
-
-      <div class="ticket-next-performance">
-        <span class="ticket-next-performance-label">Next Upcoming Performance</span>
-        <h3>An American Celebration</h3>
-        <p class="ticket-next-performance-meta">Sunday, May 31, 2026 · 4:00 PM · Poway Center for the Performing Arts</p>
+      <div class="ticket-next-performance" data-concert-countdown data-concert-name="An American Celebration" data-concert-date="2026-05-31T16:00:00">
+        <div class="ticket-next-performance-head">
+          <div>
+            <span class="ticket-next-performance-label">Next Upcoming Performance</span>
+            <h3>An American Celebration</h3>
+            <p class="ticket-next-performance-meta">Sunday, May 31, 2026 · 4:00 PM · Poway Center for the Performing Arts</p>
+          </div>
+          <a href="https://pcpa.na.ticketsearch.com/sales/sales/sales?ev=19149,19150,19151&amp;ismenuhide=true" class="btn btn-primary ticket-primary-action" target="_blank" rel="noopener">Buy Tickets Online</a>
+        </div>
+        <div class="ticket-next-performance-countdown">
+          <span class="ticket-next-performance-countdown-label">Countdown</span>
+          <p class="ticket-next-performance-countdown-value" data-concert-countdown-value>Loading countdown…</p>
+        </div>
         <p>
           A festive late-season program highlighting American voices and a celebratory orchestral close to the season.
         </p>
       </div>
 
-      <figure class="section-photo">
-        <img src="{{ '/images/capstone/powaysymphonyorchestra/orch8.jpg' | relative_url }}" alt="Audience view inside the Poway Center for the Performing Arts">
-      </figure>
+      <div class="ticket-overview-grid">
+        <article class="ticket-overview-card">
+          <h3>Season Subscriptions</h3>
+          <p>
+            Season subscriptions for the 2025–2026 season are no longer available, but subscriptions will be offered again for the 2026–2027 season.
+            Watch for announcements later this year if you want the best seating and added benefits.
+          </p>
+          <h4>Benefits of a Season Subscription</h4>
+          <ul class="ticket-benefit-list">
+            <li>10% savings on regular single-ticket prices</li>
+            <li>Priority seating with access to the best available locations in the hall</li>
+            <li>Reserved seats for all three concerts in the season</li>
+            <li>Early access to seat selection before individual tickets go on sale</li>
+          </ul>
+          <p>
+            In the meantime, individual concert tickets are available for the current season. We look forward to welcoming you to an upcoming performance.
+          </p>
+        </article>
 
-      <div class="ticket-grid">
-        <div class="ticket-option">
-          <h3>Online</h3>
-          <p>Available 24/7 at the Poway Center ticketing portal.</p>
-          <a href="https://powaycenter.com" class="btn btn-primary" target="_blank" rel="noopener">powaycenter.com</a>
-        </div>
-        <div class="ticket-option">
-          <h3>By Phone</h3>
-          <p>Call the Poway Center box office during business hours.</p>
-          <a href="tel:8587480505" class="btn btn-secondary">(858) 748-0505</a>
-        </div>
-        <div class="ticket-option">
-          <h3>In Person</h3>
-          <p>Poway Center for the Performing Arts box office.</p>
-          <a href="{{ '/contact/' | relative_url }}" class="btn btn-secondary" data-allow-navigation="true">Get Directions</a>
-        </div>
-      </div>
-
-      <ul class="ticket-notes">
-        <li>Discounts available for seniors, students, and children.</li>
-        <li>Free parking at the venue.</li>
-        <li>All ticket sales are final — no refunds or exchanges.</li>
-        <li>Prices include a $5 box office fee.</li>
-      </ul>
-
-      <div class="section-cta-row">
-        <a href="{{ '/concerts/' | relative_url }}" class="btn btn-secondary" data-allow-navigation="true">View Full Season</a>
-        <a href="{{ '/donate/' | relative_url }}" class="btn btn-primary" data-allow-navigation="true">Make a Donation</a>
+        <article class="ticket-overview-card ticket-pricing-card">
+          <h3>Ticket Prices</h3>
+          <div class="ticket-pricing-grid">
+            <div class="ticket-tier-card">
+              <h4>Tier 1</h4>
+              <ul class="ticket-price-list">
+                <li><strong>$55</strong> Full price</li>
+                <li><strong>$50</strong> Seniors, 65+</li>
+                <li><strong>$25</strong> Students, 13-22</li>
+                <li><strong>$15</strong> Youth, 12 and under</li>
+              </ul>
+            </div>
+            <div class="ticket-tier-card">
+              <h4>Tier 2</h4>
+              <ul class="ticket-price-list">
+                <li><strong>$50</strong> Full price</li>
+                <li><strong>$45</strong> Seniors, 65+</li>
+                <li><strong>$20</strong> Students, 13-22</li>
+                <li><strong>$15</strong> Youth, 12 and under</li>
+              </ul>
+            </div>
+            <div class="ticket-tier-card">
+              <h4>Tier 3</h4>
+              <ul class="ticket-price-list">
+                <li><strong>$45</strong> Full price</li>
+                <li><strong>$38</strong> Seniors, 65+</li>
+                <li><strong>$18</strong> Students, 13-22</li>
+                <li><strong>$15</strong> Youth, 12 and under</li>
+              </ul>
+            </div>
+          </div>
+          <p class="ticket-pricing-note">
+            Prices include a $5 box office fee. All ticket sales, including season subscriptions, are final; no refunds or exchanges are permitted.
+          </p>
+        </article>
       </div>
     </div>
   </section>

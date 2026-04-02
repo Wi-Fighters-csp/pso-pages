@@ -453,6 +453,7 @@
     doublebass: 'bass',
     frenchhorn: 'frenchhorn'
   };
+  var defaultMemberProfileImage = "{{ '/images/capstone/powaysymphonyorchestra/musicians/blankpfp.jpg' | relative_url }}";
 
   var preferredDirectoryInstrumentOrder = [
     'Violin I',
@@ -702,6 +703,21 @@
     var lookupKey = instrumentSampleAliases[normalizedKey] || normalizedKey;
     return instrumentSampleAudio[lookupKey] || '';
   }
+  function buildMemberProfileUrl(person, instrumentTitle) {
+    var params = [];
+    var cardId = person.cardId || '';
+    var displayName = person.name || '';
+    var image = person.image || '';
+    var bio = person.bio || '';
+
+    if (cardId) params.push('card=' + encodeURIComponent(cardId));
+    if (displayName) params.push('name=' + encodeURIComponent(displayName));
+    if (instrumentTitle) params.push('instrument=' + encodeURIComponent(instrumentTitle));
+    if (image) params.push('image=' + encodeURIComponent(image));
+    if (bio) params.push('bio=' + encodeURIComponent(bio));
+
+    return '{{ "/powayorchestra/member/" | relative_url }}' + (params.length ? '?' + params.join('&') : '');
+  }
   function normalizeMember(member) {
     if (typeof member === 'string') {
       return { name: member, image: '', bio: '', instrumentTitle: '', isCustom: false, cardId: '', editable: false };
@@ -721,20 +737,16 @@
     var person = normalizeMember(member);
     var displayInstrumentTitle = person.instrumentTitle || instrumentTitle;
     var samplePath = getInstrumentSamplePath(displayInstrumentTitle);
-    var imageMarkup = person.image
-      ? '<img src="' + escapeHtml(person.image) + '" alt="' + escapeHtml(person.name) + ' portrait" class="musician-member-photo">'
-      : '<div class="musician-member-photo musician-member-photo--empty" aria-hidden="true"></div>';
+    var memberProfileUrl = buildMemberProfileUrl(person, displayInstrumentTitle);
+    var imageMarkup = '<img src="' + escapeHtml(person.image || defaultMemberProfileImage) + '" alt="' + escapeHtml(person.name) + ' portrait" class="musician-member-photo">';
     var sampleButtonMarkup = samplePath
       ? '<button type="button" class="sample-play-sample-btn musician-sample-btn" data-audio="' + samplePath + '" data-default-label="&#9654;" aria-label="Play instrument sample" title="Play instrument sample">&#9654;</button>'
       : '<button type="button" class="sample-play-sample-btn musician-sample-btn is-unavailable" disabled aria-disabled="true" aria-label="Instrument sample coming soon" title="Instrument sample coming soon">&#9654;</button>';
     var editButtonMarkup = person.editable
       ? '<button type="button" class="musician-card-edit-btn" data-member-card-edit="' + escapeHtml(person.cardId) + '">Edit</button>'
       : '';
-    var bioMarkup = person.bio
-      ? '<p class="musician-member-bio">' + escapeHtml(person.bio) + '</p>'
-      : '';
 
-    return '<article class="musician-member-card">'
+    return '<article class="musician-member-card" data-member-profile-url="' + escapeHtml(memberProfileUrl) + '" role="link" tabindex="0">'
       + '<div class="musician-member-photo-shell">' + imageMarkup + '</div>'
       + '<div class="musician-member-card-copy">'
       + '<div class="musician-member-card-top">'
@@ -742,7 +754,6 @@
       + '<div class="musician-member-card-actions">' + sampleButtonMarkup + editButtonMarkup + '</div>'
       + '</div>'
       + '<h6 class="musician-member-name">' + escapeHtml(person.name) + '</h6>'
-      + bioMarkup
       + '</div>'
       + '</article>';
   }
@@ -1190,7 +1201,6 @@
   function updateHeroVideoAudioToggle() {
     if (!heroVideoAudioToggle) return;
     var isAudible = Boolean(audioReady && heroBackgroundActive && !heroBackgroundUserMuted);
-    heroVideoAudioToggle.textContent = isAudible ? 'Mute' : 'Unmute';
     heroVideoAudioToggle.setAttribute('aria-label', isAudible ? 'Mute background audio' : 'Turn on background audio');
     heroVideoAudioToggle.setAttribute('aria-pressed', isAudible ? 'true' : 'false');
     heroVideoAudioToggle.title = isAudible ? 'Mute background audio' : 'Turn on background audio';
@@ -1494,9 +1504,22 @@
     renderMemberCardControls();
   });
   if (musicianMemberGroups) musicianMemberGroups.addEventListener('click', function (event) {
+    var memberCard = event.target.closest('.musician-member-card[data-member-profile-url]');
+    if (memberCard && !event.target.closest('button')) {
+      window.location.href = memberCard.getAttribute('data-member-profile-url');
+      return;
+    }
+
     var editButton = event.target.closest('[data-member-card-edit]');
     if (!editButton) return;
     openMemberCardEditorForEdit(editButton.getAttribute('data-member-card-edit'));
+  });
+  if (musicianMemberGroups) musicianMemberGroups.addEventListener('keydown', function (event) {
+    var memberCard = event.target.closest('.musician-member-card[data-member-profile-url]');
+    if (!memberCard) return;
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    window.location.href = memberCard.getAttribute('data-member-profile-url');
   });
   root.addEventListener('click', function (event) {
     var heroAudioToggle = event.target.closest('[data-hero-video-audio-toggle]');

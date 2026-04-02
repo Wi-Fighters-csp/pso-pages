@@ -6,9 +6,11 @@
   }
 
   .news-card {
-    background: var(--navy-mid);
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    background:
+      radial-gradient(circle at top right, rgba(242,166,160,0.12), transparent 34%),
+      linear-gradient(180deg, rgba(158,42,43,0.94), rgba(94,54,45,0.96));
+    border: 1px solid rgba(242,166,160,0.24);
+    border-radius: 18px;
     padding: 1.8rem;
     transition: border-color 0.2s;
   }
@@ -34,7 +36,7 @@
 
   .news-card p {
     font-size: 0.97rem;
-    color: rgba(250,246,239,0.7);
+    color: rgba(243,235,220,0.8);
     line-height: 1.7;
     margin-bottom: 1.2rem;
   }

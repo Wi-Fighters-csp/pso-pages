@@ -1,0 +1,292 @@
+<link rel="stylesheet" href="{{ '/assets/css/capstones/powayorchestra/signin.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/capstones/powayorchestra/member-profile.css' | relative_url }}">
+
+<div class="pso-signin-page">
+  <div class="pso-topbar">
+    <a class="pso-home-trigger" href="{{ '/' | relative_url }}">
+      <img src="{{ '/images/capstone/powaysymphonyorchestra/pso_logo.png' | relative_url }}" alt="Poway Symphony Orchestra" class="pso-home-logo">
+    </a>
+
+    <nav class="pso-topbar-nav" aria-label="Main navigation">
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/about/' | relative_url }}" class="top-nav-link">About <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/about/' | relative_url }}" class="top-nav-dropdown-link">Our Story</a>
+          <a href="{{ '/conductor/' | relative_url }}" class="top-nav-dropdown-link">Conductor</a>
+          <a href="{{ '/musicians/' | relative_url }}" class="top-nav-dropdown-link">Musicians</a>
+          <a href="{{ '/join/' | relative_url }}" class="top-nav-dropdown-link">Interested In Joining</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item has-submenu">
+        <a href="{{ '/concerts/' | relative_url }}" class="top-nav-link">Concerts <span class="top-nav-caret">&#9662;</span></a>
+        <div class="top-nav-dropdown">
+          <a href="{{ '/concerts/' | relative_url }}" class="top-nav-dropdown-link">2025-2026 Season</a>
+          <a href="{{ '/tickets/' | relative_url }}" class="top-nav-dropdown-link">Buy Tickets</a>
+          <a href="{{ '/media/' | relative_url }}" class="top-nav-dropdown-link">Videos &amp; Recordings</a>
+        </div>
+      </div>
+
+      <div class="top-nav-item">
+        <a href="{{ '/support/' | relative_url }}" class="top-nav-link">Support</a>
+      </div>
+
+      <div class="top-nav-actions">
+        <div class="top-nav-item">
+          <a href="{{ '/powayorchestra/profile/' | relative_url }}" class="top-nav-link" data-pso-account-link data-signin-label="Sign In" data-profile-href="{{ '/powayorchestra/profile/' | relative_url }}" data-signin-href="{{ '/powayorchestra/signin/' | relative_url }}">Sign In</a>
+        </div>
+        <div class="top-nav-item">
+          <a href="{{ '/tickets/' | relative_url }}" class="top-nav-link btn-primary">Buy Tickets</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <section class="pso-member-profile-shell">
+    <div class="pso-member-profile-inner">
+      <a class="pso-member-profile-back" href="{{ '/musicians/' | relative_url }}">&larr; Back to musicians</a>
+
+      <div class="pso-member-profile-card">
+        <div class="pso-member-profile-hero">
+          <div class="pso-member-profile-photo-shell" id="pso-member-profile-photo-shell">
+            <img id="pso-member-profile-photo" class="pso-member-profile-photo" alt="Member portrait">
+          </div>
+
+          <div class="pso-member-profile-copy">
+            <span class="pso-member-profile-label">Poway Symphony Orchestra Member</span>
+            <h1 id="pso-member-profile-name">Loading member...</h1>
+            <p class="pso-member-profile-instrument" id="pso-member-profile-instrument">Instrument loading...</p>
+
+            <div class="pso-member-profile-actions">
+              <button type="button" class="pso-member-profile-sample-btn" id="pso-member-profile-sample">Play Instrument Sample</button>
+            </div>
+
+            <p class="pso-member-profile-sample-status" id="pso-member-profile-sample-status">Checking for an instrument sample...</p>
+          </div>
+        </div>
+
+        <div class="pso-member-profile-details">
+          <section class="pso-member-profile-panel">
+            <h2>Biography</h2>
+            <p id="pso-member-profile-bio">Loading member biography...</p>
+          </section>
+
+          <section class="pso-member-profile-panel">
+            <h2>Member Details</h2>
+            <div class="pso-member-profile-meta">
+              <div>
+                <span class="pso-member-profile-meta-label">Full Name</span>
+                <strong id="pso-member-profile-full-name">--</strong>
+              </div>
+              <div>
+                <span class="pso-member-profile-meta-label">Instrument</span>
+                <strong id="pso-member-profile-meta-instrument">--</strong>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <p class="pso-member-profile-status" id="pso-member-profile-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  var psoPythonURI = isLocalHost ? 'http://' + location.hostname + ':8324' : 'https://flask.opencodingsociety.com';
+  var accountLinks = Array.prototype.slice.call(document.querySelectorAll('[data-pso-account-link]'));
+  var nameNode = document.getElementById('pso-member-profile-name');
+  var fullNameNode = document.getElementById('pso-member-profile-full-name');
+  var instrumentNode = document.getElementById('pso-member-profile-instrument');
+  var metaInstrumentNode = document.getElementById('pso-member-profile-meta-instrument');
+  var bioNode = document.getElementById('pso-member-profile-bio');
+  var statusNode = document.getElementById('pso-member-profile-status');
+  var photoNode = document.getElementById('pso-member-profile-photo');
+  var sampleButton = document.getElementById('pso-member-profile-sample');
+  var sampleStatus = document.getElementById('pso-member-profile-sample-status');
+  var currentAudio = null;
+  var defaultProfileImage = "{{ '/images/capstone/powaysymphonyorchestra/musicians/blankpfp.jpg' | relative_url }}";
+
+  function setAccountLinks(user) {
+    accountLinks.forEach(function (link) {
+      if (user && user.name) {
+        link.textContent = user.name;
+        link.href = link.dataset.profileHref;
+      } else {
+        link.textContent = link.dataset.signinLabel || 'Sign In';
+        link.href = link.dataset.signinHref;
+      }
+    });
+  }
+
+  function normalizeInstrumentKey(value) {
+    return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+  }
+
+  var instrumentSampleAudio = {
+    violin: "{{ '/assets/audio/poway-orchestra/violin.mp3' | relative_url }}",
+    viola: "{{ '/assets/audio/poway-orchestra/viola.mp3' | relative_url }}",
+    cello: "{{ '/assets/audio/poway-orchestra/cello.mp3' | relative_url }}",
+    bass: "{{ '/assets/audio/poway-orchestra/bass.mp3' | relative_url }}",
+    flute: "{{ '/assets/audio/poway-orchestra/flute.mp3' | relative_url }}",
+    clarinet: "{{ '/assets/audio/poway-orchestra/clarinet.mp3' | relative_url }}",
+    trumpet: "{{ '/assets/audio/poway-orchestra/trumpet.mp3' | relative_url }}",
+    trombone: "{{ '/assets/audio/poway-orchestra/trombone.wav' | relative_url }}",
+    tuba: "{{ '/assets/audio/poway-orchestra/tuba.wav' | relative_url }}",
+    frenchhorn: "{{ '/assets/audio/poway-orchestra/french-horn.mp3' | relative_url }}",
+    timpani: "{{ '/assets/audio/poway-orchestra/timpani.mp3' | relative_url }}"
+  };
+
+  var instrumentSampleAliases = {
+    violini: 'violin',
+    violinii: 'violin',
+    bassists: 'bass',
+    doublebass: 'bass',
+    frenchhorn: 'frenchhorn'
+  };
+
+  function getInstrumentSamplePath(instrumentTitle) {
+    var normalizedKey = normalizeInstrumentKey(instrumentTitle);
+    var lookupKey = instrumentSampleAliases[normalizedKey] || normalizedKey;
+    return instrumentSampleAudio[lookupKey] || '';
+  }
+
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderMemberProfile(member) {
+    var fullName = member.name || 'Poway Symphony Musician';
+    var instrument = member.instrument || 'Instrument information coming soon';
+    var bio = member.bio || 'This member has not added a biography yet.';
+    var image = member.image || defaultProfileImage;
+    var samplePath = getInstrumentSamplePath(instrument);
+
+    nameNode.textContent = fullName;
+    fullNameNode.textContent = fullName;
+    instrumentNode.textContent = instrument;
+    metaInstrumentNode.textContent = instrument;
+    bioNode.textContent = bio;
+    statusNode.textContent = '';
+
+    photoNode.src = image;
+    photoNode.hidden = false;
+
+    sampleButton.dataset.audio = samplePath;
+    if (samplePath) {
+      sampleButton.disabled = false;
+      sampleStatus.textContent = 'Listen to a short sample for this instrument.';
+    } else {
+      sampleButton.disabled = true;
+      sampleStatus.textContent = 'An instrument sample is not available for this member yet.';
+    }
+  }
+
+  function fallbackMemberFromQuery(params) {
+    return {
+      id: params.get('card') || '',
+      name: params.get('name') || '',
+      instrument: params.get('instrument') || '',
+      image: params.get('image') || '',
+      bio: params.get('bio') || ''
+    };
+  }
+
+  function fetchIdentity() {
+    fetch(psoPythonURI + '/api/id', {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Origin': 'client'
+      }
+    }).then(function (response) {
+      if (!response.ok) return null;
+      return response.json();
+    }).then(function (user) {
+      setAccountLinks(user && user.name ? user : null);
+    }).catch(function () {
+      setAccountLinks(null);
+    });
+  }
+
+  function loadMember() {
+    var params = new URLSearchParams(window.location.search);
+    var cardId = params.get('card');
+    var fallback = fallbackMemberFromQuery(params);
+
+    if (!cardId) {
+      if (!fallback.name) {
+        statusNode.textContent = 'No musician was selected.';
+        return;
+      }
+      renderMemberProfile(fallback);
+      return;
+    }
+
+    fetch(psoPythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Origin': 'client'
+      }
+    }).then(function (response) {
+      if (!response.ok) throw new Error('Unable to load this musician profile.');
+      return response.json();
+    }).then(function (data) {
+      var card = data && data.card ? data.card : data;
+      renderMemberProfile({
+        id: card.id || fallback.id,
+        name: card.owner_name || fallback.name,
+        instrument: card.instrument_title || fallback.instrument,
+        image: card.image_url || fallback.image,
+        bio: card.bio || fallback.bio
+      });
+    }).catch(function () {
+      if (fallback.name) {
+        renderMemberProfile(fallback);
+        statusNode.textContent = 'Showing the roster version of this musician profile.';
+      } else {
+        statusNode.textContent = 'Unable to load this musician profile.';
+      }
+    });
+  }
+
+  sampleButton.addEventListener('click', function () {
+    var audioPath = sampleButton.dataset.audio || '';
+    if (!audioPath) return;
+
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio = null;
+    }
+
+    currentAudio = new Audio(audioPath);
+    currentAudio.play().then(function () {
+      sampleStatus.textContent = 'Playing instrument sample.';
+    }).catch(function () {
+      sampleStatus.textContent = 'Unable to play the instrument sample right now.';
+    });
+    currentAudio.addEventListener('ended', function () {
+      sampleStatus.textContent = 'Listen to a short sample for this instrument.';
+    });
+  });
+
+  setAccountLinks(null);
+  fetchIdentity();
+  loadMember();
+}());
+</script>

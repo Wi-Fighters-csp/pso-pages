@@ -158,7 +158,7 @@
         </section>
 
         <aside class="pso-profile-card" data-member-panel>
-          <h3>Membership Overview</h3>
+          <h3>Member Overview</h3>
           <p class="pso-signin-section-copy">
             A snapshot of your orchestra membership and current account status.
           </p>
@@ -175,6 +175,41 @@
           </div>
 
           <div class="pso-profile-badges" id="pso-badges"></div>
+
+          <div class="pso-profile-member-card-editor">
+            <div class="pso-profile-member-card-head">
+              <h4>Edit Member Card</h4>
+              <p class="pso-signin-section-copy">
+                Update the member card your orchestra admin created for you.
+              </p>
+            </div>
+
+            <div class="pso-profile-member-card-status" id="pso-member-card-status" role="status" aria-live="polite">
+              Checking for your member card...
+            </div>
+
+            <div class="pso-profile-member-card-empty" id="pso-member-card-empty" hidden>
+              Contact your orchestra admin to create your member card before you can edit it here.
+            </div>
+
+            <div class="pso-profile-member-card-form" id="pso-member-card-form" hidden>
+              <div class="pso-profile-card-summary" id="pso-member-card-summary"></div>
+
+              <div class="pso-field">
+                <label for="pso-member-card-image">Profile Image URL</label>
+                <input id="pso-member-card-image" type="url" placeholder="https://example.com/your-photo.jpg">
+              </div>
+
+              <div class="pso-field">
+                <label for="pso-member-card-bio">Member Card Bio</label>
+                <textarea id="pso-member-card-bio" placeholder="Share a short musician bio for your member card."></textarea>
+              </div>
+
+              <div class="pso-profile-member-card-actions">
+                <button class="pso-button pso-button-primary" id="pso-member-card-save" type="button">Save Member Card</button>
+              </div>
+            </div>
+          </div>
         </aside>
       </div>
 
@@ -227,12 +262,20 @@
   const nextConcert = document.getElementById('pso-next-concert');
   const badges = document.getElementById('pso-badges');
   const eventList = document.getElementById('pso-event-list');
+  const memberCardStatus = document.getElementById('pso-member-card-status');
+  const memberCardEmpty = document.getElementById('pso-member-card-empty');
+  const memberCardForm = document.getElementById('pso-member-card-form');
+  const memberCardSummary = document.getElementById('pso-member-card-summary');
+  const memberCardImage = document.getElementById('pso-member-card-image');
+  const memberCardBio = document.getElementById('pso-member-card-bio');
+  const memberCardSaveButton = document.getElementById('pso-member-card-save');
   const memberOnlyElements = Array.from(document.querySelectorAll('[data-member-only]'));
   const memberPanels = Array.from(document.querySelectorAll('[data-member-panel]'));
   const summaryGrid = document.getElementById('pso-profile-summary-grid');
   const experienceGrid = document.getElementById('pso-profile-experience-grid');
   const concertsCard = document.getElementById('pso-concerts-card');
   var currentUser = null;
+  var currentMemberCard = null;
 
   const orchestraEvents = [
     {
@@ -286,6 +329,128 @@
     if (!user) return false;
     if (user.is_admin === true) return true;
     return ['admin', 'superadmin'].indexOf(String(user.role || '').toLowerCase()) !== -1;
+  }
+
+  function normalizeMemberCard(card) {
+    return {
+      id: String(card && (card.id || card.card_id) || ''),
+      ownerUid: String(card && (card.owner_uid || card.ownerUid) || ''),
+      ownerName: String(card && (card.owner_name || card.ownerName) || ''),
+      family: String(card && card.family || ''),
+      sectionId: String(card && (card.section_id || card.sectionId) || ''),
+      instrumentTitle: String(card && (card.instrument_title || card.instrumentTitle) || ''),
+      image: String(card && (card.image_url || card.image) || ''),
+      bio: String(card && card.bio || ''),
+      createdByUid: String(card && (card.created_by_uid || card.createdByUid) || ''),
+      updatedAt: String(card && (card.updated_at || card.updatedAt) || '')
+    };
+  }
+
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  async function fetchMemberCards() {
+    const response = await fetch(`${psoPythonURI}/api/pso/member-cards`, fetchOptions);
+    if (!response.ok) {
+      throw new Error(await parseResponseMessage(response, 'Unable to load member cards right now.'));
+    }
+    const data = await response.json();
+    const cards = Array.isArray(data && data.cards) ? data.cards : [];
+    return cards.map(normalizeMemberCard).filter((card) => card.id);
+  }
+
+  async function updateMemberCard(cardId, payload) {
+    const response = await fetch(`${psoPythonURI}/api/pso/member-cards/${encodeURIComponent(cardId)}`, {
+      ...fetchOptions,
+      method: 'PATCH',
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(await parseResponseMessage(response, 'Unable to update your member card right now.'));
+    }
+
+    const data = await response.json();
+    return normalizeMemberCard(data && data.card ? data.card : {});
+  }
+
+  function setMemberCardEditorState(options) {
+    const statusText = options && options.status ? options.status : '';
+    const showForm = Boolean(options && options.showForm);
+    const showEmpty = Boolean(options && options.showEmpty);
+    const isError = Boolean(options && options.isError);
+
+    if (memberCardStatus) {
+      memberCardStatus.textContent = statusText;
+      memberCardStatus.classList.toggle('is-error', isError);
+    }
+
+    if (memberCardEmpty) memberCardEmpty.hidden = !showEmpty;
+    if (memberCardForm) memberCardForm.hidden = !showForm;
+    if (memberCardSaveButton) memberCardSaveButton.disabled = !showForm;
+  }
+
+  function renderMemberCardSummary(card) {
+    if (!memberCardSummary) return;
+    if (!card) {
+      memberCardSummary.innerHTML = '';
+      return;
+    }
+
+    memberCardSummary.innerHTML = [
+      `<div><span class="pso-panel-label">Name</span><strong>${escapeHtml(card.ownerName || currentUser && currentUser.name || '--')}</strong></div>`,
+      `<div><span class="pso-panel-label">Instrument</span><strong>${escapeHtml(card.instrumentTitle || '--')}</strong></div>`,
+      `<div><span class="pso-panel-label">Section</span><strong>${escapeHtml(card.family || '--')}</strong></div>`
+    ].join('');
+  }
+
+  function isAdminCreatedMemberCard(card, user) {
+    if (!card || !user) return false;
+    if (card.ownerUid !== String(user.uid || '')) return false;
+    if (!card.createdByUid) return false;
+    return card.createdByUid !== card.ownerUid;
+  }
+
+  async function loadMemberCardEditor(user) {
+    currentMemberCard = null;
+    renderMemberCardSummary(null);
+    if (!user) {
+      setMemberCardEditorState({ status: 'Sign in to load your member card.', showForm: false, showEmpty: false });
+      return;
+    }
+
+    setMemberCardEditorState({ status: 'Checking for your member card...', showForm: false, showEmpty: false });
+
+    try {
+      const cards = await fetchMemberCards();
+      const ownedCards = cards.filter((card) => card.ownerUid === String(user.uid || ''));
+      const editableCard = ownedCards.find((card) => isAdminCreatedMemberCard(card, user));
+
+      if (!editableCard) {
+        setMemberCardEditorState({
+          status: ownedCards.length
+            ? 'Your member card is not currently marked as admin-created, so profile editing is locked here.'
+            : 'No member card was found for your account.',
+          showForm: false,
+          showEmpty: true
+        });
+        return;
+      }
+
+      currentMemberCard = editableCard;
+      if (memberCardImage) memberCardImage.value = editableCard.image || '';
+      if (memberCardBio) memberCardBio.value = editableCard.bio || '';
+      renderMemberCardSummary(editableCard);
+      setMemberCardEditorState({ status: 'Your admin-created member card is ready to edit.', showForm: true, showEmpty: false });
+    } catch (error) {
+      setMemberCardEditorState({ status: error.message || 'Unable to load your member card.', showForm: false, showEmpty: false, isError: true });
+    }
   }
 
   function isRegisteredMember(profile) {
@@ -609,6 +774,7 @@
     profileAvatar.textContent = initialsFromName(user.name);
     adminDashboardLink.hidden = !isAdminUser(user);
     applyProfileState(profile);
+    await loadMemberCardEditor(user);
   }
 
   async function loadProfile() {
@@ -639,6 +805,33 @@
   profileSaveButton.addEventListener('click', () => {
     saveLocalProfile();
     setMessage('success', 'Profile extras saved on this device.');
+  });
+
+  memberCardSaveButton.addEventListener('click', async () => {
+    if (!currentUser || !currentMemberCard) {
+      setMemberCardEditorState({ status: 'No editable member card is available for this account.', showForm: false, showEmpty: true, isError: true });
+      return;
+    }
+
+    memberCardSaveButton.disabled = true;
+    setMemberCardEditorState({ status: 'Saving your member card...', showForm: true, showEmpty: false });
+
+    try {
+      currentMemberCard = await updateMemberCard(currentMemberCard.id, {
+        owner_name: currentMemberCard.ownerName || currentUser.name || '',
+        instrument_title: currentMemberCard.instrumentTitle || '',
+        image_url: memberCardImage.value.trim(),
+        bio: memberCardBio.value.trim()
+      });
+      renderMemberCardSummary(currentMemberCard);
+      if (memberCardImage) memberCardImage.value = currentMemberCard.image || '';
+      if (memberCardBio) memberCardBio.value = currentMemberCard.bio || '';
+      setMemberCardEditorState({ status: 'Member card updated successfully.', showForm: true, showEmpty: false });
+    } catch (error) {
+      setMemberCardEditorState({ status: error.message || 'Unable to update your member card.', showForm: true, showEmpty: false, isError: true });
+    } finally {
+      memberCardSaveButton.disabled = false;
+    }
   });
 
   [sectionField].forEach((field) => {
