@@ -1220,10 +1220,7 @@
       }
 
       setAccountLinks(null);
-      setMessage('success', 'Signed out successfully. Returning to the sign-in page...');
-      window.setTimeout(() => {
-        window.location.href = `${baseurl}/powayorchestra/signin/`;
-      }, 1000);
+      window.location.replace(`${baseurl}/powayorchestra/signin/`);
     } catch (error) {
       setMessage('error', error.message);
       logoutButton.disabled = false;

@@ -673,10 +673,7 @@
       }
 
       setAccountLinks(null);
-      setMessage('success', 'Signed out successfully. Returning to the sign-in page...');
-      window.setTimeout(() => {
-        window.location.href = signInUrl;
-      }, 1000);
+      window.location.replace(signInUrl);
     } catch (error) {
       setMessage('error', error.message);
       adminLogout.disabled = false;

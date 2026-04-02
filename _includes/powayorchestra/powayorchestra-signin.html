@@ -158,6 +158,7 @@
   const signupPanel = document.getElementById('pso-signup-panel');
   const adminUrl = `${baseurl}/powayorchestra/admin/`;
   const homeUrl = `${baseurl}/`;
+  const signInUrl = `${baseurl}/powayorchestra/signin/`;
   let pythonURI = configPythonURI;
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
     pythonURI = "http://localhost:8324";
@@ -388,8 +389,9 @@
 
       hideActions();
       form.reset();
+      signupForm.reset();
       setAccountLinks(null);
-      setMessage('success', 'You have been signed out of the orchestra account.');
+      window.location.replace(signInUrl);
     } catch (error) {
       setMessage('error', error.message);
       showActions();
