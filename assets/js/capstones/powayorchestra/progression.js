@@ -12,13 +12,6 @@
   }
   var progressionEndpoint = backendURI + '/api/pso/progression';
 
-  var LEVELS = [
-    { title: 'Beginner', xp: 0 },
-    { title: 'Section Member', xp: 120 },
-    { title: 'Principal', xp: 280 },
-    { title: 'Maestro', xp: 520 }
-  ];
-
   var QUESTS = [
     {
       id: 'welcome-overture',
@@ -37,12 +30,28 @@
       rewardXp: 55
     },
     {
+      id: 'season-cartographer',
+      title: 'Season Cartographer',
+      description: 'Explore five Poway pages across the site.',
+      metric: 'uniquePages',
+      goal: 5,
+      rewardXp: 70
+    },
+    {
       id: 'section-walkthrough',
       title: 'Section Walkthrough',
       description: 'View four different sections or panels.',
       metric: 'sectionViews',
       goal: 4,
       rewardXp: 65
+    },
+    {
+      id: 'full-house-tour',
+      title: 'Full House Tour',
+      description: 'View eight different sections or panels.',
+      metric: 'sectionViews',
+      goal: 8,
+      rewardXp: 78
     },
     {
       id: 'keen-listener',
@@ -53,12 +62,28 @@
       rewardXp: 70
     },
     {
+      id: 'deep-listener',
+      title: 'Deep Listener',
+      description: 'Play five media or instrument samples.',
+      metric: 'mediaInteractions',
+      goal: 5,
+      rewardXp: 88
+    },
+    {
       id: 'patron-path',
       title: 'Patron Path',
       description: 'Open two support, ticket, or donation actions.',
       metric: 'supportInteractions',
       goal: 2,
       rewardXp: 50
+    },
+    {
+      id: 'community-circle',
+      title: 'Community Circle',
+      description: 'Open three support, ticket, or donation actions.',
+      metric: 'supportInteractions',
+      goal: 3,
+      rewardXp: 65
     },
     {
       id: 'roster-reader',
@@ -69,6 +94,14 @@
       rewardXp: 60
     },
     {
+      id: 'section-specialist',
+      title: 'Section Specialist',
+      description: 'Search or filter the musician directory five times.',
+      metric: 'directoryInteractions',
+      goal: 5,
+      rewardXp: 82
+    },
+    {
       id: 'builder-challenge',
       title: 'Builder Challenge',
       description: 'Interact with the orchestra builder.',
@@ -77,16 +110,41 @@
       rewardXp: 80
     },
     {
+      id: 'stage-architect',
+      title: 'Stage Architect',
+      description: 'Interact with the orchestra builder three times.',
+      metric: 'builderInteractions',
+      goal: 3,
+      rewardXp: 96
+    },
+    {
       id: 'profile-keeper',
       title: 'Profile Keeper',
       description: 'Save a profile, favorite list, member card, or request action.',
       metric: 'profileActions',
       goal: 1,
       rewardXp: 85
+    },
+    {
+      id: 'ensemble-steward',
+      title: 'Ensemble Steward',
+      description: 'Complete three profile or account actions.',
+      metric: 'profileActions',
+      goal: 3,
+      rewardXp: 92
     }
   ];
 
+  var LEVELS = [
+    { title: 'Beginner', xp: 0, requiredQuests: 0 },
+    { title: 'Section Member', xp: 120, requiredQuests: 1 },
+    { title: 'Principal', xp: 280, requiredQuests: 4 },
+    { title: 'Concertmaster', xp: 520, requiredQuests: 8 },
+    { title: 'Maestro', xp: 760, requiredQuests: QUESTS.length }
+  ];
+
   var UI_STORAGE_KEY = 'pso-progression:ui';
+  var STATE_STORAGE_KEY_PREFIX = 'pso-progression:state:';
   var currentUser = null;
   var state = null;
   var widget = null;
@@ -141,6 +199,85 @@
     };
   }
 
+  function progressionStorageKey(uid) {
+    return STATE_STORAGE_KEY_PREFIX + String(uid || '').trim().toLowerCase();
+  }
+
+  function parseProgressionTime(value) {
+    var parsed = Date.parse(value || '');
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  function progressionScore(candidate) {
+    if (!candidate) return 0;
+    var metrics = candidate.metrics || {};
+    return (Number(candidate.xp) || 0) +
+      (Array.isArray(candidate.completedQuests) ? candidate.completedQuests.length * 100 : 0) +
+      (Array.isArray(metrics.uniquePages) ? metrics.uniquePages.length * 10 : 0) +
+      (Array.isArray(metrics.sectionViews) ? metrics.sectionViews.length * 8 : 0) +
+      (Number(metrics.mediaInteractions) || 0) * 6 +
+      (Number(metrics.supportInteractions) || 0) * 6 +
+      (Number(metrics.directoryInteractions) || 0) * 6 +
+      (Number(metrics.builderInteractions) || 0) * 8 +
+      (Number(metrics.profileActions) || 0) * 8;
+  }
+
+  function chooseProgressionState(primaryState, secondaryState) {
+    var normalizedPrimary = primaryState ? normalizeProgressionState(primaryState) : null;
+    var normalizedSecondary = secondaryState ? normalizeProgressionState(secondaryState) : null;
+
+    if (!normalizedPrimary) return normalizedSecondary || defaultState();
+    if (!normalizedSecondary) return normalizedPrimary;
+
+    var primaryTime = parseProgressionTime(normalizedPrimary.lastUpdatedAt);
+    var secondaryTime = parseProgressionTime(normalizedSecondary.lastUpdatedAt);
+
+    if (primaryTime !== secondaryTime) {
+      return primaryTime > secondaryTime ? normalizedPrimary : normalizedSecondary;
+    }
+
+    return progressionScore(normalizedPrimary) >= progressionScore(normalizedSecondary)
+      ? normalizedPrimary
+      : normalizedSecondary;
+  }
+
+  function shouldPreferCachedProgression(cachedProgression, serverProgression) {
+    if (!cachedProgression) return false;
+    if (!serverProgression) return true;
+
+    var cachedTime = parseProgressionTime(cachedProgression.lastUpdatedAt);
+    var serverTime = parseProgressionTime(serverProgression.lastUpdatedAt);
+
+    if (cachedTime !== serverTime) {
+      return cachedTime > serverTime;
+    }
+
+    return progressionScore(cachedProgression) > progressionScore(serverProgression);
+  }
+
+  function loadCachedProgression(uid) {
+    if (!uid) return null;
+    try {
+      var raw = window.localStorage.getItem(progressionStorageKey(uid));
+      if (!raw) return null;
+      return normalizeProgressionState(JSON.parse(raw));
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function persistCachedProgression() {
+    if (!currentUser || !currentUser.uid || !state) return;
+    try {
+      window.localStorage.setItem(
+        progressionStorageKey(currentUser.uid),
+        JSON.stringify(progressionPayload())
+      );
+    } catch (error) {
+      console.warn('Unable to cache Poway progression locally.', error);
+    }
+  }
+
   function handleProgressionUnauthorized() {
     window.clearTimeout(saveTimer);
     saveTimer = null;
@@ -174,12 +311,14 @@
     }).then(normalizeProgressionState);
   }
 
-  function saveProgression(update) {
+  function saveProgression(update, options) {
+    var requestOptions = options || {};
     return fetch(progressionEndpoint, {
       method: 'PUT',
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'include',
+      keepalive: Boolean(requestOptions.keepalive),
       headers: {
         'Content-Type': 'application/json',
         'X-Origin': 'client'
@@ -198,10 +337,12 @@
     }).then(normalizeProgressionState);
   }
 
-  function flushSave() {
+  function flushSave(options) {
     if (!currentUser || !state) return;
-    saveInFlight = saveProgression(progressionPayload()).then(function (serverState) {
+    persistCachedProgression();
+    saveInFlight = saveProgression(progressionPayload(), options).then(function (serverState) {
       state = serverState;
+      persistCachedProgression();
       renderWidget();
       return serverState;
     }).catch(function (error) {
@@ -237,7 +378,69 @@
   function saveState() {
     if (!currentUser || !state) return;
     state.lastUpdatedAt = new Date().toISOString();
+    persistCachedProgression();
     queueSave();
+  }
+
+  function flushProgressionNow() {
+    if (!currentUser || !state) return;
+    state.lastUpdatedAt = state.lastUpdatedAt || new Date().toISOString();
+    persistCachedProgression();
+    window.clearTimeout(saveTimer);
+    saveTimer = null;
+    if (saveInFlight) {
+      saveQueued = true;
+      return;
+    }
+    flushSave({ keepalive: true });
+  }
+
+  function questRequirementProgress(fromCount, toCount) {
+    if (!state) return 0;
+    var span = Math.max(1, toCount - fromCount);
+    return Math.max(0, Math.min(100, ((state.completedQuests.length - fromCount) / span) * 100));
+  }
+
+  function nextLevelCopy() {
+    if (!state) return '';
+    var next = nextLevel();
+    if (!next) {
+      return state.completedQuests.length === QUESTS.length
+        ? 'All levels and quests complete.'
+        : (QUESTS.length - state.completedQuests.length) + ' quests left to fully clear progression';
+    }
+
+    var xpRemaining = Math.max(0, next.xp - state.xp);
+    var questsRemaining = Math.max(0, (next.requiredQuests || 0) - state.completedQuests.length);
+    if (xpRemaining > 0 && questsRemaining > 0) {
+      return xpRemaining + ' XP and ' + questsRemaining + ' quests to ' + next.title;
+    }
+    if (questsRemaining > 0) {
+      return questsRemaining + ' quests to ' + next.title;
+    }
+    if (xpRemaining > 0) {
+      return xpRemaining + ' XP to ' + next.title;
+    }
+    return 'Ready for ' + next.title;
+  }
+
+  function sortActiveQuests(left, right) {
+    var leftPercent = questProgress(left) / left.goal;
+    var rightPercent = questProgress(right) / right.goal;
+    if (rightPercent !== leftPercent) return rightPercent - leftPercent;
+    return right.rewardXp - left.rewardXp;
+  }
+
+  function sortCompletedQuests(left, right) {
+    return QUESTS.findIndex(function (quest) { return quest.id === left.id; }) -
+      QUESTS.findIndex(function (quest) { return quest.id === right.id; });
+  }
+
+  function buildCompletedQuestMarkup(quest) {
+    return '<article class="pso-gamify-quest is-complete is-compact">' +
+      '<div class="pso-gamify-quest-head"><strong>' + quest.title + '</strong><span>Completed</span></div>' +
+      '<p>' + quest.description + '</p>' +
+    '</article>';
   }
 
   function loadUiState() {
@@ -292,9 +495,10 @@
 
   function currentLevel() {
     var xp = state ? state.xp : 0;
+    var completedQuests = state ? state.completedQuests.length : 0;
     var active = LEVELS[0];
     LEVELS.forEach(function (level) {
-      if (xp >= level.xp) {
+      if (xp >= level.xp && completedQuests >= (level.requiredQuests || 0)) {
         active = level;
       }
     });
@@ -302,11 +506,12 @@
   }
 
   function nextLevel() {
-    var xp = state ? state.xp : 0;
-    for (var index = 0; index < LEVELS.length; index += 1) {
-      if (LEVELS[index].xp > xp) return LEVELS[index];
-    }
-    return null;
+    var current = currentLevel();
+    var currentIndex = LEVELS.findIndex(function (level) {
+      return level.title === current.title;
+    });
+    if (currentIndex === -1 || currentIndex >= LEVELS.length - 1) return null;
+    return LEVELS[currentIndex + 1];
   }
 
   function levelProgressPercent() {
@@ -335,6 +540,7 @@
     if (state.metrics.builderInteractions >= 1) badges.push('Stage Planner');
     if (state.metrics.supportInteractions >= 2) badges.push('Patron Pulse');
     if (state.completedQuests.length >= 4) badges.push('Principal Focus');
+    if (currentLevel().title === 'Concertmaster') badges.push('Concertmaster');
     if (currentLevel().title === 'Maestro') badges.push('Maestro');
     return badges.slice(0, 4);
   }
@@ -451,9 +657,12 @@
     var level = currentLevel();
     var next = nextLevel();
     var badges = derivedBadges();
-    var openQuests = QUESTS.slice().sort(function (left, right) {
-      return questProgress(right) - questProgress(left);
-    }).slice(0, 4);
+    var activeQuests = QUESTS.filter(function (quest) {
+      return !hasCompletedQuest(quest.id);
+    }).sort(sortActiveQuests);
+    var completedQuests = QUESTS.filter(function (quest) {
+      return hasCompletedQuest(quest.id);
+    }).sort(sortCompletedQuests);
 
     renderShell(
       '<div class="pso-gamify-card">' +
@@ -469,7 +678,7 @@
         '</div>' +
         '<p class="pso-gamify-copy">' + escapeHtml(currentUser.name || currentUser.uid || 'Member') + ' is building momentum across the site.</p>' +
         '<div class="pso-gamify-group">' +
-          '<div class="pso-gamify-row"><span>Level Progress</span><span>' + (next ? (next.xp - state.xp) + ' XP to ' + next.title : 'Top Level Reached') + '</span></div>' +
+          '<div class="pso-gamify-row"><span>XP Progress</span><span>' + nextLevelCopy() + '</span></div>' +
           '<div class="pso-gamify-track"><span style="width:' + levelProgressPercent() + '%"></span></div>' +
         '</div>' +
         '<div class="pso-gamify-group">' +
@@ -481,7 +690,20 @@
             return '<span class="pso-gamify-badge">' + badge + '</span>';
           }).join('') : '<span class="pso-gamify-badge is-muted">No badges yet</span>') +
         '</div>' +
-        '<div class="pso-gamify-quests">' + openQuests.map(buildQuestMarkup).join('') + '</div>' +
+        '<div class="pso-gamify-quest-sections">' +
+          '<div class="pso-gamify-group">' +
+            '<div class="pso-gamify-row"><span>Active Quests</span><span>' + activeQuests.length + '</span></div>' +
+            '<div class="pso-gamify-quest-list">' +
+              (activeQuests.length ? activeQuests.map(buildQuestMarkup).join('') : '<p class="pso-gamify-empty">All active quests are cleared. Open completed quests below to review the full run.</p>') +
+            '</div>' +
+          '</div>' +
+          '<details class="pso-gamify-completed">' +
+            '<summary><span>Completed Quests</span><span>' + completedQuests.length + '</span></summary>' +
+            '<div class="pso-gamify-completed-body">' +
+              (completedQuests.length ? completedQuests.map(buildCompletedQuestMarkup).join('') : '<p class="pso-gamify-empty">Completed quests will collect here.</p>') +
+            '</div>' +
+          '</details>' +
+        '</div>' +
       '</div>'
     );
   }
@@ -582,11 +804,22 @@
       pageVisitRecorded = false;
     }
     currentUser = user;
-    return loadProgression().then(function (serverState) {
-      if (!currentUser || currentUser.uid !== user.uid) return null;
-      state = serverState;
+    var cachedState = loadCachedProgression(user.uid);
+    if (cachedState) {
+      state = cachedState;
       setupSectionTracking();
       renderWidget();
+    }
+    return loadProgression().then(function (serverState) {
+      if (!currentUser || currentUser.uid !== user.uid) return null;
+      var useCachedState = shouldPreferCachedProgression(cachedState, serverState);
+      state = useCachedState ? cachedState : serverState;
+      persistCachedProgression();
+      setupSectionTracking();
+      renderWidget();
+      if (useCachedState && progressionScore(cachedState) > progressionScore(serverState)) {
+        queueSave(0);
+      }
       if (!pageVisitRecorded) {
         pageVisitRecorded = true;
         recordUnique('uniquePages', location.pathname, 18);
@@ -598,7 +831,8 @@
         return null;
       }
       console.warn('Unable to load Poway progression.', error);
-      state = defaultState();
+      state = cachedState || defaultState();
+      persistCachedProgression();
       setupSectionTracking();
       renderWidget();
       if (!pageVisitRecorded) {
@@ -660,6 +894,12 @@
     renderLockedWidget();
     setupClickTracking();
     setupInputTracking();
+    window.addEventListener('pagehide', flushProgressionNow);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') {
+        flushProgressionNow();
+      }
+    });
     fetchIdentity();
   }
 
