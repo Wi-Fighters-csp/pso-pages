@@ -141,6 +141,7 @@
   </section>
 </div>
 
+<script src="{{ '/assets/js/capstones/powayorchestra/progression.js' | relative_url }}"></script>
 <script type="module">
   import { baseurl, pythonURI as configPythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
@@ -248,6 +249,9 @@
       const data = await response.json();
       if (data && data.name) {
         setAccountLinks(data);
+        if (window.PSOGamification) {
+          window.PSOGamification.hydrateAuthenticatedUser(data);
+        }
         setMessage('success', `You are already signed in as ${data.name}.`);
         showActions();
       } else {
@@ -302,6 +306,10 @@
 
       setMessage('success', 'Sign in successful. Returning you to the orchestra page...');
       setAccountLinks(signedInUser);
+      if (window.PSOGamification) {
+        window.PSOGamification.hydrateAuthenticatedUser(signedInUser);
+        window.PSOGamification.track('profile-action', { key: 'signin' });
+      }
       showActions();
       window.setTimeout(() => {
         window.location.href = destinationUrl;
@@ -347,6 +355,10 @@
       setSignupMessage('success', 'Account created and signed in. Returning you to the orchestra page...');
       setMessage('success', `Welcome, ${payload.name}. Your orchestra account is ready.`);
       setAccountLinks({ name: payload.name, uid: payload.uid });
+      if (window.PSOGamification) {
+        window.PSOGamification.hydrateAuthenticatedUser({ name: payload.name, uid: payload.uid, role: 'user' });
+        window.PSOGamification.track('profile-action', { key: 'signup' });
+      }
       showActions();
       window.setTimeout(() => {
         window.location.href = homeUrl;

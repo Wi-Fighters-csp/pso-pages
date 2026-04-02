@@ -92,6 +92,7 @@
   </section>
 </div>
 
+<script src="{{ '/assets/js/capstones/powayorchestra/progression.js' | relative_url }}"></script>
 <script>
 (function () {
   var pythonURI;
@@ -217,6 +218,9 @@
       if (!response.ok) return null;
       return response.json();
     }).then(function (user) {
+      if (user && user.uid && window.PSOGamification) {
+        window.PSOGamification.hydrateAuthenticatedUser(user);
+      }
       setAccountLinks(user && user.name ? user : null);
     }).catch(function () {
       setAccountLinks(null);

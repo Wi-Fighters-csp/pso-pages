@@ -269,6 +269,7 @@
   </section>
 </div>
 
+<script src="{{ '/assets/js/capstones/powayorchestra/progression.js' | relative_url }}"></script>
 <script type="module">
   import { pythonURI as configPythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
@@ -1023,6 +1024,9 @@
 
   async function renderUser(user) {
     currentUser = user;
+    if (window.PSOGamification) {
+      window.PSOGamification.hydrateAuthenticatedUser(user);
+    }
     var profile = loadLocalProfile(user);
     profile = await loadServerMemberState(user, profile);
     setAccountLinks(user);
@@ -1080,10 +1084,13 @@
       if (syncResult.errors.length) {
         setMessage('info', `Profile saved on this device. Backend sync was partial: ${syncResult.errors[0]}`);
       } else if (syncResult.memberCardSaved) {
+        if (window.PSOGamification) window.PSOGamification.track('profile-action', { key: 'profile-save' });
         setMessage('success', 'Profile bio saved to your account and synced to your member card.');
       } else if (syncResult.favoritesSaved) {
+        if (window.PSOGamification) window.PSOGamification.track('profile-action', { key: 'favorites-save' });
         setMessage('success', 'Profile details and favorites saved to your account.');
       } else {
+        if (window.PSOGamification) window.PSOGamification.track('profile-action', { key: 'bio-save' });
         setMessage('success', 'Profile bio saved to your account.');
       }
     } catch (error) {

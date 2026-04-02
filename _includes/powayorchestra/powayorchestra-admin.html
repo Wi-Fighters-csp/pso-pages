@@ -205,6 +205,7 @@
   </section>
 </div>
 
+<script src="{{ '/assets/js/capstones/powayorchestra/progression.js' | relative_url }}"></script>
 <script type="module">
   import { baseurl, pythonURI as configPythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
@@ -512,6 +513,9 @@
     }
 
     await loadRequests();
+    if (window.PSOGamification) {
+      window.PSOGamification.track('profile-action', { key: 'admin-review' });
+    }
     setMessage('success', `Request ${action === 'approve' ? 'approved' : 'rejected'} successfully.`);
   }
 
@@ -529,6 +533,9 @@
       }
 
       currentUser = await response.json();
+      if (window.PSOGamification) {
+        window.PSOGamification.hydrateAuthenticatedUser(currentUser);
+      }
       setAccountLinks(currentUser);
       if (!isAdminUser(currentUser)) {
         adminStatus.textContent = 'This account is signed in, but it does not have admin privileges.';
