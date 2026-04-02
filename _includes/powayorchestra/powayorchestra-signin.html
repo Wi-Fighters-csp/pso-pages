@@ -158,7 +158,12 @@
   const adminUrl = `${baseurl}/powayorchestra/admin/`;
   const homeUrl = `${baseurl}/`;
   const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  const psoPythonURI = isLocalHost ? `http://${location.hostname}:8324` : pythonURI;
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    psoPythonURI = "http://localhost:8324";  // Same URI for localhost or 127.0.0.1
+} else {
+    psoPythonURI = "https://wifighters.opencodingsociety.com";
+
+}
 
   function isAdminUser(user) {
     if (!user) return false;
