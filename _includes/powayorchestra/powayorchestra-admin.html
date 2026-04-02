@@ -206,12 +206,14 @@
 </div>
 
 <script type="module">
-  import { baseurl, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+  import { baseurl, pythonURI as configPythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
-  const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  const psoPythonURI = isLocalHost
-    ? 'http://localhost:8324'
-    : 'https://wifighters.opencodingsociety.com';
+  let pythonURI = configPythonURI;
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    pythonURI = "http://localhost:8324";
+  } else {
+    pythonURI = "https://wifighters.opencodingsociety.com";
+  }
   const signInUrl = `${baseurl}/powayorchestra/signin/`;
   const profileUrl = `${baseurl}/powayorchestra/profile/`;
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
@@ -322,7 +324,7 @@
   }
 
   async function createMemberCard(cardInput) {
-    const response = await fetch(`${psoPythonURI}/api/pso/admin/member-cards`, {
+    const response = await fetch(`${pythonURI}/api/pso/admin/member-cards`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -486,7 +488,7 @@
   }
 
   async function loadRequests() {
-    const response = await fetch(`${psoPythonURI}/api/pso/admin/member-requests?status=all`, fetchOptions);
+    const response = await fetch(`${pythonURI}/api/pso/admin/member-requests?status=all`, fetchOptions);
     if (!response.ok) {
       throw new Error(await parseResponseMessage(response, 'Unable to load member requests.'));
     }
@@ -499,7 +501,7 @@
   }
 
   async function reviewRequest(requestId, action) {
-    const endpoint = `${psoPythonURI}/api/pso/admin/member-requests/${requestId}/${action}`;
+    const endpoint = `${pythonURI}/api/pso/admin/member-requests/${requestId}/${action}`;
     const response = await fetch(endpoint, {
       ...fetchOptions,
       method: 'POST'
@@ -516,7 +518,7 @@
   async function loadDashboard() {
     try {
       dashboardContent.hidden = true;
-      const response = await fetch(`${psoPythonURI}/api/id`, fetchOptions);
+      const response = await fetch(`${pythonURI}/api/id`, fetchOptions);
       if (!response.ok) {
         setAccountLinks(null);
         setMessage('error', 'Please sign in to access the admin dashboard. Redirecting to sign in...');
@@ -654,7 +656,7 @@
   adminLogout.addEventListener('click', async () => {
     adminLogout.disabled = true;
     try {
-      const response = await fetch(`${psoPythonURI}/api/authenticate`, {
+      const response = await fetch(`${pythonURI}/api/authenticate`, {
         ...fetchOptions,
         method: 'DELETE'
       });

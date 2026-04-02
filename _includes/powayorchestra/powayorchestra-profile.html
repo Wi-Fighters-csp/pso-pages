@@ -270,12 +270,14 @@
 </div>
 
 <script type="module">
-  import { fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+  import { pythonURI as configPythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
-  const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  const psoPythonURI = isLocalHost
-    ? 'http://localhost:8324'
-    : 'https://wifighters.opencodingsociety.com';
+  let pythonURI = configPythonURI;
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    pythonURI = "http://localhost:8324";
+  } else {
+    pythonURI = "https://wifighters.opencodingsociety.com";
+  }
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
   const profileStatus = document.getElementById('pso-profile-status');
   const profileName = document.getElementById('pso-profile-name');
@@ -507,7 +509,7 @@
   }
 
   async function fetchMemberCards() {
-    const response = await fetch(`${psoPythonURI}/api/pso/member-cards`, fetchOptions);
+    const response = await fetch(`${pythonURI}/api/pso/member-cards`, fetchOptions);
     if (!response.ok) {
       throw new Error(await parseResponseMessage(response, 'Unable to load member cards right now.'));
     }
@@ -517,7 +519,7 @@
   }
 
   async function updateMemberCard(cardId, payload) {
-    const response = await fetch(`${psoPythonURI}/api/pso/member-cards/${encodeURIComponent(cardId)}`, {
+    const response = await fetch(`${pythonURI}/api/pso/member-cards/${encodeURIComponent(cardId)}`, {
       ...fetchOptions,
       method: 'PATCH',
       body: JSON.stringify(payload)
@@ -703,7 +705,7 @@
   }
 
   async function saveBioToAccountBackend(profile) {
-    const response = await fetch(`${psoPythonURI}/api/user`, {
+    const response = await fetch(`${pythonURI}/api/user`, {
       ...fetchOptions,
       method: 'PUT',
       body: JSON.stringify({
@@ -723,7 +725,7 @@
   async function saveFavoritesToAccountBackend(profile) {
     const favoritePerformances = favoriteStorageValue(profile.favoritePerformances);
     const favoriteMusicians = favoriteStorageValue(profile.favoriteMusicians);
-    const response = await fetch(`${psoPythonURI}/api/user`, {
+    const response = await fetch(`${pythonURI}/api/user`, {
       ...fetchOptions,
       method: 'PUT',
       body: JSON.stringify({
@@ -887,7 +889,7 @@
           var profile = loadLocalProfile(currentUser);
           profile.bio = bioField.value.trim();
           try {
-            const response = await fetch(`${psoPythonURI}/api/pso/member-request`, {
+            const response = await fetch(`${pythonURI}/api/pso/member-request`, {
               ...fetchOptions,
               method: 'POST',
               body: JSON.stringify({
@@ -982,7 +984,7 @@
     }
 
     try {
-      const statusResponse = await fetch(`${psoPythonURI}/api/pso/member-request/status`, fetchOptions);
+      const statusResponse = await fetch(`${pythonURI}/api/pso/member-request/status`, fetchOptions);
       if (statusResponse.ok) {
         const statusData = await statusResponse.json();
         const requestData = statusData && statusData.request ? statusData.request : null;
@@ -1002,7 +1004,7 @@
 
     if (mergedProfile.memberRegistered && !isAdminUser(user)) {
       try {
-        const memberResponse = await fetch(`${psoPythonURI}/api/pso/member/profile`, fetchOptions);
+        const memberResponse = await fetch(`${pythonURI}/api/pso/member/profile`, fetchOptions);
         if (memberResponse.ok) {
           const memberData = await memberResponse.json();
           mergedProfile.instruments = memberData.instrument || mergedProfile.instruments;
@@ -1041,7 +1043,7 @@
   async function loadProfile() {
     try {
       adminDashboardLink.hidden = true;
-      const response = await fetch(`${psoPythonURI}/api/id`, fetchOptions);
+      const response = await fetch(`${pythonURI}/api/id`, fetchOptions);
       if (!response.ok) {
         adminDashboardLink.hidden = true;
         setAccountLinks(null);
@@ -1201,7 +1203,7 @@
   logoutButton.addEventListener('click', async () => {
     logoutButton.disabled = true;
     try {
-      const response = await fetch(`${psoPythonURI}/api/authenticate`, {
+      const response = await fetch(`${pythonURI}/api/authenticate`, {
         ...fetchOptions,
         method: 'DELETE'
       });

@@ -94,10 +94,12 @@
 
 <script>
 (function () {
-  var isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  var psoPythonURI = isLocalHost
-    ? 'http://localhost:8324'
-    : 'https://wifighters.opencodingsociety.com';
+  var pythonURI;
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    pythonURI = "http://localhost:8324";
+  } else {
+    pythonURI = "https://wifighters.opencodingsociety.com";
+  }
   var accountLinks = Array.prototype.slice.call(document.querySelectorAll('[data-pso-account-link]'));
   var nameNode = document.getElementById('pso-member-profile-name');
   var fullNameNode = document.getElementById('pso-member-profile-full-name');
@@ -202,7 +204,7 @@
   }
 
   function fetchIdentity() {
-    fetch(psoPythonURI + '/api/id', {
+    fetch(pythonURI + '/api/id', {
       method: 'GET',
       mode: 'cors',
       cache: 'default',
@@ -235,7 +237,7 @@
       return;
     }
 
-    fetch(psoPythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
+    fetch(pythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
       method: 'GET',
       mode: 'cors',
       cache: 'default',

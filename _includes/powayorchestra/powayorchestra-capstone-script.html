@@ -136,10 +136,12 @@
     timpani: '',
     percussion: ''
   };
-  var isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  var psoPythonURI = isLocalHost
-    ? 'http://localhost:8324'
-    : 'https://wifighters.opencodingsociety.com';
+  var pythonURI;
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    pythonURI = "http://localhost:8324";
+  } else {
+    pythonURI = "https://wifighters.opencodingsociety.com";
+  }
   function isAdminUser(user) {
     if (!user) return false;
     if (user.is_admin === true) return true;
@@ -194,7 +196,7 @@
   }
 
   function fetchStoredMemberCards() {
-    return fetch(psoPythonURI + '/api/pso/member-cards', {
+    return fetch(pythonURI + '/api/pso/member-cards', {
       method: 'GET',
       mode: 'cors',
       cache: 'default',
@@ -217,7 +219,7 @@
   }
 
   function createMemberCard(cardInput) {
-    return fetch(psoPythonURI + '/api/pso/admin/member-cards', {
+    return fetch(pythonURI + '/api/pso/admin/member-cards', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -243,7 +245,7 @@
   }
 
   function updateMemberCard(cardId, cardInput) {
-    return fetch(psoPythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
+    return fetch(pythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
       method: 'PATCH',
       credentials: 'include',
       headers: {
@@ -261,7 +263,7 @@
   }
 
   function removeMemberCard(cardId) {
-    return fetch(psoPythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
+    return fetch(pythonURI + '/api/pso/member-cards/' + encodeURIComponent(cardId), {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -323,7 +325,7 @@
 
   function loadAccountIdentity() {
     if (!accountLinks.length) return;
-    fetch(psoPythonURI + '/api/id', {
+    fetch(pythonURI + '/api/id', {
       method: 'GET',
       mode: 'cors',
       cache: 'default',
