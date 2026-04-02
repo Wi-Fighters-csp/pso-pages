@@ -366,6 +366,206 @@
     margin-top: 3rem;
   }
 
+  .pso-foundation .section,
+  .pso-foundation .section-photo,
+  .pso-foundation .section-card-frame,
+  .pso-foundation .concert-feature-card,
+  .pso-foundation .concert-card,
+  .pso-foundation .ticket-option,
+  .pso-foundation .contact-block,
+  .pso-foundation .news-card,
+  .pso-foundation .media-featured,
+  .pso-foundation .media-archive-panel,
+  .pso-foundation .media-video-card,
+  .pso-foundation .instrument-card,
+  .pso-foundation .musician-member-card,
+  .pso-foundation .musician-member-group,
+  .pso-foundation .builder-overview-card,
+  .pso-foundation .builder-palette,
+  .pso-foundation .builder-stage-shell,
+  .pso-foundation .builder-performance-panel,
+  .pso-foundation .conductor-card,
+  .pso-foundation .donate-impact-card,
+  .pso-foundation .donate-tier,
+  .pso-foundation .sample-instrument-card,
+  .pso-foundation .home-performance-shell,
+  .pso-foundation .home-performance-copy,
+  .pso-foundation .section h2,
+  .pso-foundation .section-intro,
+  .pso-foundation .section-divider,
+  .pso-foundation .section-cta-row {
+    animation-duration: 760ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: both;
+    will-change: transform, opacity;
+  }
+
+  .pso-foundation .section {
+    animation-name: psoSectionReveal;
+  }
+
+  .pso-foundation .section:nth-of-type(1) { animation-delay: 60ms; }
+  .pso-foundation .section:nth-of-type(2) { animation-delay: 140ms; }
+  .pso-foundation .section:nth-of-type(3) { animation-delay: 220ms; }
+  .pso-foundation .section:nth-of-type(4) { animation-delay: 300ms; }
+
+  .pso-foundation .section-divider,
+  .pso-foundation .section h2,
+  .pso-foundation .section-intro,
+  .pso-foundation .section-photo,
+  .pso-foundation .section-cta-row {
+    animation-name: psoSectionItemReveal;
+  }
+
+  .pso-foundation .section-divider { animation-delay: 80ms; }
+  .pso-foundation .section h2 { animation-delay: 130ms; }
+  .pso-foundation .section-intro { animation-delay: 180ms; }
+  .pso-foundation .section-photo { animation-delay: 220ms; }
+  .pso-foundation .section-cta-row { animation-delay: 280ms; }
+
+  .pso-foundation .section-card-frame,
+  .pso-foundation .concert-feature-card,
+  .pso-foundation .concert-card,
+  .pso-foundation .ticket-option,
+  .pso-foundation .contact-block,
+  .pso-foundation .news-card,
+  .pso-foundation .media-featured,
+  .pso-foundation .media-archive-panel,
+  .pso-foundation .media-video-card,
+  .pso-foundation .instrument-card,
+  .pso-foundation .musician-member-card,
+  .pso-foundation .musician-member-group,
+  .pso-foundation .builder-overview-card,
+  .pso-foundation .builder-palette,
+  .pso-foundation .builder-stage-shell,
+  .pso-foundation .builder-performance-panel,
+  .pso-foundation .conductor-card,
+  .pso-foundation .donate-impact-card,
+  .pso-foundation .donate-tier,
+  .pso-foundation .sample-instrument-card,
+  .pso-foundation .home-performance-shell,
+  .pso-foundation .home-performance-copy {
+    animation-name: psoSectionCardReveal;
+  }
+
+  .pso-foundation .concert-card:nth-child(1),
+  .pso-foundation .ticket-option:nth-child(1),
+  .pso-foundation .news-card:nth-child(1),
+  .pso-foundation .media-video-card:nth-child(1),
+  .pso-foundation .instrument-card:nth-child(1),
+  .pso-foundation .musician-member-card:nth-child(1),
+  .pso-foundation .donate-tier:nth-child(1),
+  .pso-foundation .sample-instrument-card:nth-child(1) { animation-delay: 220ms; }
+
+  .pso-foundation .concert-card:nth-child(2),
+  .pso-foundation .ticket-option:nth-child(2),
+  .pso-foundation .news-card:nth-child(2),
+  .pso-foundation .media-video-card:nth-child(2),
+  .pso-foundation .instrument-card:nth-child(2),
+  .pso-foundation .musician-member-card:nth-child(2),
+  .pso-foundation .donate-tier:nth-child(2),
+  .pso-foundation .sample-instrument-card:nth-child(2) { animation-delay: 300ms; }
+
+  .pso-foundation .concert-card:nth-child(3),
+  .pso-foundation .ticket-option:nth-child(3),
+  .pso-foundation .news-card:nth-child(3),
+  .pso-foundation .media-video-card:nth-child(3),
+  .pso-foundation .instrument-card:nth-child(3),
+  .pso-foundation .musician-member-card:nth-child(3),
+  .pso-foundation .donate-tier:nth-child(3),
+  .pso-foundation .sample-instrument-card:nth-child(3) { animation-delay: 380ms; }
+
+  .pso-foundation .concert-card:nth-child(4),
+  .pso-foundation .ticket-option:nth-child(4),
+  .pso-foundation .news-card:nth-child(4),
+  .pso-foundation .media-video-card:nth-child(4),
+  .pso-foundation .instrument-card:nth-child(4),
+  .pso-foundation .musician-member-card:nth-child(4),
+  .pso-foundation .donate-tier:nth-child(4),
+  .pso-foundation .sample-instrument-card:nth-child(4) { animation-delay: 460ms; }
+
+  .pso-foundation .media-featured,
+  .pso-foundation .media-archive-panel,
+  .pso-foundation .builder-overview-card,
+  .pso-foundation .builder-palette,
+  .pso-foundation .builder-stage-shell,
+  .pso-foundation .builder-performance-panel,
+  .pso-foundation .conductor-card,
+  .pso-foundation .donate-impact-card,
+  .pso-foundation .home-performance-shell,
+  .pso-foundation .home-performance-copy,
+  .pso-foundation .musician-member-group {
+    animation-delay: 240ms;
+  }
+
+  @keyframes psoSectionReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes psoSectionItemReveal {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes psoSectionCardReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pso-foundation .section,
+    .pso-foundation .section-photo,
+    .pso-foundation .section-card-frame,
+    .pso-foundation .concert-feature-card,
+    .pso-foundation .concert-card,
+    .pso-foundation .ticket-option,
+    .pso-foundation .contact-block,
+    .pso-foundation .news-card,
+    .pso-foundation .media-featured,
+    .pso-foundation .media-archive-panel,
+    .pso-foundation .media-video-card,
+    .pso-foundation .instrument-card,
+    .pso-foundation .musician-member-card,
+    .pso-foundation .musician-member-group,
+    .pso-foundation .builder-overview-card,
+    .pso-foundation .builder-palette,
+    .pso-foundation .builder-stage-shell,
+    .pso-foundation .builder-performance-panel,
+    .pso-foundation .conductor-card,
+    .pso-foundation .donate-impact-card,
+    .pso-foundation .donate-tier,
+    .pso-foundation .sample-instrument-card,
+    .pso-foundation .home-performance-shell,
+    .pso-foundation .home-performance-copy,
+    .pso-foundation .section h2,
+    .pso-foundation .section-intro,
+    .pso-foundation .section-divider,
+    .pso-foundation .section-cta-row {
+      animation: none !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
   .motion-reveal {
     opacity: 0;
     transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);

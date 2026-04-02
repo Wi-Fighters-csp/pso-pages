@@ -74,8 +74,46 @@
             <div class="pso-profile-row"><span class="pso-panel-label">Role</span><span id="pso-profile-role">--</span></div>
           </div>
 
+          <div class="pso-profile-field-grid">
+            <div class="pso-field pso-field--full">
+              <label for="pso-profile-bio">Biography / About Me</label>
+              <textarea id="pso-profile-bio" placeholder="Share your musical background, favorite repertoire, or how you support the orchestra."></textarea>
+            </div>
+
+            <div class="pso-field" data-member-only>
+              <label for="pso-profile-instruments">Instruments Played</label>
+              <input id="pso-profile-instruments" type="text" placeholder="Violin, Piano, Voice">
+            </div>
+
+            <div class="pso-field" data-member-only>
+              <label for="pso-profile-section">Section / Ensemble</label>
+              <select id="pso-profile-section">
+                <option value="">Select a section</option>
+                <option value="strings">Strings</option>
+                <option value="woodwinds">Woodwinds</option>
+                <option value="brass">Brass</option>
+                <option value="percussion">Percussion</option>
+                <option value="patron">Patron Circle</option>
+                <option value="volunteer">Volunteer Team</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pso-profile-inline-actions">
+            <button class="pso-button pso-button-primary" id="pso-profile-save" type="button">Save Profile Notes</button>
+            <a class="pso-button pso-button-secondary" id="pso-admin-dashboard-link" href="{{ '/powayorchestra/admin/' | relative_url }}" hidden>Open Admin Dashboard</a>
+            <span class="pso-profile-note">Your bio syncs to your account when available. Other profile extras stay on this device.</span>
+          </div>
+
+          <p class="pso-auth-message" id="pso-profile-message" role="status" aria-live="polite"></p>
+
+          <div class="pso-auth-actions is-visible">
+            <a class="pso-button pso-button-secondary" href="{{ '/' | relative_url }}">Return to Orchestra Home</a>
+            <button class="pso-button pso-button-secondary" id="pso-profile-logout" type="button">Sign Out</button>
+          </div>
+
           <div class="pso-profile-member-gate" id="pso-member-gate" hidden>
-            <div>
+            <div class="pso-profile-member-gate-head">
               <span class="pso-profile-gate-label" id="pso-member-gate-label">Orchestra Member Access Locked</span>
               <p class="pso-profile-gate-copy" id="pso-member-gate-copy">
                 Register as a Poway Symphony Orchestra member to unlock instrument, practice time, and section tools on this profile.
@@ -116,44 +154,6 @@
             <div class="pso-profile-gate-actions" id="pso-member-gate-actions">
               <!-- Buttons will be injected by JS only if needed -->
             </div>
-          </div>
-
-          <div class="pso-profile-field-grid">
-            <div class="pso-field pso-field--full">
-              <label for="pso-profile-bio">Biography / About Me</label>
-              <textarea id="pso-profile-bio" placeholder="Share your musical background, favorite repertoire, or how you support the orchestra."></textarea>
-            </div>
-
-            <div class="pso-field" data-member-only>
-              <label for="pso-profile-instruments">Instruments Played</label>
-              <input id="pso-profile-instruments" type="text" placeholder="Violin, Piano, Voice">
-            </div>
-
-            <div class="pso-field" data-member-only>
-              <label for="pso-profile-section">Section / Ensemble</label>
-              <select id="pso-profile-section">
-                <option value="">Select a section</option>
-                <option value="strings">Strings</option>
-                <option value="woodwinds">Woodwinds</option>
-                <option value="brass">Brass</option>
-                <option value="percussion">Percussion</option>
-                <option value="patron">Patron Circle</option>
-                <option value="volunteer">Volunteer Team</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="pso-profile-inline-actions">
-            <button class="pso-button pso-button-primary" id="pso-profile-save" type="button">Save Profile Notes</button>
-            <a class="pso-button pso-button-secondary" id="pso-admin-dashboard-link" href="{{ '/powayorchestra/admin/' | relative_url }}" hidden>Open Admin Dashboard</a>
-            <span class="pso-profile-note">Your bio syncs to your account when available. Other profile extras stay on this device.</span>
-          </div>
-
-          <p class="pso-auth-message" id="pso-profile-message" role="status" aria-live="polite"></p>
-
-          <div class="pso-auth-actions is-visible">
-            <a class="pso-button pso-button-secondary" href="{{ '/' | relative_url }}">Return to Orchestra Home</a>
-            <button class="pso-button pso-button-secondary" id="pso-profile-logout" type="button">Sign Out</button>
           </div>
         </section>
 
@@ -231,6 +231,9 @@
                 <input id="pso-favorite-performance-input" type="text" placeholder="Add a concert, program, or performance">
                 <button class="pso-button pso-button-secondary" id="pso-favorite-performance-add" type="button">Add</button>
               </div>
+              <p class="pso-profile-favorite-help">
+                <a href="{{ '/media/' | relative_url }}">Don't know? Check out Videos and Recordings!</a>
+              </p>
               <div class="pso-profile-chip-list" id="pso-favorite-performances" aria-live="polite"></div>
             </div>
 
@@ -240,6 +243,9 @@
                 <input id="pso-favorite-musician-input" type="text" placeholder="Add a musician you want to follow">
                 <button class="pso-button pso-button-secondary" id="pso-favorite-musician-add" type="button">Add</button>
               </div>
+              <p class="pso-profile-favorite-help">
+                <a href="{{ '/musicians/' | relative_url }}">Don't know? Check out Musicians!</a>
+              </p>
               <div class="pso-profile-chip-list" id="pso-favorite-musicians" aria-live="polite"></div>
             </div>
 

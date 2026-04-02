@@ -244,6 +244,88 @@
     padding: 0;
   }
 
+  .pso-signin-shell .pso-signin-hero,
+  .pso-signin-shell .pso-signin-card,
+  .pso-signin-shell .pso-signin-panel,
+  .pso-signin-shell .pso-auth-actions,
+  .pso-signin-shell .pso-panel-list,
+  .pso-signin-shell .pso-signin-form > * {
+    animation-duration: 760ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: both;
+    will-change: transform, opacity;
+  }
+
+  .pso-signin-shell .pso-signin-hero {
+    animation-name: psoSigninHeroReveal;
+    animation-delay: 80ms;
+  }
+
+  .pso-signin-shell .pso-signin-card,
+  .pso-signin-shell .pso-signin-panel {
+    animation-name: psoSigninCardReveal;
+  }
+
+  .pso-signin-shell .pso-signin-card { animation-delay: 180ms; }
+  .pso-signin-shell .pso-signin-panel { animation-delay: 260ms; }
+
+  .pso-signin-shell .pso-panel-list,
+  .pso-signin-shell .pso-signin-form > * {
+    animation-name: psoSigninItemReveal;
+  }
+
+  .pso-signin-shell .pso-signin-form > :nth-child(1) { animation-delay: 260ms; }
+  .pso-signin-shell .pso-signin-form > :nth-child(2) { animation-delay: 340ms; }
+  .pso-signin-shell .pso-signin-form > :nth-child(3) { animation-delay: 420ms; }
+  .pso-signin-shell .pso-panel-list { animation-delay: 240ms; }
+  .pso-signin-shell .pso-auth-actions { animation-name: psoSigninItemReveal; animation-delay: 500ms; }
+
+  @keyframes psoSigninHeroReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes psoSigninCardReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes psoSigninItemReveal {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pso-signin-shell .pso-signin-hero,
+    .pso-signin-shell .pso-signin-card,
+    .pso-signin-shell .pso-signin-panel,
+    .pso-signin-shell .pso-auth-actions,
+    .pso-signin-shell .pso-panel-list,
+    .pso-signin-shell .pso-signin-form > * {
+      animation: none !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
   .pso-signin-hero {
     text-align: center;
     margin-bottom: 2rem;

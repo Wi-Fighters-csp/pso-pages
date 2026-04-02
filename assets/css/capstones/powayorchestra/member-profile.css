@@ -2,6 +2,81 @@
   padding: 2.8rem 1.25rem 3.5rem;
 }
 
+.pso-member-profile-back,
+.pso-member-profile-card,
+.pso-member-profile-hero,
+.pso-member-profile-panel,
+.pso-member-profile-status {
+  animation-duration: 760ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+}
+
+.pso-member-profile-back {
+  animation-name: psoMemberProfileRise;
+  animation-delay: 80ms;
+}
+
+.pso-member-profile-card {
+  animation-name: psoMemberProfileCardReveal;
+  animation-delay: 160ms;
+}
+
+.pso-member-profile-hero {
+  animation-name: psoMemberProfileRise;
+  animation-delay: 240ms;
+}
+
+.pso-member-profile-panel:nth-of-type(1) {
+  animation-name: psoMemberProfileRise;
+  animation-delay: 320ms;
+}
+
+.pso-member-profile-panel:nth-of-type(2) {
+  animation-name: psoMemberProfileRise;
+  animation-delay: 400ms;
+}
+
+.pso-member-profile-status {
+  animation-name: psoMemberProfileRise;
+  animation-delay: 480ms;
+}
+
+@keyframes psoMemberProfileCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes psoMemberProfileRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pso-member-profile-back,
+  .pso-member-profile-card,
+  .pso-member-profile-hero,
+  .pso-member-profile-panel,
+  .pso-member-profile-status {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 .pso-member-profile-inner {
   max-width: 1080px;
   margin: 0 auto;
