@@ -54,7 +54,7 @@
       </div>
 
       <div class="top-nav-item">
-        <a href="{{ '/donate/' | relative_url }}" class="top-nav-link btn-primary">Donate</a>
+        <a href="{{ '/donate/' | relative_url }}" class="top-nav-link">Donate</a>
       </div>
     </nav>
   </div>
@@ -91,7 +91,7 @@
 
             <div class="pso-form-actions">
               <button class="pso-button pso-button-primary" id="pso-submit-button" type="submit">Sign In</button>
-              <a class="pso-inline-link" href="#pso-signup-form">Need an account? Create one below.</a>
+              <a class="pso-inline-link" href="#pso-signup-panel" data-pso-show-signup>Need an account? Create one below.</a>
             </div>
           </form>
 
@@ -102,27 +102,7 @@
           </div>
         </section>
 
-        <aside class="pso-signin-panel">
-          <h3>Quick Access</h3>
-          <p class="pso-signin-section-copy">
-            After signing in, you can move directly back into the orchestra site for season details, musician information, and supporter resources.
-          </p>
-
-          <ul class="pso-panel-list">
-            <li>
-              <span class="pso-panel-label">Season</span>
-              Browse the current concert season and ticket links.
-            </li>
-            <li>
-              <span class="pso-panel-label">Musicians</span>
-              Return to audition, rehearsal, and member information.
-            </li>
-            <li>
-              <span class="pso-panel-label">Support</span>
-              Jump back to donations, sponsor support, and contact details.
-            </li>
-          </ul>
-
+        <section class="pso-signin-panel pso-signup-panel" id="pso-signup-panel" hidden>
           <h3>Create Account</h3>
           <p class="pso-signin-section-copy">
             New to the orchestra site? Create a Poway Symphony Orchestra account here, then continue straight into the main experience.
@@ -155,7 +135,7 @@
             <a href="{{ '/contact/' | relative_url }}">Orchestra Contact Info</a>
             <a href="https://powaycenter.com" target="_blank" rel="noopener">Poway Center Tickets</a>
           </div>
-        </aside>
+        </section>
       </div>
     </div>
   </section>
@@ -170,9 +150,11 @@
   const signupMessage = document.getElementById('pso-signup-message');
   const actions = document.getElementById('pso-auth-actions');
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
+  const showSignupLinks = Array.from(document.querySelectorAll('[data-pso-show-signup]'));
   const submitButton = document.getElementById('pso-submit-button');
   const signupButton = document.getElementById('pso-signup-button');
   const logoutButton = document.getElementById('pso-logout-button');
+  const signupPanel = document.getElementById('pso-signup-panel');
   const adminUrl = `${baseurl}/powayorchestra/admin/`;
   const homeUrl = `${baseurl}/`;
   const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
@@ -230,6 +212,21 @@
     actions.classList.remove('is-visible');
   }
 
+  function revealSignupPanel({ focus = false } = {}) {
+    if (!signupPanel) return;
+
+    signupPanel.hidden = false;
+    if (focus) {
+      window.requestAnimationFrame(() => {
+        const firstField = document.getElementById('pso-signup-name');
+        if (firstField) {
+          firstField.focus({ preventScroll: true });
+        }
+        signupPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+
   async function parseResponseMessage(response, fallbackMessage) {
     try {
       const data = await response.json();
@@ -256,6 +253,18 @@
       setAccountLinks(null);
       console.warn('Unable to verify existing session.', error);
     }
+  }
+
+  showSignupLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      revealSignupPanel({ focus: true });
+      window.history.replaceState(null, '', '#pso-signup-panel');
+    });
+  });
+
+  if (window.location.hash === '#pso-signup-panel') {
+    revealSignupPanel();
   }
 
   form.addEventListener('submit', async (event) => {
@@ -303,6 +312,7 @@
 
   signupForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    revealSignupPanel();
     clearSignupMessage();
     clearMessage();
     hideActions();
@@ -332,7 +342,7 @@
       signupForm.reset();
       setSignupMessage('success', 'Account created and signed in. Returning you to the orchestra page...');
       setMessage('success', `Welcome, ${payload.name}. Your orchestra account is ready.`);
-  setAccountLinks({ name: payload.name, uid: payload.uid });
+      setAccountLinks({ name: payload.name, uid: payload.uid });
       showActions();
       window.setTimeout(() => {
         window.location.href = homeUrl;
@@ -362,7 +372,7 @@
 
       hideActions();
       form.reset();
-  setAccountLinks(null);
+      setAccountLinks(null);
       setMessage('success', 'You have been signed out of the orchestra account.');
     } catch (error) {
       setMessage('error', error.message);

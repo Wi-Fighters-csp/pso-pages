@@ -161,30 +161,6 @@
     color: var(--navy-dark);
   }
 
-  .top-nav-link.btn-secondary {
-    border-color: rgba(242,166,160,0.32);
-    color: var(--gold-pale);
-  }
-
-  .top-nav-link.btn-secondary:hover {
-    border-color: var(--gold);
-    color: var(--white);
-    background: rgba(242,166,160,0.16);
-  }
-
-  .top-nav-link--games {
-    border-color: rgba(242,166,160,0.26);
-    color: var(--gold-pale);
-    background: linear-gradient(135deg, rgba(242,166,160,0.16), rgba(250,243,224,0.05));
-  }
-
-  .top-nav-link--games:hover,
-  .top-nav-item--games:focus-within .top-nav-link--games {
-    border-color: rgba(217,119,6,0.44);
-    color: var(--white);
-    background: linear-gradient(135deg, rgba(242,166,160,0.22), rgba(250,243,224,0.08));
-  }
-
   .top-nav-caret { font-size: 0.6rem; opacity: 0.7; }
 
   /* Dropdown */
@@ -195,7 +171,7 @@
     left: 0;
     background:
       linear-gradient(180deg, rgba(94,54,45,0.98), rgba(62,39,35,0.98));
-    border: 1px solid rgba(217,119,6,0.28);
+    border: none;
     border-radius: 14px;
     min-width: 200px;
     z-index: 500;
@@ -223,18 +199,6 @@
 
   .top-nav-dropdown-link:hover {
     background: rgba(242,166,160,0.16);
-    color: var(--white);
-  }
-
-  .top-nav-dropdown--games {
-    background:
-      linear-gradient(180deg, rgba(242,166,160,0.14), transparent 65%),
-      linear-gradient(180deg, rgba(94,54,45,0.98), rgba(62,39,35,0.98));
-    border-color: rgba(217,119,6,0.3);
-  }
-
-  .top-nav-dropdown--games .top-nav-dropdown-link:hover {
-    background: rgba(242,166,160,0.18);
     color: var(--white);
   }
 
