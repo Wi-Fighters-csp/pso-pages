@@ -7,7 +7,7 @@
     }
 
     .pso-topbar { padding: 0 1rem; }
-    .pso-topbar-nav { gap: 0.1rem; }
+    .pso-topbar-nav { gap: 0.35rem; }
     .top-nav-actions {
       width: 100%;
       justify-content: flex-end;

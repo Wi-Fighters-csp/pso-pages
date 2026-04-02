@@ -146,7 +146,7 @@
           <div class="pso-profile-inline-actions">
             <button class="pso-button pso-button-primary" id="pso-profile-save" type="button">Save Profile Notes</button>
             <a class="pso-button pso-button-secondary" id="pso-admin-dashboard-link" href="{{ '/powayorchestra/admin/' | relative_url }}" hidden>Open Admin Dashboard</a>
-            <span class="pso-profile-note">These profile extras save on this device until the backend stores them.</span>
+            <span class="pso-profile-note">Your bio syncs to your account when available. Other profile extras stay on this device.</span>
           </div>
 
           <p class="pso-auth-message" id="pso-profile-message" role="status" aria-live="polite"></p>
@@ -157,13 +157,14 @@
           </div>
         </section>
 
-        <aside class="pso-profile-card" data-member-panel>
-          <h3>Member Overview</h3>
-          <p class="pso-signin-section-copy">
+        <aside class="pso-profile-card">
+          <h3 id="pso-side-panel-title">Member Overview</h3>
+          <p class="pso-signin-section-copy" id="pso-side-panel-copy">
             A snapshot of your orchestra membership and current account status.
           </p>
 
-          <div class="pso-profile-stats">
+          <div class="pso-profile-member-overview" id="pso-member-overview" data-member-panel>
+            <div class="pso-profile-stats">
             <div class="pso-profile-stat">
               <span class="pso-profile-stat-label">Membership Status</span>
               <strong id="pso-membership-status">Active Member</strong>
@@ -172,11 +173,12 @@
               <span class="pso-profile-stat-label">Upcoming Concert</span>
               <strong id="pso-next-concert">Spring Gala</strong>
             </div>
+            </div>
+
+            <div class="pso-profile-badges" id="pso-badges"></div>
           </div>
 
-          <div class="pso-profile-badges" id="pso-badges"></div>
-
-          <div class="pso-profile-member-card-editor">
+          <div class="pso-profile-member-card-editor" id="pso-profile-member-card-editor" data-member-panel>
             <div class="pso-profile-member-card-head">
               <h4>Edit Member Card</h4>
               <p class="pso-signin-section-copy">
@@ -208,6 +210,41 @@
               <div class="pso-profile-member-card-actions">
                 <button class="pso-button pso-button-primary" id="pso-member-card-save" type="button">Save Member Card</button>
               </div>
+            </div>
+          </div>
+
+          <div class="pso-profile-favorites-editor" id="pso-profile-favorites-editor" hidden>
+            <div class="pso-profile-member-card-head">
+              <h4>Favorites</h4>
+              <p class="pso-signin-section-copy">
+                Save the performances and musicians you want to come back to on your profile.
+              </p>
+            </div>
+
+            <div class="pso-profile-favorites-status" id="pso-favorites-status" role="status" aria-live="polite">
+              Your favorites are stored on this profile when backend sync is available.
+            </div>
+
+            <div class="pso-field">
+              <label for="pso-favorite-performance-input">Favorite Performances</label>
+              <div class="pso-profile-favorite-entry-row">
+                <input id="pso-favorite-performance-input" type="text" placeholder="Add a concert, program, or performance">
+                <button class="pso-button pso-button-secondary" id="pso-favorite-performance-add" type="button">Add</button>
+              </div>
+              <div class="pso-profile-chip-list" id="pso-favorite-performances" aria-live="polite"></div>
+            </div>
+
+            <div class="pso-field">
+              <label for="pso-favorite-musician-input">Favorite Musicians</label>
+              <div class="pso-profile-favorite-entry-row">
+                <input id="pso-favorite-musician-input" type="text" placeholder="Add a musician you want to follow">
+                <button class="pso-button pso-button-secondary" id="pso-favorite-musician-add" type="button">Add</button>
+              </div>
+              <div class="pso-profile-chip-list" id="pso-favorite-musicians" aria-live="polite"></div>
+            </div>
+
+            <div class="pso-profile-member-card-actions">
+              <button class="pso-button pso-button-primary" id="pso-favorites-save" type="button">Save Favorites</button>
             </div>
           </div>
         </aside>
@@ -242,6 +279,8 @@
   const profileSaveButton = document.getElementById('pso-profile-save');
   const adminDashboardLink = document.getElementById('pso-admin-dashboard-link');
   const logoutButton = document.getElementById('pso-profile-logout');
+  const sidePanelTitle = document.getElementById('pso-side-panel-title');
+  const sidePanelCopy = document.getElementById('pso-side-panel-copy');
   const memberGateActions = document.getElementById('pso-member-gate-actions');
   let memberRegisterButton = null;
   let memberWithdrawButton = null;
@@ -258,6 +297,17 @@
   const bioField = document.getElementById('pso-profile-bio');
   const instrumentsField = document.getElementById('pso-profile-instruments');
   const sectionField = document.getElementById('pso-profile-section');
+  const memberOverview = document.getElementById('pso-member-overview');
+  const memberCardEditor = document.getElementById('pso-profile-member-card-editor');
+  const favoritesEditor = document.getElementById('pso-profile-favorites-editor');
+  const favoritesStatus = document.getElementById('pso-favorites-status');
+  const favoritePerformanceInput = document.getElementById('pso-favorite-performance-input');
+  const favoritePerformanceAdd = document.getElementById('pso-favorite-performance-add');
+  const favoritePerformancesList = document.getElementById('pso-favorite-performances');
+  const favoriteMusicianInput = document.getElementById('pso-favorite-musician-input');
+  const favoriteMusicianAdd = document.getElementById('pso-favorite-musician-add');
+  const favoriteMusiciansList = document.getElementById('pso-favorite-musicians');
+  const favoritesSaveButton = document.getElementById('pso-favorites-save');
   const membershipStatus = document.getElementById('pso-membership-status');
   const nextConcert = document.getElementById('pso-next-concert');
   const badges = document.getElementById('pso-badges');
@@ -276,6 +326,10 @@
   const concertsCard = document.getElementById('pso-concerts-card');
   var currentUser = null;
   var currentMemberCard = null;
+  var favoriteState = {
+    performances: [],
+    musicians: []
+  };
 
   const orchestraEvents = [
     {
@@ -316,6 +370,95 @@
     if (normalized.indexOf('musician') !== -1 || normalized.indexOf('teacher') !== -1) return 'strings';
     if (normalized.indexOf('volunteer') !== -1) return 'volunteer';
     return 'patron';
+  }
+
+  function normalizeFavoriteItem(value) {
+    return String(value || '').trim().replace(/\s+/g, ' ');
+  }
+
+  function normalizeFavoritesList(value) {
+    var candidates = [];
+
+    if (Array.isArray(value)) {
+      candidates = value;
+    } else if (typeof value === 'string') {
+      var trimmed = value.trim();
+      if (!trimmed) {
+        candidates = [];
+      } else {
+        try {
+          var parsed = JSON.parse(trimmed);
+          candidates = Array.isArray(parsed) ? parsed : trimmed.split(/\r?\n|,/);
+        } catch (error) {
+          candidates = trimmed.split(/\r?\n|,/);
+        }
+      }
+    }
+
+    return candidates.reduce(function (items, entry) {
+      var normalized = normalizeFavoriteItem(entry);
+      var key = normalized.toLowerCase();
+      if (!normalized || items.indexMap[key]) return items;
+      items.indexMap[key] = true;
+      items.values.push(normalized);
+      return items;
+    }, { values: [], indexMap: {} }).values;
+  }
+
+  function favoriteStorageValue(items) {
+    return normalizeFavoritesList(items).join('\n');
+  }
+
+  function applyFavoriteState(profile) {
+    favoriteState.performances = normalizeFavoritesList(profile.favoritePerformances);
+    favoriteState.musicians = normalizeFavoritesList(profile.favoriteMusicians);
+    renderFavoriteList('performances');
+    renderFavoriteList('musicians');
+  }
+
+  function renderFavoriteList(kind) {
+    var listNode = kind === 'performances' ? favoritePerformancesList : favoriteMusiciansList;
+    var items = kind === 'performances' ? favoriteState.performances : favoriteState.musicians;
+    if (!listNode) return;
+
+    if (!items.length) {
+      listNode.innerHTML = '<p class="pso-profile-favorite-empty">Nothing saved yet.</p>';
+      return;
+    }
+
+    listNode.innerHTML = items.map(function (item, index) {
+      return '<span class="pso-profile-favorite-chip">' +
+        '<span>' + escapeHtml(item) + '</span>' +
+        '<button type="button" class="pso-profile-chip-remove" data-favorite-kind="' + kind + '" data-favorite-index="' + index + '" aria-label="Remove ' + escapeHtml(item) + '">Remove</button>' +
+      '</span>';
+    }).join('');
+  }
+
+  function setFavoritesStatus(text, isError) {
+    if (!favoritesStatus) return;
+    favoritesStatus.textContent = text;
+    favoritesStatus.classList.toggle('is-error', Boolean(isError));
+  }
+
+  function addFavorite(kind, value) {
+    var normalized = normalizeFavoriteItem(value);
+    var list = kind === 'performances' ? favoriteState.performances : favoriteState.musicians;
+    var duplicate = list.some(function (item) {
+      return item.toLowerCase() === normalized.toLowerCase();
+    });
+
+    if (!normalized || duplicate) return false;
+
+    list.push(normalized);
+    renderFavoriteList(kind);
+    return true;
+  }
+
+  function removeFavorite(kind, index) {
+    var list = kind === 'performances' ? favoriteState.performances : favoriteState.musicians;
+    if (!Array.isArray(list) || index < 0 || index >= list.length) return;
+    list.splice(index, 1);
+    renderFavoriteList(kind);
   }
 
   function membershipStatusForSection(section) {
@@ -466,6 +609,8 @@
     var memberType = membershipStatusForSection(section);
     return {
       bio: '',
+      favoritePerformances: [],
+      favoriteMusicians: [],
       instruments: '',
       section: section,
       membershipStatus: memberType,
@@ -491,7 +636,10 @@
     var defaults = makeDefaultProfile(user);
     try {
       var saved = window.localStorage.getItem(getProfileStorageKey(user.uid));
-      return saved ? Object.assign(defaults, JSON.parse(saved)) : defaults;
+      var merged = saved ? Object.assign(defaults, JSON.parse(saved)) : defaults;
+      merged.favoritePerformances = normalizeFavoritesList(merged.favoritePerformances);
+      merged.favoriteMusicians = normalizeFavoritesList(merged.favoriteMusicians);
+      return merged;
     } catch (error) {
       return defaults;
     }
@@ -505,6 +653,8 @@
     profile.memberRequestSubmittedAt = '';
     profile.requestInstrument = '';
     profile.requestSection = '';
+    profile.favoritePerformances = normalizeFavoritesList(profile.favoritePerformances);
+    profile.favoriteMusicians = normalizeFavoritesList(profile.favoriteMusicians);
     profile.instruments = '';
     profile.section = defaults.section;
     profile.membershipStatus = defaults.membershipStatus;
@@ -519,6 +669,8 @@
     var storedProfile = loadLocalProfile(currentUser);
     var profile = {
       bio: bioField.value.trim(),
+      favoritePerformances: normalizeFavoritesList(favoriteState.performances),
+      favoriteMusicians: normalizeFavoritesList(favoriteState.musicians),
       instruments: instrumentsField.value.trim(),
       section: sectionField.value,
       membershipStatus: membershipStatus.textContent,
@@ -539,6 +691,87 @@
       privacy: storedProfile.privacy || 'private'
     };
     window.localStorage.setItem(getProfileStorageKey(currentUser.uid), JSON.stringify(profile));
+    return profile;
+  }
+
+  async function saveBioToAccountBackend(profile) {
+    const response = await fetch(`${psoPythonURI}/api/user`, {
+      ...fetchOptions,
+      method: 'PUT',
+      body: JSON.stringify({
+        bio: profile.bio || ''
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(await parseResponseMessage(response, 'Unable to save your bio to the backend right now.'));
+    }
+
+    if (currentUser) {
+      currentUser.bio = profile.bio || '';
+    }
+  }
+
+  async function saveFavoritesToAccountBackend(profile) {
+    const favoritePerformances = favoriteStorageValue(profile.favoritePerformances);
+    const favoriteMusicians = favoriteStorageValue(profile.favoriteMusicians);
+    const response = await fetch(`${psoPythonURI}/api/user`, {
+      ...fetchOptions,
+      method: 'PUT',
+      body: JSON.stringify({
+        favorite_performances: favoritePerformances,
+        favorite_musicians: favoriteMusicians
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(await parseResponseMessage(response, 'Unable to save your favorites to the backend right now.'));
+    }
+
+    if (currentUser) {
+      currentUser.favorite_performances = favoritePerformances;
+      currentUser.favorite_musicians = favoriteMusicians;
+    }
+  }
+
+  async function syncProfileBioToMemberCard(profile) {
+    if (!currentMemberCard) return;
+
+    currentMemberCard = await updateMemberCard(currentMemberCard.id, {
+      owner_name: currentMemberCard.ownerName || currentUser && currentUser.name || '',
+      instrument_title: currentMemberCard.instrumentTitle || '',
+      image_url: currentMemberCard.image || '',
+      bio: profile.bio || ''
+    });
+
+    renderMemberCardSummary(currentMemberCard);
+    if (memberCardImage) memberCardImage.value = currentMemberCard.image || '';
+    if (memberCardBio) memberCardBio.value = currentMemberCard.bio || '';
+  }
+
+  async function saveProfileToBackend(profile) {
+    const operations = [
+      saveBioToAccountBackend(profile).then(() => ({ key: 'account' })),
+      saveFavoritesToAccountBackend(profile).then(() => ({ key: 'favorites' }))
+    ];
+
+    if (currentMemberCard) {
+      operations.push(
+        syncProfileBioToMemberCard(profile).then(() => ({ key: 'member-card' }))
+      );
+    }
+
+    const settled = await Promise.allSettled(operations);
+    return settled.reduce((result, entry) => {
+      if (entry.status === 'fulfilled') {
+        if (entry.value.key === 'account') result.accountSaved = true;
+        if (entry.value.key === 'favorites') result.favoritesSaved = true;
+        if (entry.value.key === 'member-card') result.memberCardSaved = true;
+      } else {
+        result.errors.push(entry.reason && entry.reason.message ? entry.reason.message : 'Backend sync failed.');
+      }
+      return result;
+    }, { accountSaved: false, favoritesSaved: false, memberCardSaved: false, errors: [] });
   }
 
   function renderBadges(profile) {
@@ -590,8 +823,9 @@
     memberRequestEmail.value = profile.requestEmail || '';
     memberRequestInstrument.value = profile.requestInstrument || '';
     memberRequestSection.value = profile.requestSection || '';
+    applyFavoriteState(profile);
     instrumentsField.value = profile.instruments || '';
-    sectionField.value = profile.section || 'strings';
+    sectionField.value = profile.section || '';
     renderMemberAccess(profile);
     renderStats(profile);
     renderTimeline(profile);
@@ -602,6 +836,12 @@
     var pending = isPendingMember(profile);
     var isAdmin = isAdminUser(currentUser);
     updateConcertCardPlacement(unlocked);
+    if (sidePanelTitle) sidePanelTitle.textContent = unlocked ? 'Member Overview' : 'Saved Favorites';
+    if (sidePanelCopy) {
+      sidePanelCopy.textContent = unlocked
+        ? 'A snapshot of your orchestra membership and current account status.'
+        : 'Keep track of the performances and musicians you want to revisit from your orchestra profile.';
+    }
     memberOnlyElements.forEach((element) => {
       element.hidden = !unlocked;
       element.setAttribute('aria-hidden', unlocked ? 'false' : 'true');
@@ -610,6 +850,9 @@
       panel.hidden = !unlocked;
       panel.setAttribute('aria-hidden', unlocked ? 'false' : 'true');
     });
+    if (favoritesEditor) favoritesEditor.hidden = unlocked;
+    if (memberOverview) memberOverview.hidden = !unlocked;
+    if (memberCardEditor) memberCardEditor.hidden = !unlocked;
     instrumentsField.disabled = !unlocked;
     sectionField.disabled = !unlocked;
     // Hide the entire gate section for registered members and admins — no redundant info
@@ -720,6 +963,16 @@
     mergedProfile.memberRegistered = isAdminUser(user) || user.is_member === true;
     mergedProfile.memberRequestPending = !mergedProfile.memberRegistered && user.member_request_status === 'pending';
 
+    if (Object.prototype.hasOwnProperty.call(user || {}, 'bio')) {
+      mergedProfile.bio = String(user.bio || '');
+    }
+    if (Object.prototype.hasOwnProperty.call(user || {}, 'favorite_performances') || Object.prototype.hasOwnProperty.call(user || {}, 'favoritePerformances')) {
+      mergedProfile.favoritePerformances = normalizeFavoritesList(user.favorite_performances || user.favoritePerformances);
+    }
+    if (Object.prototype.hasOwnProperty.call(user || {}, 'favorite_musicians') || Object.prototype.hasOwnProperty.call(user || {}, 'favoriteMusicians')) {
+      mergedProfile.favoriteMusicians = normalizeFavoritesList(user.favorite_musicians || user.favoriteMusicians);
+    }
+
     try {
       const statusResponse = await fetch(`${psoPythonURI}/api/pso/member-request/status`, fetchOptions);
       if (statusResponse.ok) {
@@ -802,9 +1055,32 @@
     }
   }
 
-  profileSaveButton.addEventListener('click', () => {
-    saveLocalProfile();
-    setMessage('success', 'Profile extras saved on this device.');
+  profileSaveButton.addEventListener('click', async () => {
+    if (!currentUser) {
+      setMessage('error', 'Sign in before saving your profile bio.');
+      return;
+    }
+
+    const profile = saveLocalProfile();
+    profileSaveButton.disabled = true;
+    setMessage('info', 'Saving your profile...');
+
+    try {
+      const syncResult = await saveProfileToBackend(profile);
+      if (syncResult.errors.length) {
+        setMessage('info', `Profile saved on this device. Backend sync was partial: ${syncResult.errors[0]}`);
+      } else if (syncResult.memberCardSaved) {
+        setMessage('success', 'Profile bio saved to your account and synced to your member card.');
+      } else if (syncResult.favoritesSaved) {
+        setMessage('success', 'Profile details and favorites saved to your account.');
+      } else {
+        setMessage('success', 'Profile bio saved to your account.');
+      }
+    } catch (error) {
+      setMessage('info', `Profile saved on this device. Backend sync was unavailable: ${error.message}`);
+    } finally {
+      profileSaveButton.disabled = false;
+    }
   });
 
   memberCardSaveButton.addEventListener('click', async () => {
@@ -833,6 +1109,72 @@
       memberCardSaveButton.disabled = false;
     }
   });
+
+  if (favoritePerformanceAdd) {
+    favoritePerformanceAdd.addEventListener('click', () => {
+      if (addFavorite('performances', favoritePerformanceInput.value)) {
+        favoritePerformanceInput.value = '';
+        saveLocalProfile();
+        setFavoritesStatus('Favorite performances updated locally. Save to sync them to your account.', false);
+      }
+    });
+  }
+
+  if (favoriteMusicianAdd) {
+    favoriteMusicianAdd.addEventListener('click', () => {
+      if (addFavorite('musicians', favoriteMusicianInput.value)) {
+        favoriteMusicianInput.value = '';
+        saveLocalProfile();
+        setFavoritesStatus('Favorite musicians updated locally. Save to sync them to your account.', false);
+      }
+    });
+  }
+
+  [favoritePerformanceInput, favoriteMusicianInput].forEach((field) => {
+    if (!field) return;
+    field.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter') return;
+      event.preventDefault();
+      if (field === favoritePerformanceInput) {
+        favoritePerformanceAdd.click();
+      } else {
+        favoriteMusicianAdd.click();
+      }
+    });
+  });
+
+  [favoritePerformancesList, favoriteMusiciansList].forEach((listNode) => {
+    if (!listNode) return;
+    listNode.addEventListener('click', (event) => {
+      var trigger = event.target.closest('[data-favorite-kind][data-favorite-index]');
+      if (!trigger) return;
+      removeFavorite(trigger.dataset.favoriteKind, Number(trigger.dataset.favoriteIndex));
+      saveLocalProfile();
+      setFavoritesStatus('Favorite list updated locally. Save to sync the change to your account.', false);
+    });
+  });
+
+  if (favoritesSaveButton) {
+    favoritesSaveButton.addEventListener('click', async () => {
+      if (!currentUser) {
+        setFavoritesStatus('Sign in before saving favorites.', true);
+        return;
+      }
+
+      var profile = saveLocalProfile();
+      favoritesSaveButton.disabled = true;
+      setFavoritesStatus('Saving favorites to your profile...', false);
+
+      try {
+        await saveFavoritesToAccountBackend(profile);
+        setFavoritesStatus('Favorites saved to your profile.', false);
+      } catch (error) {
+        setFavoritesStatus(error.message || 'Favorites were saved only on this device.', true);
+      } finally {
+        favoritesSaveButton.disabled = false;
+      }
+    });
+  }
 
   [sectionField].forEach((field) => {
     field.addEventListener('input', () => {
