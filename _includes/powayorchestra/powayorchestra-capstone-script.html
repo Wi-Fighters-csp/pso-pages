@@ -25,11 +25,17 @@
   var heroVideoAudioToggle = root.querySelector('[data-hero-video-audio-toggle]');
   var instrumentDiscovery = root.querySelector('.instrument-discovery');
   var instrumentGrid = root.querySelector('[data-instrument-grid]');
+  var familyAudioPlayer = root.querySelector('[data-family-audio-player]');
+  var familyAudioPlayerTitle = root.querySelector('[data-family-audio-player-title]');
+  var familyAudioPlayerToggle = root.querySelector('[data-family-audio-player-toggle]');
+  var musicianFamilyFilters = root.querySelector('[data-musician-family-filters]');
+  var musicianInstrumentFilters = root.querySelector('[data-musician-instrument-filters]');
+  var musicianDirectoryMain = root.querySelector('[data-musician-directory-main]');
+  var musicianDirectoryStatus = root.querySelector('[data-musician-directory-status]');
+  var musicianDirectoryEmpty = root.querySelector('[data-musician-directory-empty]');
   var instrumentDetailPanel = root.querySelector('.instrument-detail-panel');
   var detailTitle = root.querySelector('[data-instrument-title]');
   var detailCopy = root.querySelector('[data-instrument-copy]');
-  var musicianPanelActions = root.querySelector('[data-musician-panel-actions]');
-  var musicianResetSectionsButton = root.querySelector('[data-musician-reset-sections]');
   var detailPlayers = root.querySelector('[data-instrument-players]');
   var detailList = root.querySelector('[data-instrument-list]');
   var detailMeta = root.querySelector('[data-instrument-meta]');
@@ -39,7 +45,6 @@
   var musicianRoster = root.querySelector('[data-musician-roster]');
   var musicianRosterCopy = root.querySelector('[data-musician-roster-copy]');
   var musicianRosterEmpty = root.querySelector('[data-musician-roster-empty]');
-  var musicianRosterFamilyGrid = root.querySelector('[data-musician-roster-family-grid]');
   var musicianRosterDetail = root.querySelector('[data-musician-roster-detail]');
   var musicianSectionTitle = root.querySelector('[data-musician-section-title]');
   var musicianSectionCopy = root.querySelector('[data-musician-section-copy]');
@@ -74,7 +79,12 @@
   var lastFloatingNoteTime = 0;
   var currentHoverAudio = null;
   var currentHoverCard = null;
+  var activeFamilyAudio = null;
+  var activeFamilyAudioKey = '';
+  var activeFamilyAudioPaused = false;
   var activeMusicianSearchQuery = '';
+  var selectedDirectoryFamily = 'all';
+  var selectedDirectoryInstrument = 'all';
   var musicianSearchMatches = {};
   var currentAccountUser = null;
   var memberCardsCache = [];
@@ -289,7 +299,7 @@
       instrumentTitle: card.instrumentTitle,
       isCustom: true,
       cardId: card.id,
-      editable: canManageMemberCardEditor() && canEditMemberCard(card)
+      editable: Boolean(memberCardEditor) && canManageMemberCardEditor() && canEditMemberCard(card)
     };
   }
 
@@ -354,19 +364,19 @@
       instruments: ['Violin', 'Viola', 'Cello', 'Double Bass'],
       hoverAudio: "{{ '/assets/audio/poway-orchestra/strings_sound.mp3' | relative_url }}",
       detailMeta: 'Common jobs in the section include leading melodies, building harmony, and creating the rich blanket of sound under the full orchestra.',
-      soundHint: 'Hover after your first click or tap to hear a short string preview.',
+      soundHint: 'Click a card to hear a short string preview.',
       cardHeading: 'Violins, violas, cellos, and basses',
       cardDescription: 'Warm, lyrical, and flexible. This family often carries the melody and the emotional core of a concert.',
-      cardNote: 'Hover for sound. Click to meet the section.',
+      cardNote: 'Click for sound and to meet the section.',
       visual: '🎻',
       sections: [
       { id: 'violinists', label: 'Violinists', title: 'Violinists', copy: 'The violinists split into Violin I and Violin II, carrying high melodic lines, bright textures, and much of the orchestra\'s shimmer.', groups: [
-        { title: 'Violin I', members: [{ name: 'Ulli Reiner, Concertmaster', image: "{{ '/images/capstone/powaysymphonyorchestra/musicians/reiner.jpg' | relative_url }}" }, 'Lina Monsalve', 'Hailey Avis', 'Anne Thompson', 'Sandy Davis', 'Carol Hernandez', 'Thom Chang', 'Anna Mat', 'Heidi Yenney', 'Leslie Tseng*', 'Howard Chiu*'] },
-        { title: 'Violin II', members: ['Jennifer Kiang, Principal', 'Brianne McMurtry', 'Tonia Pizer', 'Rebecca Lee', 'Lauren Marek', 'Sierra Shijia Guo', 'Randall Brinton', 'Stephen Stohs', 'Jesus Cervantes', 'Kiersten Smith', 'Jennifer Williams'] }
+        { title: 'Violin I', members: [{ name: 'Ulli Reiner, Concertmaster', image: "{{ '/images/capstone/powaysymphonyorchestra/musicians/reiner.jpg' | relative_url }}" }, 'Lina Monsalve', 'Hailey Avis', 'Anne Thompson', 'Sandy Davis', 'Carol Hernandez', 'Thom Chang', 'Jonathan Lo', 'Anna Mat', 'Heidi Yenney', 'Leslie Tseng*', 'Patricia McCormick', 'Julia Umarova'] },
+        { title: 'Violin II', members: ['Jennifer Kiang, Principal', 'Brianne McMurtry', 'Rebecca Lee', 'Lauren Marek', 'Emma Wang', 'Stephen Stohs', 'Jesus Cervantes', 'Kiersten Smith'] }
       ] },
-      { id: 'violists', label: 'Violists', title: 'Violists', copy: 'The viola section fills in the orchestra\'s warm middle register and often connects the sparkle of violins with the depth of the cellos.', groups: [{ title: 'Viola', members: ['Joanne Stohs, Principal', 'Kathleen Heaps', 'Lidia Berhe', 'Shelby Hardman', 'Jorge Soto', 'Sandiwa del Rosario', 'Gina Caviar', 'Francesca Savage'] }] },
-      { id: 'cellists', label: 'Cellists', title: 'Cellists', copy: 'The cello section gives the orchestra resonance and lyric depth, often carrying rich counter-melodies and sweeping harmonic motion.', groups: [{ title: 'Cello', members: ['Daniel Grab, Principal', 'Cathy Buller', 'Carol Tolbert', 'Matt Nuth', 'Andrea Mitchell', 'Aki Tatsumi', 'Nobuki Nakanishi', 'Natasha Hui', 'Brenna Mitchell', 'Emily Fang*'] }] },
-      { id: 'bassists', label: 'Bassists', title: 'Bassists', copy: 'The bass section anchors the ensemble with pulse, weight, and low-end support that helps the whole orchestra feel grounded.', groups: [{ title: 'Bass', members: ['Richard Wilson, Principal', 'Jamie Townsend', 'Peter Morrison', 'Allen Kashani', 'Gedeon Deak', 'Matt Solis', 'Lilith Holtz', 'Taylor Smith'] }] }
+      { id: 'violists', label: 'Violists', title: 'Violists', copy: 'The viola section fills in the orchestra\'s warm middle register and often connects the sparkle of violins with the depth of the cellos.', groups: [{ title: 'Viola', members: ['Joanne Stohs, Principal', 'Kathleen Heaps', 'Lidia Berhe', 'Jorge Soto', 'Sandiwa del Rosario', 'Gina Caviar', 'Francesca Savage', 'Yu-Ying Lee*'] }] },
+      { id: 'cellists', label: 'Cellists', title: 'Cellists', copy: 'The cello section gives the orchestra resonance and lyric depth, often carrying rich counter-melodies and sweeping harmonic motion.', groups: [{ title: 'Cello', members: ['Daniel Grab, Principal', 'Cathy Buller', 'Matt Nuth', 'Andrea Mitchell', 'Aki Tatsumi', 'Brenna Mitchell', 'Emily Fang*', 'Lorie Kirkell'] }] },
+      { id: 'bassists', label: 'Bassists', title: 'Bassists', copy: 'The bass section anchors the ensemble with pulse, weight, and low-end support that helps the whole orchestra feel grounded.', groups: [{ title: 'Bass', members: ['Richard Wilson, Principal', 'Jamie Townsend', 'Peter Morrison', 'Allen Kashani', 'Lily Venturino', 'Lilith Holtz', 'Taylor Smith'] }] }
     ] },
     brass: {
       title: 'Brass',
@@ -375,16 +385,16 @@
       instruments: ['Trumpet', 'French Horn', 'Trombone', 'Tuba'],
       hoverAudio: "{{ '/assets/audio/poway-orchestra/brass_sound.mp3' | relative_url }}",
       detailMeta: 'Brass players often deliver fanfares, dramatic climaxes, and the big resonant chords that make orchestral finales feel huge.',
-      soundHint: 'Hover after your first click or tap to hear a short brass preview.',
+      soundHint: 'Click a card to hear a short brass preview.',
       cardHeading: 'Trumpets, horns, trombones, and tuba',
       cardDescription: 'Bright and bold. This section adds sparkle, fanfares, and the thrilling power behind big musical moments.',
-      cardNote: 'Hover for sound. Click to meet the section.',
+      cardNote: 'Click for sound and to meet the section.',
       visual: '🎺',
       sections: [
       { id: 'trumpeters', label: 'Trumpeters', title: 'Trumpeters', copy: 'Trumpeters add brilliance, ceremonial flair, and the bright top edge of the brass sound.', groups: [{ title: 'Trumpet', members: ['Jay Posteraro, Principal', 'Alan Cox'] }] },
-      { id: 'horn-players', label: 'Horn Players', title: 'Horn Players', copy: 'The horn section bridges brass and woodwinds, bringing both heroic power and warm blended color.', groups: [{ title: 'French Horn', members: ['Jerry Folsom, Principal', 'Warren Gref', 'Andrew Young', 'Neven Basener'] }] },
-      { id: 'trombonists', label: 'Trombonists', title: 'Trombonists', copy: 'Trombones add gravity, force, and sonorous depth during climactic and ceremonial passages.', groups: [{ title: 'Trombone', members: ['Sean Reusch, Principal', 'Dave Griegel', 'William Oakes'] }] },
-      { id: 'tubists', label: 'Tubists', title: 'Tubists', copy: 'The tuba grounds the brass choir and reinforces the orchestra\'s broadest and heaviest sonorities.', groups: [{ title: 'Tuba', members: ['Joseph Ortiz'] }] }
+      { id: 'horn-players', label: 'Horn Players', title: 'Horn Players', copy: 'The horn section bridges brass and woodwinds, bringing both heroic power and warm blended color.', groups: [{ title: 'French Horn', members: ['Jerry Folsom, Principal', 'Andrew Young', 'Laura Givon', 'Jackie Shannon'] }] },
+      { id: 'trombonists', label: 'Trombonists', title: 'Trombonists', copy: 'Trombones add gravity, force, and sonorous depth during climactic and ceremonial passages.', groups: [{ title: 'Trombone', members: ['Andrew Moreau, Principal', 'Dave Griegel', 'William Oakes'] }] },
+      { id: 'tubists', label: 'Tubists', title: 'Tubists', copy: 'The tuba grounds the brass choir and reinforces the orchestra\'s broadest and heaviest sonorities.', groups: [{ title: 'Tuba', members: [] }] }
     ] },
     woodwinds: {
       title: 'Woodwinds',
@@ -393,16 +403,16 @@
       instruments: ['Flute', 'Oboe', 'Clarinet', 'Bassoon'],
       hoverAudio: "{{ '/assets/audio/poway-orchestra/woodwind_sound.mp3' | relative_url }}",
       detailMeta: 'Woodwind players frequently trade solos, mimic natural sounds, and provide the character voices that listeners remember after a concert.',
-      soundHint: 'Hover after your first click or tap to hear a short woodwind preview.',
+      soundHint: 'Click a card to hear a short woodwind preview.',
       cardHeading: 'Flute, oboe, clarinet, and bassoon',
       cardDescription: 'Colorful and agile. These instruments often shape the orchestra\'s most distinctive melodies and textures.',
-      cardNote: 'Hover for sound. Click to meet the section.',
+      cardNote: 'Click for sound and to meet the section.',
       visual: '🎶',
       sections: [
       { id: 'flutists', label: 'Flutists', title: 'Flutists', copy: 'The flute section brings brightness, agility, and soaring upper-register color. Piccolo coverage is included here.', groups: [{ title: 'Flute', members: ['Katie Grab, Principal', 'Jordan Schafer'] }, { title: 'Piccolo', members: ['Jordan Schafer'] }] },
       { id: 'oboists', label: 'Oboists', title: 'Oboists', copy: 'Oboists provide focused, expressive tone and carry some of the orchestra\'s most recognizable solo colors. English horn coverage is included here.', groups: [{ title: 'Oboe', members: ['Sue Ann Leininger, Principal', 'Sara Harris'] }, { title: 'English Horn', members: ['Sara Harris'] }] },
       { id: 'clarinetists', label: 'Clarinetists', title: 'Clarinetists', copy: 'Clarinetists bring smooth, flexible color that can shift from velvety blend to bright solo lines.', groups: [{ title: 'Clarinet', members: ['Rich Levine, Principal', 'Priyanka Koti'] }] },
-      { id: 'bassoonists', label: 'Bassoonists', title: 'Bassoonists', copy: 'Bassoonists add depth, character, and a distinctive reedy warmth to the orchestra\'s lower woodwind texture.', groups: [{ title: 'Bassoon', members: ['David Savage, Principal', 'Jarin Thiem, Assistant Principal'] }] }
+        { id: 'bassoonists', label: 'Bassoonists', title: 'Bassoonists', copy: 'Bassoonists add depth, character, and a distinctive reedy warmth to the orchestra\'s lower woodwind texture.', groups: [{ title: 'Bassoon', members: ['David Savage, Principal', 'Jarin Thiem, Assistant Principal'] }, { title: 'Contrabassoon', members: ['Dan Weiss'] }] }
     ] },
     percussion: {
       title: 'Percussion',
@@ -411,14 +421,14 @@
       instruments: ['Timpani', 'Snare Drum', 'Bass Drum', 'Cymbals', 'Xylophone'],
       hoverAudio: "{{ '/assets/audio/poway-orchestra/percussion_sound.mp3' | relative_url }}",
       detailMeta: 'Percussion players help shape tempo, texture, and excitement, from crisp rhythmic patterns to thunderous climaxes.',
-      soundHint: 'Hover after your first click or tap to hear a short percussion preview.',
+      soundHint: 'Click a card to hear a short percussion preview.',
       cardHeading: 'Drums, cymbals, timpani, and mallets',
       cardDescription: 'Rhythmic and dramatic. This family provides pulse, accents, and the striking sounds that younger audiences instantly notice.',
-      cardNote: 'Hover for sound. Click to meet the section.',
+      cardNote: 'Click for sound and to meet the section.',
       visual: '🥁',
       sections: [
       { id: 'timpanists', label: 'Timpanists', title: 'Timpanists', copy: 'Timpani shape the pulse and drama of the orchestra, helping transitions and climaxes land with clarity.', groups: [{ title: 'Timpani', members: ['Beverly Reese Dorcy'] }] },
-      { id: 'percussionists', label: 'Percussionists', title: 'Percussionists', copy: 'Percussionists add rhythm, attack, and color through carefully timed entrances that can transform the whole ensemble.', groups: [{ title: 'Percussion', members: ['Jane Booth'] }] }
+      { id: 'percussionists', label: 'Percussionists', title: 'Percussionists', copy: 'Percussionists add rhythm, attack, and color through carefully timed entrances that can transform the whole ensemble.', groups: [{ title: 'Percussion', members: [] }] }
     ] }
   };
 
@@ -443,6 +453,217 @@
     doublebass: 'bass',
     frenchhorn: 'frenchhorn'
   };
+
+  var preferredDirectoryInstrumentOrder = [
+    'Violin I',
+    'Violin II',
+    'Viola',
+    'Cello',
+    'Bass',
+    'Flute',
+    'Piccolo',
+    'Oboe',
+    'Clarinet',
+    'Bassoon',
+    'Contrabassoon',
+    'French Horn',
+    'Trumpet',
+    'Trombone',
+    'Timpani'
+  ];
+
+  function getDirectoryFamilyLabel(familyKey) {
+    if (familyKey === 'woodwinds') return 'Winds';
+    if (familyKey === 'strings') return 'Strings';
+    if (familyKey === 'brass') return 'Brass';
+    if (familyKey === 'percussion') return 'Percussion';
+    return '';
+  }
+
+  function getDirectoryFamilyOptions() {
+    return [
+      { id: 'all', label: 'All Sections' },
+      { id: 'strings', label: 'Strings' },
+      { id: 'brass', label: 'Brass' },
+      { id: 'woodwinds', label: 'Winds' },
+      { id: 'percussion', label: 'Percussion' }
+    ];
+  }
+
+  function syncActiveFamilyCards() {
+    instrumentCards.forEach(function (card) {
+      var isActive = selectedDirectoryFamily !== 'all' && card.dataset.family === selectedDirectoryFamily;
+      card.classList.toggle('is-active', isActive);
+      card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  }
+
+  function buildMusicianDirectoryEntries() {
+    var entries = [];
+
+    Object.keys(instrumentFamilyData).forEach(function (familyKey) {
+      var family = getFamilyConfig(familyKey) || { sections: [] };
+      family.sections.forEach(function (section) {
+        section.groups.forEach(function (group) {
+          group.members.forEach(function (member, memberIndex) {
+            var person = normalizeMember(member);
+            entries.push({
+              member: person,
+              familyKey: familyKey,
+              familyLabel: getDirectoryFamilyLabel(familyKey),
+              instrumentGroup: group.title,
+              sectionId: section.id,
+              memberIndex: memberIndex,
+              searchText: normalizeSearchText([
+                person.name,
+                group.title,
+                family.title,
+                section.title,
+                section.label,
+                person.instrumentTitle
+              ].join(' '))
+            });
+          });
+        });
+      });
+    });
+
+    loadStoredMemberCards().forEach(function (card) {
+      entries.push({
+        member: toDisplayMemberCard(card),
+        familyKey: card.family,
+        familyLabel: getDirectoryFamilyLabel(card.family),
+        instrumentGroup: card.instrumentTitle || 'Members',
+        sectionId: card.sectionId,
+        memberIndex: 999,
+        searchText: normalizeSearchText([
+          card.ownerName,
+          card.instrumentTitle,
+          card.bio,
+          card.family,
+          card.sectionId
+        ].join(' '))
+      });
+    });
+
+    return entries;
+  }
+
+  function getOrderedDirectoryInstruments(entries) {
+    var present = [];
+    var seen = {};
+
+    entries.forEach(function (entry) {
+      if (!entry.instrumentGroup || seen[entry.instrumentGroup]) return;
+      seen[entry.instrumentGroup] = true;
+      present.push(entry.instrumentGroup);
+    });
+
+    var ordered = preferredDirectoryInstrumentOrder.slice();
+    ['English Horn', 'Tuba', 'Percussion'].forEach(function (instrument) {
+      if (ordered.indexOf(instrument) === -1) ordered.push(instrument);
+    });
+
+    present.forEach(function (instrument) {
+      if (ordered.indexOf(instrument) === -1) ordered.push(instrument);
+    });
+
+    return ordered;
+  }
+
+  function renderMusicianDirectoryFilters(entries) {
+    var familyCounts = {};
+    var instrumentCounts = {};
+    var orderedInstruments = getOrderedDirectoryInstruments(entries);
+
+    entries.forEach(function (entry) {
+      familyCounts[entry.familyKey] = (familyCounts[entry.familyKey] || 0) + 1;
+      instrumentCounts[entry.instrumentGroup] = (instrumentCounts[entry.instrumentGroup] || 0) + 1;
+    });
+
+    if (musicianFamilyFilters) {
+      musicianFamilyFilters.innerHTML = getDirectoryFamilyOptions().map(function (option) {
+        return '<option value="' + option.id + '">' + option.label + '</option>';
+      }).join('');
+      musicianFamilyFilters.value = selectedDirectoryFamily;
+    }
+
+    if (musicianInstrumentFilters) {
+      musicianInstrumentFilters.innerHTML = ['all'].concat(orderedInstruments).map(function (instrument) {
+        var isAll = instrument === 'all';
+        var label = isAll ? 'All Instruments' : instrument;
+        var count = isAll ? entries.length : (instrumentCounts[instrument] || 0);
+        var disabledAttr = !isAll && count === 0 ? ' disabled' : '';
+        return '<option value="' + instrument + '"' + disabledAttr + '>' + label + '</option>';
+      }).join('');
+      musicianInstrumentFilters.value = selectedDirectoryInstrument;
+    }
+  }
+
+  function renderMusicianDirectory() {
+    var entries = buildMusicianDirectoryEntries();
+    var orderedInstruments = getOrderedDirectoryInstruments(entries);
+
+    renderMusicianDirectoryFilters(entries);
+    syncActiveFamilyCards();
+
+    var filteredEntries = entries.filter(function (entry) {
+      if (selectedDirectoryFamily !== 'all' && entry.familyKey !== selectedDirectoryFamily) return false;
+      if (selectedDirectoryInstrument !== 'all' && entry.instrumentGroup !== selectedDirectoryInstrument) return false;
+      if (activeMusicianSearchQuery && entry.searchText.indexOf(activeMusicianSearchQuery) === -1) return false;
+      return true;
+    });
+
+    if (musicianDirectoryStatus) {
+      var summary = 'Showing ' + filteredEntries.length + ' musician' + (filteredEntries.length === 1 ? '' : 's');
+      if (selectedDirectoryFamily !== 'all') {
+        summary += ' in ' + getDirectoryFamilyLabel(selectedDirectoryFamily);
+      }
+      if (selectedDirectoryInstrument !== 'all') {
+        summary += (selectedDirectoryFamily !== 'all' ? ' · ' : ' in ') + selectedDirectoryInstrument;
+      }
+      if (activeMusicianSearchQuery) {
+        summary += ' matching your search';
+      }
+      summary += '.';
+      musicianDirectoryStatus.textContent = summary;
+    }
+
+    if (musicianDirectoryEmpty) {
+      musicianDirectoryEmpty.classList.toggle('is-hidden', filteredEntries.length > 0);
+    }
+
+    if (!musicianMemberGroups) return;
+    if (!filteredEntries.length) {
+      musicianMemberGroups.innerHTML = '';
+      return;
+    }
+
+    var grouped = {};
+    filteredEntries.forEach(function (entry) {
+      if (!grouped[entry.instrumentGroup]) grouped[entry.instrumentGroup] = [];
+      grouped[entry.instrumentGroup].push(entry);
+    });
+
+    musicianMemberGroups.innerHTML = orderedInstruments.filter(function (instrument) {
+      return grouped[instrument] && grouped[instrument].length;
+    }).map(function (instrument) {
+      var groupEntries = grouped[instrument].slice().sort(function (left, right) {
+        return left.memberIndex - right.memberIndex;
+      });
+      return '<section class="musician-directory-group">'
+        + '<div class="musician-directory-group-head">'
+        + '<p>' + escapeHtml(groupEntries[0].familyLabel) + '</p>'
+        + '<h4>' + escapeHtml(instrument) + '</h4>'
+        + '</div>'
+        + '<div class="musician-member-card-grid">'
+        + groupEntries.map(function (entry) {
+          return makeMemberCard(entry.member, entry.instrumentGroup);
+        }).join('')
+        + '</div>'
+        + '</section>';
+    }).join('');
+  }
 
   function getFamilyConfig(familyKey) {
     return instrumentFamilyData[familyKey] || null;
@@ -473,16 +694,6 @@
     return sections.map(function (section) {
       var familyAttr = familyKey ? ' data-family-key="' + familyKey + '"' : '';
       return '<button type="button" class="musician-section-chip' + extraClassName + '" data-section-id="' + section.id + '"' + familyAttr + '>' + section.label + '</button>';
-    }).join('');
-  }
-  function renderDefaultRosterSectionGrid() {
-    if (!musicianRosterFamilyGrid) return;
-    musicianRosterFamilyGrid.innerHTML = Object.keys(instrumentFamilyData).map(function (familyKey) {
-      var family = instrumentFamilyData[familyKey];
-      return '<section class="musician-roster-family-column">'
-        + '<h4>' + family.title + '</h4>'
-        + '<div class="musician-section-chip-list">' + makeSectionButtons(family.sections, { familyKey: familyKey }) + '</div>'
-        + '</section>';
     }).join('');
   }
   function normalizeInstrumentKey(value) { return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ''); }
@@ -578,7 +789,13 @@
   }
   function makeSearchResultCards(results) {
     return '<div class="musician-search-results-grid">'
-      + results.map(function (result) { return makeMemberCard(result.member, result.instrumentTitle); }).join('')
+      + results.map(function (result) {
+        var label = result.instrumentTitle;
+        if (result.familyTitle) {
+          label += ' · ' + result.familyTitle;
+        }
+        return makeMemberCard(result.member, label);
+      }).join('')
       + '</div>';
   }
   function normalizeSearchText(value) { return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
@@ -601,14 +818,13 @@
     if (detailCopy) detailCopy.textContent = family.detailCopy;
     if (detailMeta) detailMeta.textContent = family.detailMeta;
     if (detailHint) detailHint.textContent = family.soundHint;
-    setMusicianPanelActionsVisible(true);
     renderFamilySectionButtons(selectedFamily, visibleSectionIds);
     if (detailList) detailList.innerHTML = makeChips(family.instruments);
     if (musicianRoster) {
       musicianRoster.classList.remove('is-hidden');
       musicianRoster.setAttribute('aria-hidden', 'false');
     }
-    if (musicianRosterCopy) musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America. Choose a ' + family.title + ' section below to see the players.';
+    if (musicianRosterCopy) musicianRosterCopy.textContent = 'Current musicians as of March 22, 2026 for Mendelssohn Classics. Choose a ' + family.title + ' section below to see the players.';
     if (musicianRosterEmpty) {
       musicianRosterEmpty.classList.remove('is-hidden');
       if (visibleSectionIds && visibleSectionIds.length > 1) {
@@ -626,10 +842,6 @@
     if (!activeMusicianSearchQuery) return null;
     var visibleSections = musicianSearchMatches[familyKey];
     return visibleSections && visibleSections.length ? visibleSections : null;
-  }
-  function setMusicianPanelActionsVisible(isVisible) {
-    if (!musicianPanelActions) return;
-    musicianPanelActions.classList.toggle('is-hidden', !isVisible);
   }
   function renderFamilySectionButtons(familyKey, visibleSectionIds) {
     if (!detailPlayers) return;
@@ -714,15 +926,7 @@
     populateMemberCardEditor(card);
   }
   function refreshVisibleMusicianCards() {
-    if (activeMusicianSearchQuery) {
-      applyMusicianSearch(activeMusicianSearchQuery);
-      return;
-    }
-    if (selectedFamily && activeMusicianSectionId) {
-      showMusicianSection(activeMusicianSectionId);
-      return;
-    }
-    renderMemberCardControls();
+    renderMusicianDirectory();
   }
   function showMusicianSection(sectionId) {
     if (!selectedFamily || !detailPlayers) return;
@@ -747,32 +951,14 @@
   function resetInstrumentPanel() {
     selectedFamily = null;
     activeMusicianSectionId = '';
-    instrumentCards.forEach(function (card) {
-      card.classList.remove('is-active');
-      card.setAttribute('aria-pressed', 'false');
-    });
-    if (detailTitle) detailTitle.textContent = 'Choose a section';
-    if (detailCopy) detailCopy.textContent = 'Start with a section chip to load the current players, then use the search bar if you want to jump to a specific instrument or musician.';
-    if (detailMeta) detailMeta.textContent = 'Each family has its own role in the orchestra, from carrying the melody to building rhythm and dramatic impact.';
-    if (detailHint) detailHint.textContent = 'Audio previews usually begin after the page receives one click, tap, or key press.';
-    setMusicianPanelActionsVisible(false);
-    if (detailPlayers) detailPlayers.innerHTML = '';
-    if (detailList) detailList.innerHTML = '';
-    if (musicianRoster) {
-      musicianRoster.classList.remove('is-hidden');
-      musicianRoster.setAttribute('aria-hidden', 'false');
-    }
-    if (musicianRosterCopy) musicianRosterCopy.textContent = 'Current musicians as of November 16, 2025 for Dvořák in America. Click a section below to meet the musicians.';
-    if (musicianRosterEmpty) {
-      musicianRosterEmpty.classList.remove('is-hidden');
-    }
-    renderDefaultRosterSectionGrid();
-    if (musicianRosterDetail) musicianRosterDetail.classList.add('is-hidden');
-    if (musicianSectionTitle) musicianSectionTitle.textContent = 'Select a section';
-    if (musicianSectionCopy) musicianSectionCopy.textContent = 'Pick a section chip to load the current players.';
-    if (musicianMemberGroups) musicianMemberGroups.innerHTML = '';
+    selectedDirectoryFamily = 'all';
+    selectedDirectoryInstrument = 'all';
+    activeMusicianSearchQuery = '';
+    if (musicianSearchInput) musicianSearchInput.value = '';
+    clearSelectedFamilyAudio();
     hideMemberCardEditor();
-    renderMemberCardControls();
+    setMusicianSearchStatus('Filter the directory by name, section, or instrument.');
+    renderMusicianDirectory();
   }
   function updateInstrumentPanel(card, options) { if (!card) return; updateInstrumentPanelByFamily(card.dataset.family || null, options); }
   function collectMusicianSearchResults(query) {
@@ -812,6 +998,7 @@
             results.push({
               member: person,
               instrumentTitle: group.title,
+              familyTitle: family.title,
               family: familyKey,
               sectionId: section.id
             });
@@ -838,6 +1025,7 @@
       results.push({
         member: toDisplayMemberCard(card),
         instrumentTitle: card.instrumentTitle,
+        familyTitle: (getFamilyConfig(card.family) || {}).title || '',
         family: card.family,
         sectionId: card.sectionId
       });
@@ -848,57 +1036,13 @@
   function applyMusicianSearch(rawValue) {
     var query = normalizeSearchText(rawValue);
     activeMusicianSearchQuery = query;
-    musicianSearchMatches = {};
-
-    if (!query) {
-      setSearchResultsMode(false);
-      setMusicianSearchStatus('Search by musician or instrument to jump to the matching orchestra section.');
-      if (selectedFamily) {
-        updateInstrumentPanelByFamily(selectedFamily);
-      } else {
-        resetInstrumentPanel();
-      }
-      return;
+    if (query) {
+      clearSelectedFamilyAudio();
+      setMusicianSearchStatus('Searching the musician directory.');
+    } else {
+      setMusicianSearchStatus('Filter the directory by name, section, or instrument.');
     }
-
-    var results = collectMusicianSearchResults(query);
-    setSearchResultsMode(true);
-
-    if (!results.length) {
-      setMusicianSearchStatus('No matching musicians found.');
-      if (musicianRoster) {
-        musicianRoster.classList.remove('is-hidden');
-        musicianRoster.setAttribute('aria-hidden', 'false');
-      }
-      if (musicianRosterEmpty) {
-        musicianRosterEmpty.classList.remove('is-hidden');
-        musicianRosterEmpty.innerHTML = '<p>No musicians matched that name or instrument.</p>';
-      }
-      if (musicianRosterDetail) {
-        musicianRosterDetail.classList.add('is-hidden');
-      }
-      if (musicianMemberGroups) {
-        musicianMemberGroups.innerHTML = '';
-      }
-      return;
-    }
-
-    setMusicianSearchStatus('Showing ' + results.length + ' matching musician' + (results.length === 1 ? '' : 's') + '.');
-
-    if (musicianRoster) {
-      musicianRoster.classList.remove('is-hidden');
-      musicianRoster.setAttribute('aria-hidden', 'false');
-    }
-    if (musicianRosterEmpty) {
-      musicianRosterEmpty.classList.add('is-hidden');
-    }
-    if (musicianRosterDetail) {
-      musicianRosterDetail.classList.remove('is-hidden');
-    }
-    if (musicianMemberGroups) {
-      musicianMemberGroups.innerHTML = makeSearchResultCards(results);
-    }
-    renderMemberCardControls();
+    renderMusicianDirectory();
   }
   async function saveMemberCard(event) {
     event.preventDefault();
@@ -986,6 +1130,63 @@
     }
   }
   function unlockAudio() { audioReady = true; }
+  function updateFamilyAudioPlayer() {
+    if (!familyAudioPlayer || !familyAudioPlayerToggle || !familyAudioPlayerTitle) return;
+    var family = activeFamilyAudioKey ? getFamilyConfig(activeFamilyAudioKey) : null;
+    familyAudioPlayer.classList.toggle('is-hidden', !family);
+    if (!family) return;
+    familyAudioPlayerTitle.textContent = family.title + ' audio preview';
+    familyAudioPlayerToggle.textContent = activeFamilyAudio && !activeFamilyAudioPaused ? 'Pause' : 'Play';
+    familyAudioPlayerToggle.setAttribute('aria-pressed', activeFamilyAudio && !activeFamilyAudioPaused ? 'true' : 'false');
+  }
+  function clearSelectedFamilyAudio() {
+    if (activeFamilyAudio) {
+      activeFamilyAudio.pause();
+      activeFamilyAudio.currentTime = 0;
+    }
+    activeFamilyAudio = null;
+    activeFamilyAudioKey = '';
+    activeFamilyAudioPaused = false;
+    updateFamilyAudioPlayer();
+  }
+  function playSelectedFamilyAudio(familyKey) {
+    var family = getFamilyConfig(familyKey);
+    var audioPath = family && family.hoverAudio;
+    if (!audioReady || !audioPath) {
+      activeFamilyAudioKey = familyKey || '';
+      activeFamilyAudioPaused = true;
+      updateFamilyAudioPlayer();
+      return;
+    }
+    if (activeFamilyAudio && activeFamilyAudioKey === familyKey && activeFamilyAudioPaused) {
+      activeFamilyAudio.play().then(function () {
+        activeFamilyAudioPaused = false;
+        updateFamilyAudioPlayer();
+      }).catch(function () {});
+      return;
+    }
+    clearSelectedFamilyAudio();
+    stopHoverPreview();
+    stopCurrentAudio();
+    stopMediaPlayback();
+    activeFamilyAudioKey = familyKey;
+    activeFamilyAudio = new Audio(audioPath);
+    activeFamilyAudio.preload = 'auto';
+    activeFamilyAudio.volume = 0.7;
+    activeFamilyAudio.currentTime = 0;
+    activeFamilyAudio.play().then(function () {
+      activeFamilyAudioPaused = false;
+      updateFamilyAudioPlayer();
+    }).catch(function () {
+      activeFamilyAudioPaused = true;
+      updateFamilyAudioPlayer();
+    });
+    activeFamilyAudio.addEventListener('ended', function () {
+      activeFamilyAudioPaused = true;
+      updateFamilyAudioPlayer();
+    });
+    updateFamilyAudioPlayer();
+  }
   function updateHeroVideoAudioToggle() {
     if (!heroVideoAudioToggle) return;
     var isAudible = Boolean(audioReady && heroBackgroundActive && !heroBackgroundUserMuted);
@@ -1064,7 +1265,7 @@
   }
   function stopCurrentAudio() { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } if (currentButton) { resetAudioButton(currentButton); currentButton = null; } }
   function playInstrumentPreview(card) { if (!audioReady || !card) return; var family = getFamilyConfig(card.dataset.family); var audioPath = family && family.hoverAudio; if (!audioPath) return; stopCurrentAudio(); stopMediaPlayback(); var last = previewCooldown.get(card) || 0; if (Date.now() - last < 500) return; previewCooldown.set(card, Date.now()); if (currentHoverCard === card && currentHoverAudio) { currentHoverAudio.currentTime = 0; currentHoverAudio.play().catch(function () {}); return; } stopHoverPreview(); var audio = new Audio(audioPath); audio.preload = 'auto'; audio.volume = 0.65; audio.currentTime = 0; audio.play().then(function () { currentHoverAudio = audio; currentHoverCard = card; }).catch(function () {}); }
-  function stopAllSectionAudio() { stopHoverPreview(); stopCurrentAudio(); stopMediaPlayback(); }
+  function stopAllSectionAudio() { stopHoverPreview(); stopCurrentAudio(); clearSelectedFamilyAudio(); stopMediaPlayback(); }
   function setActiveMedia(card, shouldAutoplay) { if (!card || !mediaPlayer) return; var videoId = card.dataset.videoId; if (!videoId) return; stopHoverPreview(); stopCurrentAudio(); var embedUrl = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0&enablejsapi=1' + (shouldAutoplay ? '&autoplay=1' : ''); mediaPlayer.src = embedUrl; mediaPlayer.title = (card.dataset.videoTitle || 'Poway Symphony Orchestra video') + ' video player'; if (mediaTitle) mediaTitle.textContent = card.dataset.videoTitle || ''; if (mediaComposer) mediaComposer.textContent = card.dataset.videoComposer || ''; if (mediaCopy) mediaCopy.textContent = card.dataset.videoCopy || ''; if (mediaExternal) mediaExternal.href = card.dataset.videoUrl || 'https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ'; mediaCards.forEach(function (entry) { entry.classList.toggle('is-selected', entry === card); entry.setAttribute('aria-pressed', entry === card ? 'true' : 'false'); }); }
   function createHeroSparkles() { if (!heroSparkleLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; var sparkleCount = window.innerWidth < 700 ? 10 : 18; heroSparkleLayer.innerHTML = ''; for (var i = 0; i < sparkleCount; i++) { var sparkle = document.createElement('span'); sparkle.className = 'hero-sparkle'; sparkle.style.left = (Math.random() * 100) + '%'; sparkle.style.top = (15 + Math.random() * 70) + '%'; sparkle.style.animationDuration = (4.5 + Math.random() * 4.5) + 's'; sparkle.style.animationDelay = (Math.random() * 6) + 's'; sparkle.style.opacity = (0.35 + Math.random() * 0.4).toFixed(2); var size = 4 + Math.random() * 5; sparkle.style.width = size + 'px'; sparkle.style.height = size + 'px'; heroSparkleLayer.appendChild(sparkle); } }
   function getBuilderZone(slotKey) {
@@ -1229,11 +1430,15 @@
   function bindInstrumentCardEvents() {
     instrumentCards.forEach(function (card) {
       card.setAttribute('aria-pressed', card.classList.contains('is-active') ? 'true' : 'false');
-      card.addEventListener('click', function () { updateInstrumentPanel(card, { sectionIds: getVisibleSectionsForFamily(card.dataset.family) }); playInstrumentPreview(card); });
-      card.addEventListener('pointerenter', function () { playInstrumentPreview(card); });
-      card.addEventListener('pointerleave', function () { stopHoverPreview(card); });
-      card.addEventListener('focus', function () { playInstrumentPreview(card); });
-      card.addEventListener('blur', function () { stopHoverPreview(card); });
+      card.addEventListener('click', function () {
+        selectedDirectoryFamily = card.dataset.family || 'all';
+        selectedDirectoryInstrument = 'all';
+        renderMusicianDirectory();
+        playSelectedFamilyAudio(card.dataset.family);
+        if (musicianDirectoryMain) {
+          musicianDirectoryMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     });
   }
   ['pointerdown', 'keydown', 'touchstart'].forEach(function (eventName) { root.addEventListener(eventName, function () { unlockAudio(); syncHeroBackgroundAudio(); }, { once: true, passive: true }); });
@@ -1249,15 +1454,35 @@
     }
     showMusicianSection(button.dataset.sectionId);
   }
+  if (musicianFamilyFilters) musicianFamilyFilters.addEventListener('change', function () {
+    selectedDirectoryFamily = musicianFamilyFilters.value || 'all';
+    selectedDirectoryInstrument = 'all';
+    if (selectedDirectoryFamily === 'all') {
+      clearSelectedFamilyAudio();
+    }
+    renderMusicianDirectory();
+  });
+  if (musicianInstrumentFilters) musicianInstrumentFilters.addEventListener('change', function () {
+    selectedDirectoryInstrument = musicianInstrumentFilters.value || 'all';
+    renderMusicianDirectory();
+  });
   if (detailPlayers) detailPlayers.addEventListener('click', handleMusicianSectionChipClick);
-  if (musicianRosterFamilyGrid) musicianRosterFamilyGrid.addEventListener('click', handleMusicianSectionChipClick);
-  if (musicianResetSectionsButton) musicianResetSectionsButton.addEventListener('click', function () {
-    if (musicianSearchInput) musicianSearchInput.value = '';
-    activeMusicianSearchQuery = '';
-    musicianSearchMatches = {};
-    setSearchResultsMode(false);
-    setMusicianSearchStatus('Search by musician or instrument to jump to the matching orchestra section.');
-    resetInstrumentPanel();
+  if (familyAudioPlayerToggle) familyAudioPlayerToggle.addEventListener('click', function () {
+    if (!activeFamilyAudioKey) return;
+    if (!activeFamilyAudio) {
+      playSelectedFamilyAudio(activeFamilyAudioKey);
+      return;
+    }
+    if (activeFamilyAudioPaused) {
+      activeFamilyAudio.play().then(function () {
+        activeFamilyAudioPaused = false;
+        updateFamilyAudioPlayer();
+      }).catch(function () {});
+      return;
+    }
+    activeFamilyAudio.pause();
+    activeFamilyAudioPaused = true;
+    updateFamilyAudioPlayer();
   });
   if (musicianSearchInput) musicianSearchInput.addEventListener('input', function () { applyMusicianSearch(musicianSearchInput.value); });
   if (memberCardEditor) memberCardEditor.addEventListener('submit', saveMemberCard);
@@ -1300,6 +1525,7 @@
     stopHoverPreview();
     stopMediaPlayback();
     stopCurrentAudio();
+    clearSelectedFamilyAudio();
 
     var audio = new Audio(audioPath);
     audio.preload = 'auto';

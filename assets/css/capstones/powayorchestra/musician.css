@@ -19,6 +19,20 @@
     max-width: 1120px;
   }
 
+  .musician-listen-section {
+    margin-bottom: 1.8rem;
+  }
+
+  .musician-listen-header {
+    margin-bottom: 0.9rem;
+  }
+
+  .musician-listen-intro {
+    margin: 0;
+    max-width: 640px;
+    text-align: left;
+  }
+
   .instrument-discovery-intro {
     max-width: 760px;
     margin: 0 auto 1rem;
@@ -31,6 +45,203 @@
   .instrument-search-shell {
     max-width: 760px;
     margin: 0 auto 1.1rem;
+  }
+
+  .musician-search-shell--sidebar {
+    max-width: none;
+    margin: 0 0 1.1rem;
+  }
+
+  .family-audio-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(226,201,122,0.18);
+    border-radius: 10px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 50%),
+      rgba(8, 19, 38, 0.62);
+  }
+
+  .family-audio-player-copy p {
+    margin: 0;
+    color: rgba(250,246,239,0.84);
+    font-size: 0.96rem;
+  }
+
+  .family-audio-player-label {
+    display: inline-block;
+    margin-bottom: 0.2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .family-audio-player-toggle {
+    appearance: none;
+    border: 1px solid rgba(226,201,122,0.26);
+    border-radius: 999px;
+    background: rgba(250,246,239,0.04);
+    color: var(--gold-light);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  .family-audio-player-toggle:hover,
+  .family-audio-player-toggle:focus-visible {
+    outline: none;
+    transform: translateY(-1px);
+    border-color: rgba(226,201,122,0.72);
+    background: rgba(226,201,122,0.12);
+    color: var(--white);
+  }
+
+  .musician-directory-shell {
+    display: grid;
+    grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+    gap: 1.3rem;
+    align-items: start;
+  }
+
+  .musician-filter-sidebar-inner {
+    position: sticky;
+    top: 84px;
+    border: 1px solid rgba(226,201,122,0.14);
+    border-radius: 12px;
+    padding: 1rem;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 44%),
+      rgba(8, 19, 38, 0.6);
+  }
+
+  .musician-filter-group + .musician-filter-group {
+    margin-top: 1rem;
+  }
+
+  .musician-filter-label {
+    margin: 0 0 0.55rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .musician-filter-select {
+    width: 100%;
+    min-height: 46px;
+    border: 1px solid rgba(226,201,122,0.24);
+    border-radius: 10px;
+    background: rgba(8,17,31,0.78);
+    color: rgba(250,246,239,0.9);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.7rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .musician-filter-select:focus {
+    outline: none;
+    border-color: rgba(226,201,122,0.72);
+    box-shadow: 0 0 0 3px rgba(226,201,122,0.12);
+  }
+
+  .musician-directory-main {
+    min-width: 0;
+  }
+
+  .musician-directory-header {
+    margin-bottom: 1rem;
+  }
+
+  .musician-directory-status {
+    margin: 0;
+    color: rgba(250,246,239,0.72);
+    line-height: 1.65;
+  }
+
+  .musician-directory-empty {
+    border: 1px solid rgba(226,201,122,0.14);
+    border-radius: 10px;
+    padding: 1rem;
+    background: rgba(8, 19, 38, 0.56);
+    margin-bottom: 1rem;
+  }
+
+  .musician-directory-empty p {
+    margin: 0;
+  }
+
+  .musician-directory-groups {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .musician-directory-group {
+    border: 1px solid rgba(226,201,122,0.14);
+    border-radius: 12px;
+    padding: 0.85rem;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%),
+      rgba(8, 19, 38, 0.5);
+  }
+
+  .musician-directory-group-head {
+    margin-bottom: 0.9rem;
+  }
+
+  .musician-directory-group-head p {
+    margin: 0 0 0.25rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .musician-directory-group-head h4 {
+    margin: 0;
+    color: var(--white);
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 920px) {
+    .musician-directory-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .musician-filter-sidebar-inner {
+      position: static;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .family-audio-player {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .family-audio-player-toggle {
+      width: 100%;
+      text-align: center;
+    }
+
+    .musician-filter-list {
+      gap: 0.45rem;
+    }
   }
 
   .instrument-search-label {
@@ -79,6 +290,10 @@
     display: none;
   }
 
+  .instrument-discovery.is-search-results-mode .family-audio-player {
+    display: none;
+  }
+
   .instrument-discovery.is-search-results-mode .instrument-detail-panel {
     grid-template-columns: 1fr;
     border: 0;
@@ -105,9 +320,9 @@
 
   .instrument-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.4rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1rem;
   }
 
   .instrument-card.is-search-hidden {
@@ -124,8 +339,8 @@
       linear-gradient(160deg, rgba(200,168,75,0.08), transparent 45%),
       linear-gradient(180deg, rgba(255,255,255,0.03), transparent 38%),
       var(--navy-mid);
-    padding: 1.3rem;
-    min-height: 250px;
+    padding: 1rem;
+    min-height: 190px;
     color: var(--cream);
     cursor: pointer;
     transition: transform 0.28s ease, border-color 0.2s ease, box-shadow 0.28s ease;
@@ -230,21 +445,21 @@
 
   .instrument-card h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.45rem;
+    font-size: 1.2rem;
     color: var(--white);
     margin-bottom: 0.55rem;
   }
 
   .instrument-card p {
-    font-size: 0.98rem;
-    line-height: 1.65;
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: rgba(250,246,239,0.74);
     max-width: 32ch;
   }
 
   .instrument-card-note {
     display: inline-block;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     font-family: 'Jost', sans-serif;
     font-size: 0.69rem;
     letter-spacing: 0.14em;
@@ -256,14 +471,14 @@
     position: absolute;
     right: 1rem;
     bottom: 1rem;
-    width: 74px;
-    height: 74px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     border: 1px solid rgba(226,201,122,0.28);
     background: rgba(12,26,46,0.42);
     display: grid;
     place-items: center;
-    font-size: 2rem;
+    font-size: 1.65rem;
     line-height: 1;
     color: var(--gold-light);
     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
@@ -335,35 +550,6 @@
     margin-bottom: 1rem;
   }
 
-  .musician-panel-actions {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 0.8rem;
-  }
-
-  .musician-panel-back {
-    appearance: none;
-    border: 1px solid rgba(226,201,122,0.24);
-    border-radius: 999px;
-    background: rgba(250,246,239,0.04);
-    color: var(--gold-light);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.5rem 0.85rem;
-    cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-  }
-
-  .musician-panel-back:hover,
-  .musician-panel-back:focus-visible {
-    outline: none;
-    transform: translateY(-1px);
-    border-color: rgba(226,201,122,0.72);
-    background: rgba(226,201,122,0.12);
-    color: var(--white);
-  }
 
   .instrument-detail-subheading {
     font-family: 'Jost', sans-serif;
@@ -507,52 +693,6 @@
     line-height: 1.7;
   }
 
-  .musician-roster-empty-prompt {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
-    font-weight: 600;
-    color: var(--gold-light);
-  }
-
-  .musician-roster-empty-copy {
-    margin-top: 0.4rem !important;
-    max-width: 60ch;
-  }
-
-  .musician-roster-family-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 0.9rem;
-    margin-top: 1rem;
-  }
-
-  .musician-roster-family-column {
-    border: 1px solid rgba(226,201,122,0.14);
-    border-radius: 12px;
-    padding: 0.95rem;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.04), transparent 42%),
-      rgba(5, 15, 31, 0.74);
-  }
-
-  .musician-roster-family-column h4 {
-    margin: 0 0 0.8rem;
-    color: var(--gold-light);
-    font-size: 0.96rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .musician-roster-family-column .musician-section-chip-list {
-    gap: 0.55rem;
-  }
-
-  .musician-roster-family-column .musician-section-chip {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-  }
-
   .musician-roster-detail {
     display: grid;
     gap: 1rem;
@@ -579,7 +719,7 @@
 
   .musician-member-groups {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
@@ -600,8 +740,9 @@
 
   .musician-member-card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fill, 122px);
+    justify-content: start;
+    gap: 0.6rem;
   }
 
   .musician-search-results-grid {
@@ -612,14 +753,14 @@
 
   .musician-member-card {
     border: 1px solid rgba(226,201,122,0.12);
-    border-radius: 12px;
+    border-radius: 9px;
     overflow: hidden;
     background: rgba(255,255,255,0.03);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.14);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.13);
   }
 
   .musician-member-photo-shell {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 0.95 / 1;
     background: linear-gradient(180deg, rgba(226,201,122,0.12), rgba(8,19,38,0.85));
     border-bottom: 1px solid rgba(226,201,122,0.12);
   }
@@ -641,22 +782,22 @@
 
   .musician-member-card-copy {
     display: grid;
-    gap: 0.55rem;
-    padding: 0.95rem 1rem 1rem;
+    gap: 0.38rem;
+    padding: 0.6rem 0.65rem 0.68rem;
   }
 
   .musician-member-card-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.6rem;
+    gap: 0.45rem;
   }
 
   .musician-member-instrument {
     margin: 0;
     font-family: 'Jost', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--gold);
   }
@@ -665,8 +806,8 @@
     margin: 0;
     color: rgba(250,246,239,0.9);
     font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    line-height: 1.35;
+    font-size: 0.82rem;
+    line-height: 1.3;
   }
 
   .musician-roster-note {
@@ -677,7 +818,7 @@
 
   .musician-member-card-actions {
     display: flex;
-    gap: 0.7rem;
+    gap: 0.35rem;
     flex-wrap: wrap;
     flex-shrink: 0;
   }
@@ -685,8 +826,8 @@
   .musician-member-bio {
     margin: 0;
     color: rgba(250,246,239,0.74);
-    line-height: 1.55;
-    font-size: 0.92rem;
+    line-height: 1.45;
+    font-size: 0.76rem;
   }
 
   .musician-member-card-controls {

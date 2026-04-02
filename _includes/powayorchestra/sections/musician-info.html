@@ -6,120 +6,71 @@
       </p>
 
       <div class="instrument-discovery" aria-label="Musician roster explorer">
-        <p class="instrument-discovery-intro">
-          Search for an instrument or musician, or start with the section chooser below to jump directly into the current roster.
-        </p>
+        <div class="musician-listen-section">
+          <div class="musician-listen-header">
+            <span class="musician-roster-label">Listen</span>
+            <h3 class="conductor-title" style="text-align:left; margin-bottom:0.4rem;">Hear Each Section</h3>
+            <p class="instrument-discovery-intro musician-listen-intro">
+              Click a section card to hear its sound and immediately filter the roster below.
+            </p>
+          </div>
 
-        <div class="instrument-search-shell">
-          <label class="instrument-search-label" for="musician-search-input">Search by instrument or musician</label>
-          <input
-            id="musician-search-input"
-            class="instrument-search-input"
-            type="search"
-            placeholder="Try violin, horn, or a musician name"
-            autocomplete="off"
-            data-musician-search>
-          <p class="instrument-search-status" data-musician-search-status>
-            Search by musician or instrument to jump to the matching orchestra section.
-          </p>
+          <div class="instrument-grid" data-instrument-grid></div>
+
+          <div class="family-audio-player is-hidden" data-family-audio-player aria-live="polite">
+            <div class="family-audio-player-copy">
+              <span class="family-audio-player-label">Now Playing</span>
+              <p data-family-audio-player-title>Family audio preview</p>
+            </div>
+            <button type="button" class="family-audio-player-toggle" data-family-audio-player-toggle aria-pressed="true">Pause</button>
+          </div>
         </div>
-        <div class="instrument-detail-panel" aria-live="polite">
-          <div>
-            <p class="instrument-detail-eyebrow">Start Here</p>
-            <h3 class="instrument-detail-title" data-instrument-title>Choose a section</h3>
-            <p class="instrument-detail-copy" data-instrument-copy>
-              Start with a section chip to load the current players, then use the search bar if you want to jump to a specific instrument or musician.
-            </p>
-            <div class="musician-panel-actions is-hidden" data-musician-panel-actions>
-              <button type="button" class="musician-panel-back" data-musician-reset-sections>Back to all sections</button>
-            </div>
-            <p class="instrument-detail-subheading">Choose a section to meet the musicians</p>
-            <div class="instrument-chip-list" data-instrument-players></div>
-          </div>
 
-          <div class="instrument-detail-meta">
-            <div class="instrument-chip-list" data-instrument-list></div>
-            <p data-instrument-meta>
-              Each family has its own role in the orchestra, from carrying the melody to building rhythm and dramatic impact.
-            </p>
-            <p class="instrument-audio-hint" data-instrument-soundhint>
-              Audio previews usually begin after the page receives one click, tap, or key press.
-            </p>
-          </div>
-
-          <div class="musician-roster is-hidden" data-musician-roster aria-labelledby="musician-roster-title" aria-hidden="true">
-            <div class="musician-roster-header">
-              <span class="musician-roster-label">Current Musicians</span>
-              <h3 id="musician-roster-title" class="conductor-title" style="text-align:left; margin-bottom:0.5rem;">Poway Symphony Orchestra Musicians</h3>
-              <p data-musician-roster-copy>Current musicians as of November 16, 2025 for Dvořák in America.</p>
-            </div>
-
-            <div class="musician-roster-grid">
-              <div class="musician-roster-empty" data-musician-roster-empty>
-                <p class="musician-roster-empty-prompt">Click a section below to meet the musicians.</p>
-                <p class="musician-roster-empty-copy">Start with any part of the orchestra. Each chip opens the matching family and loads the current players for that section.</p>
-                <div class="musician-roster-family-grid" data-musician-roster-family-grid></div>
+        <div class="musician-directory-shell">
+          <aside class="musician-filter-sidebar">
+            <div class="musician-filter-sidebar-inner">
+              <div class="instrument-search-shell musician-search-shell--sidebar">
+                <label class="instrument-search-label" for="musician-search-input">Search the roster</label>
+                <input
+                  id="musician-search-input"
+                  class="instrument-search-input"
+                  type="search"
+                  placeholder="Try violin, horn, or a musician name"
+                  autocomplete="off"
+                  data-musician-search>
+                <p class="instrument-search-status" data-musician-search-status>
+                  Filter the directory by name, section, or instrument.
+                </p>
               </div>
 
-              <div class="musician-roster-detail is-hidden" data-musician-roster-detail>
-                <div class="musician-roster-detail-header">
-                  <p class="instrument-detail-subheading">Selected Section</p>
-                  <h4 data-musician-section-title>Select a section</h4>
-                  <p data-musician-section-copy>Pick a section chip to load the current players.</p>
-                </div>
+              <div class="musician-filter-group">
+                <p class="musician-filter-label">Section Filter</p>
+                <select class="musician-filter-select" data-musician-family-filters aria-label="Filter musicians by section"></select>
+              </div>
 
-                <div class="musician-member-groups" data-musician-member-groups></div>
-
-                <div class="musician-member-card-controls" data-member-card-controls hidden>
-                  <div class="musician-member-card-admin-bar">
-                    <p class="musician-member-card-admin-copy" data-member-card-admin-copy>
-                      Only admins can create or edit saved member cards.
-                    </p>
-                  </div>
-
-                  <form class="musician-member-card-editor is-hidden" data-member-card-editor hidden>
-                    <div class="musician-member-card-editor-head">
-                      <div>
-                        <p class="instrument-detail-subheading">Member Card Editor</p>
-                        <h5 data-member-card-editor-title>Create a member card</h5>
-                      </div>
-                      <p class="musician-member-card-editor-status" data-member-card-editor-status>
-                        Cards saved here stay in this browser until a backend store is added.
-                      </p>
-                    </div>
-
-                    <div class="musician-member-card-form-grid">
-                      <label>
-                        <span>Member UID</span>
-                        <input type="text" data-member-card-owner-uid placeholder="User ID tied to this member">
-                      </label>
-                      <label>
-                        <span>Member Name</span>
-                        <input type="text" data-member-card-owner-name placeholder="Full name shown on the card">
-                      </label>
-                      <label>
-                        <span>Instrument Title</span>
-                        <input type="text" data-member-card-instrument placeholder="Bass, Violin I, Clarinet">
-                      </label>
-                      <label>
-                        <span>Image URL</span>
-                        <input type="url" data-member-card-image placeholder="https://... or /images/...">
-                      </label>
-                      <label class="musician-member-card-form-full">
-                        <span>Short Bio</span>
-                        <textarea rows="4" data-member-card-bio placeholder="Short member bio or description"></textarea>
-                      </label>
-                    </div>
-
-                    <div class="musician-member-card-editor-actions">
-                      <button class="btn btn-primary" type="submit" data-member-card-save>Save Card</button>
-                      <button class="btn btn-secondary" type="button" data-member-card-cancel>Cancel</button>
-                      <button class="btn btn-secondary" type="button" data-member-card-delete hidden>Delete Card</button>
-                    </div>
-                  </form>
-                </div>
+              <div class="musician-filter-group">
+                <p class="musician-filter-label">Instrument Filter</p>
+                <select class="musician-filter-select" data-musician-instrument-filters aria-label="Filter musicians by instrument"></select>
               </div>
             </div>
+          </aside>
+
+          <div class="musician-directory-main" data-musician-directory-main>
+            <div class="musician-directory-header">
+              <span class="musician-roster-label">Musician Directory</span>
+              <h3 class="conductor-title" style="text-align:left; margin-bottom:0.45rem;">Poway Symphony Orchestra Musicians</h3>
+              <p class="section-intro" style="margin:0 0 0.35rem;">Current musicians as of March 22, 2026</p>
+              <p class="musician-roster-label" style="margin-bottom:0.55rem;">Mendelssohn Classics</p>
+              <p class="musician-directory-status" data-musician-directory-status>
+                Showing the full roster in score order.
+              </p>
+            </div>
+
+            <div class="musician-directory-empty is-hidden" data-musician-directory-empty>
+              <p>No musicians matched the current filters.</p>
+            </div>
+
+            <div class="musician-directory-groups musician-member-groups" data-musician-member-groups></div>
 
             <p class="musician-roster-note">An asterisk indicates the original roster notation provided for this program.</p>
           </div>
