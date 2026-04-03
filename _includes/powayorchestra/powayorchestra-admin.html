@@ -207,7 +207,7 @@
 
 <script src="{{ '/assets/js/capstones/powayorchestra/progression.js' | relative_url }}"></script>
 <script type="module">
-  import { baseurl, pythonURI as configPythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+  import { pythonURI as configPythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
   let pythonURI = configPythonURI;
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
@@ -215,8 +215,8 @@
   } else {
     pythonURI = "https://wifighters.opencodingsociety.com";
   }
-  const signInUrl = `${baseurl}/powayorchestra/signin/`;
-  const profileUrl = `${baseurl}/powayorchestra/profile/`;
+  const signInUrl = "{{ '/powayorchestra/signin/' | relative_url }}";
+  const profileUrl = "{{ '/powayorchestra/profile/' | relative_url }}";
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
   const dashboardContent = document.getElementById('pso-admin-dashboard-content');
   const adminTitle = document.getElementById('pso-admin-title');

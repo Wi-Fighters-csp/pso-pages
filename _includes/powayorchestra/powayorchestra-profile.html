@@ -279,6 +279,7 @@
   } else {
     pythonURI = "https://wifighters.opencodingsociety.com";
   }
+  const signInUrl = "{{ '/powayorchestra/signin/' | relative_url }}";
   const accountLinks = Array.from(document.querySelectorAll('[data-pso-account-link]'));
   const profileStatus = document.getElementById('pso-profile-status');
   const profileName = document.getElementById('pso-profile-name');
@@ -1054,7 +1055,7 @@
         profileStatus.textContent = 'You are not signed in right now. Please sign in to view your orchestra profile.';
         setMessage('error', 'Your orchestra session could not be found. Redirecting to sign in...');
         window.setTimeout(() => {
-          window.location.href = `${baseurl}/powayorchestra/signin/`;
+          window.location.href = signInUrl;
         }, 1200);
         return;
       }
@@ -1220,7 +1221,7 @@
       }
 
       setAccountLinks(null);
-      window.location.replace(`${baseurl}/powayorchestra/signin/`);
+      window.location.replace(signInUrl);
     } catch (error) {
       setMessage('error', error.message);
       logoutButton.disabled = false;
