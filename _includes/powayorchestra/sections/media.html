@@ -7,6 +7,107 @@
         or open it directly on YouTube.
       </p>
 
+      <div class="media-tune-menu">
+        <details class="games-dropdown media-tune-dropdown" id="tune-the-orchestra">
+          <summary class="games-dropdown-summary">
+            <span class="games-dropdown-badge">Mini Game</span>
+            <span class="games-dropdown-text">
+              <span class="games-dropdown-title">Tune the Orchestra</span>
+              <span class="games-dropdown-copy">Use the drone pitches to tune by ear before you dive into the live performances.</span>
+            </span>
+            <span class="games-dropdown-caret" aria-hidden="true">&#9662;</span>
+          </summary>
+
+          <div class="games-dropdown-body">
+            <section class="media-tune-game" data-tune-game aria-labelledby="tune-the-orchestra-title">
+              <div class="media-tune-game-copy">
+                <p class="media-card-kicker">Mini Game</p>
+                <h3 id="tune-the-orchestra-title">Tune the Orchestra</h3>
+                <p>
+                  Before the concert starts, a few drone pitches are out of tune. Each file has a correct target pitch, but the current playback does not begin at that exact note.
+                  Drag the slider, listen closely, and press check when you think you have matched the target.
+                </p>
+                <div class="media-featured-actions">
+                  <button type="button" class="btn btn-primary" data-tune-game-reset>Retune the Orchestra</button>
+                </div>
+              </div>
+
+              <div class="media-tune-status" data-tune-game-status role="status" aria-live="polite">
+                Match each drone to its target pitch to get the orchestra ready for the performance.
+              </div>
+
+              <div class="media-tune-grid">
+                <article class="media-tune-card" data-tune-card data-target-label="C" data-audio-src="{{ '/assets/audio/poway-orchestra/C_drone.mp3' | relative_url }}">
+                  <div class="media-tune-card-head">
+                    <div>
+                      <p class="media-card-kicker">Drone 1</p>
+                      <h4>Concert C</h4>
+                    </div>
+                    <span class="media-tune-target-pill">Target: C</span>
+                  </div>
+                  <p class="media-tune-description">This drone should land on concert C. The file starts detuned, so move the slider until it feels centered.</p>
+                  <label class="media-tune-slider-label" for="tune-violin-slider">Pitch slider</label>
+                  <input id="tune-violin-slider" class="media-tune-slider" data-tune-slider type="range" min="-50" max="50" step="1" value="0">
+                  <div class="media-tune-readout-row">
+                    <span class="media-tune-readout" data-tune-readout>Listen and tune</span>
+                  </div>
+                  <div class="media-tune-accuracy" data-tune-accuracy>Accuracy: --</div>
+                  <div class="media-featured-actions media-tune-actions">
+                    <button type="button" class="btn btn-secondary" data-tune-play-current data-default-label="Play Current Drone" data-pause-label="Pause Current Drone">Play Current Drone</button>
+                    <button type="button" class="btn btn-secondary" data-tune-play-target data-default-label="Play Target Drone" data-pause-label="Pause Target Drone">Play Target Drone</button>
+                    <button type="button" class="btn btn-primary" data-tune-check>Check Pitch</button>
+                  </div>
+                </article>
+
+                <article class="media-tune-card" data-tune-card data-target-label="F" data-audio-src="{{ '/assets/audio/poway-orchestra/F_drone.mp3' | relative_url }}">
+                  <div class="media-tune-card-head">
+                    <div>
+                      <p class="media-card-kicker">Drone 2</p>
+                      <h4>Concert F</h4>
+                    </div>
+                    <span class="media-tune-target-pill">Target: F</span>
+                  </div>
+                  <p class="media-tune-description">This drone should settle on concert F. Use the slider to guide the pitch toward the target before you check it.</p>
+                  <label class="media-tune-slider-label" for="tune-flute-slider">Pitch slider</label>
+                  <input id="tune-flute-slider" class="media-tune-slider" data-tune-slider type="range" min="-50" max="50" step="1" value="0">
+                  <div class="media-tune-readout-row">
+                    <span class="media-tune-readout" data-tune-readout>Listen and tune</span>
+                  </div>
+                  <div class="media-tune-accuracy" data-tune-accuracy>Accuracy: --</div>
+                  <div class="media-featured-actions media-tune-actions">
+                    <button type="button" class="btn btn-secondary" data-tune-play-current data-default-label="Play Current Drone" data-pause-label="Pause Current Drone">Play Current Drone</button>
+                    <button type="button" class="btn btn-secondary" data-tune-play-target data-default-label="Play Target Drone" data-pause-label="Pause Target Drone">Play Target Drone</button>
+                    <button type="button" class="btn btn-primary" data-tune-check>Check Pitch</button>
+                  </div>
+                </article>
+
+                <article class="media-tune-card" data-tune-card data-target-label="B" data-audio-src="{{ '/assets/audio/poway-orchestra/B_drone.mp3' | relative_url }}">
+                  <div class="media-tune-card-head">
+                    <div>
+                      <p class="media-card-kicker">Drone 3</p>
+                      <h4>Concert B</h4>
+                    </div>
+                    <span class="media-tune-target-pill">Target: B</span>
+                  </div>
+                  <p class="media-tune-description">This drone belongs on concert B. Slide until the pitch feels stable, then check how accurate your tuning was.</p>
+                  <label class="media-tune-slider-label" for="tune-cello-slider">Pitch slider</label>
+                  <input id="tune-cello-slider" class="media-tune-slider" data-tune-slider type="range" min="-50" max="50" step="1" value="0">
+                  <div class="media-tune-readout-row">
+                    <span class="media-tune-readout" data-tune-readout>Listen and tune</span>
+                  </div>
+                  <div class="media-tune-accuracy" data-tune-accuracy>Accuracy: --</div>
+                  <div class="media-featured-actions media-tune-actions">
+                    <button type="button" class="btn btn-secondary" data-tune-play-current data-default-label="Play Current Drone" data-pause-label="Pause Current Drone">Play Current Drone</button>
+                    <button type="button" class="btn btn-secondary" data-tune-play-target data-default-label="Play Target Drone" data-pause-label="Pause Target Drone">Play Target Drone</button>
+                    <button type="button" class="btn btn-primary" data-tune-check>Check Pitch</button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </details>
+      </div>
+
       <div class="media-showcase">
         <article class="media-featured">
           <div class="media-player-shell">
@@ -115,5 +216,6 @@
           </div>
         </aside>
       </div>
+
     </div>
   </section>

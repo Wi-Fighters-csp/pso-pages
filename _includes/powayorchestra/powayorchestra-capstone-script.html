@@ -21,6 +21,10 @@
   var mediaComposer = root.querySelector('[data-media-composer]');
   var mediaCopy = root.querySelector('[data-media-copy]');
   var mediaExternal = root.querySelector('[data-media-external]');
+  var tuneGame = root.querySelector('[data-tune-game]');
+  var tuneGameStatus = root.querySelector('[data-tune-game-status]');
+  var tuneGameReset = root.querySelector('[data-tune-game-reset]');
+  var tuneGameCards = Array.prototype.slice.call(root.querySelectorAll('[data-tune-card]'));
   var heroVideoFrame = root.querySelector('[data-hero-video-frame]');
   var heroVideoAudioToggle = root.querySelector('[data-hero-video-audio-toggle]');
   var instrumentDiscovery = root.querySelector('.instrument-discovery');
@@ -90,6 +94,7 @@
   var memberCardsCache = [];
   var activeMusicianSectionId = '';
   var memberCardEditorState = { mode: 'create', cardId: '' };
+  var activeTunePreviewAudio = null;
   var builderSlotConfig = {
     'first-violins': { instrument: 'First Violins', family: 'strings' },
     'second-violins': { instrument: 'Second Violins', family: 'strings' },
@@ -1269,6 +1274,213 @@
   function stopHoverPreview(card) { if (!currentHoverAudio) return; if (card && currentHoverCard !== card) return; currentHoverAudio.pause(); currentHoverAudio.currentTime = 0; currentHoverAudio = null; currentHoverCard = null; }
   function stopMediaPlayback() { mediaPlayers.forEach(function (player) { if (!player || !player.contentWindow) return; try { player.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'); } catch (error) {} }); }
   var currentAudio = null; var currentButton = null;
+  var tuneGameBaseDetune = new WeakMap();
+  var tuneGameCheckedCards = new WeakMap();
+  var activeTunePreviewCard = null;
+  var activeTunePreviewUsesTargetPitch = false;
+  function centsToRatio(cents) { return Math.pow(2, Number(cents || 0) / 1200); }
+  function resetTunePreviewButton(button) {
+    if (!button) return;
+    button.textContent = button.dataset.defaultLabel || 'Play Audio';
+    button.classList.remove('is-playing');
+    button.setAttribute('aria-pressed', 'false');
+  }
+  function setTunePreviewButtonPlaying(button) {
+    if (!button) return;
+    button.textContent = button.dataset.pauseLabel || 'Pause Audio';
+    button.classList.add('is-playing');
+    button.setAttribute('aria-pressed', 'true');
+  }
+  function stopTunePreview() {
+    if (activeTunePreviewAudio) {
+      activeTunePreviewAudio.pause();
+      activeTunePreviewAudio.currentTime = 0;
+      activeTunePreviewAudio = null;
+    }
+    activeTunePreviewCard = null;
+    activeTunePreviewUsesTargetPitch = false;
+    tuneGameCards.forEach(function (card) {
+      resetTunePreviewButton(card.querySelector('[data-tune-play-current]'));
+      resetTunePreviewButton(card.querySelector('[data-tune-play-target]'));
+    });
+  }
+  function syncActiveTunePreview(card) {
+    if (!activeTunePreviewAudio || !activeTunePreviewCard || activeTunePreviewCard !== card || activeTunePreviewUsesTargetPitch) return;
+    var state = getTuneCardState(card);
+    activeTunePreviewAudio.playbackRate = centsToRatio(state.cents);
+  }
+  function playTuneSample(card, useTargetPitch, triggerButton) {
+    if (!card) return;
+    var audioSrc = card.dataset.audioSrc || '';
+    if (!audioSrc) return;
+    if (triggerButton && activeTunePreviewAudio && triggerButton.classList.contains('is-playing')) {
+      stopTunePreview();
+      return;
+    }
+    var state = getTuneCardState(card);
+    var playbackRate = useTargetPitch ? 1 : centsToRatio(state.cents);
+    stopCurrentAudio();
+    stopHoverPreview();
+    stopMediaPlayback();
+    stopTunePreview();
+    var audio = new Audio(audioSrc);
+    audio.preload = 'auto';
+    audio.playbackRate = playbackRate;
+    audio.volume = 0.92;
+    audio.preservesPitch = false;
+    audio.mozPreservesPitch = false;
+    audio.webkitPreservesPitch = false;
+    audio.currentTime = 0;
+    activeTunePreviewAudio = audio;
+    activeTunePreviewCard = card;
+    activeTunePreviewUsesTargetPitch = Boolean(useTargetPitch);
+    setTunePreviewButtonPlaying(triggerButton);
+    audio.play().catch(function () {
+      resetTunePreviewButton(triggerButton);
+      activeTunePreviewAudio = null;
+      activeTunePreviewCard = null;
+      activeTunePreviewUsesTargetPitch = false;
+    });
+    audio.addEventListener('ended', function () {
+      if (activeTunePreviewAudio === audio) {
+        activeTunePreviewAudio = null;
+        activeTunePreviewCard = null;
+        activeTunePreviewUsesTargetPitch = false;
+        resetTunePreviewButton(triggerButton);
+      }
+    });
+  }
+  function getTuneCardState(card) {
+    var slider = card.querySelector('[data-tune-slider]');
+    var sliderCents = Number(slider && slider.value || 0);
+    var baseDetune = Number(tuneGameBaseDetune.get(card) || 0);
+    var cents = baseDetune + sliderCents;
+    return {
+      sliderCents: sliderCents,
+      baseDetune: baseDetune,
+      cents: cents,
+      isInTune: Math.abs(cents) <= 6
+    };
+  }
+  function updateTuneCard(card) {
+    var readout = card.querySelector('[data-tune-readout]');
+    var accuracyNode = card.querySelector('[data-tune-accuracy]');
+    var state = getTuneCardState(card);
+    card.classList.toggle('is-in-tune', state.isInTune);
+    if (readout) readout.textContent = 'Listen and tune';
+    if (!tuneGameCheckedCards.get(card) && accuracyNode) accuracyNode.textContent = 'Accuracy: --';
+    return state;
+  }
+  function getTuneAccuracyPercent(cents) {
+    return Math.max(0, Math.round(100 - (Math.abs(cents) * 2)));
+  }
+  function checkTuneCard(card) {
+    if (!card) return;
+    var state = getTuneCardState(card);
+    var readout = card.querySelector('[data-tune-readout]');
+    var accuracyNode = card.querySelector('[data-tune-accuracy]');
+    var accuracy = getTuneAccuracyPercent(state.cents);
+    tuneGameCheckedCards.set(card, true);
+    if (accuracyNode) accuracyNode.textContent = 'Accuracy: ' + accuracy + '%';
+    if (readout) readout.textContent = 'Pitch checked';
+    updateTuneGameStatus();
+  }
+  function updateTuneGameStatus() {
+    if (!tuneGameStatus || !tuneGameCards.length) return;
+    var allChecked = tuneGameCards.every(function (card) {
+      return Boolean(tuneGameCheckedCards.get(card));
+    });
+    if (!allChecked) {
+      tuneGameStatus.classList.remove('is-success');
+      tuneGameStatus.textContent = 'Check all three pitches to see if the orchestra is ready.';
+      return;
+    }
+    var accuracyScores = tuneGameCards.map(function (card) {
+      return getTuneAccuracyPercent(getTuneCardState(card).cents);
+    });
+    var hasVeryLowPitch = accuracyScores.some(function (score) {
+      return score <= 59;
+    });
+    var hasMidPitch = accuracyScores.some(function (score) {
+      return score >= 60 && score <= 89;
+    });
+    var allStrong = accuracyScores.every(function (score) {
+      return score >= 90;
+    });
+
+    if (allStrong) {
+      tuneGameStatus.textContent = 'The orchestra is in tune and ready for the concert.';
+      tuneGameStatus.classList.add('is-success');
+      return;
+    }
+
+    tuneGameStatus.classList.remove('is-success');
+    if (hasVeryLowPitch) {
+      tuneGameStatus.textContent = "That's terrible! Retune!";
+      return;
+    }
+    if (hasMidPitch) {
+      tuneGameStatus.textContent = 'Double check some pitches.';
+      return;
+    }
+    tuneGameStatus.textContent = 'Keep tuning until the orchestra is ready.';
+  }
+  function randomizeTuneGame() {
+    if (!tuneGameCards.length) return;
+    tuneGameCards.forEach(function (card) {
+      var slider = card.querySelector('[data-tune-slider]');
+      var nextBaseDetune = 0;
+      while (Math.abs(nextBaseDetune) < 9) {
+        nextBaseDetune = Math.round((Math.random() * 70) - 35);
+      }
+      tuneGameBaseDetune.set(card, nextBaseDetune);
+      tuneGameCheckedCards.set(card, false);
+      if (slider) slider.value = '0';
+      updateTuneCard(card);
+    });
+    updateTuneGameStatus();
+  }
+  function initTuneGame() {
+    if (!tuneGame || !tuneGameCards.length) return;
+    tuneGameCards.forEach(function (card) {
+      var slider = card.querySelector('[data-tune-slider]');
+      var playCurrentButton = card.querySelector('[data-tune-play-current]');
+      var playTargetButton = card.querySelector('[data-tune-play-target]');
+      var checkButton = card.querySelector('[data-tune-check]');
+      if (slider) {
+        slider.addEventListener('input', function () {
+          tuneGameCheckedCards.set(card, false);
+          updateTuneCard(card);
+          syncActiveTunePreview(card);
+          updateTuneGameStatus();
+        });
+      }
+      if (playCurrentButton) {
+        playCurrentButton.addEventListener('click', function () {
+          playTuneSample(card, false, playCurrentButton);
+        });
+        resetTunePreviewButton(playCurrentButton);
+      }
+      if (playTargetButton) {
+        playTargetButton.addEventListener('click', function () {
+          playTuneSample(card, true, playTargetButton);
+        });
+        resetTunePreviewButton(playTargetButton);
+      }
+      if (checkButton) {
+        checkButton.addEventListener('click', function () {
+          checkTuneCard(card);
+        });
+      }
+      updateTuneCard(card);
+    });
+    if (tuneGameReset) {
+      tuneGameReset.addEventListener('click', function () {
+        randomizeTuneGame();
+      });
+    }
+    randomizeTuneGame();
+  }
   function resetAudioButton(button) {
     if (!button) return;
     button.classList.remove('is-playing');
@@ -1278,7 +1490,7 @@
   }
   function stopCurrentAudio() { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } if (currentButton) { resetAudioButton(currentButton); currentButton = null; } }
   function playInstrumentPreview(card) { if (!audioReady || !card) return; var family = getFamilyConfig(card.dataset.family); var audioPath = family && family.hoverAudio; if (!audioPath) return; stopCurrentAudio(); stopMediaPlayback(); var last = previewCooldown.get(card) || 0; if (Date.now() - last < 500) return; previewCooldown.set(card, Date.now()); if (currentHoverCard === card && currentHoverAudio) { currentHoverAudio.currentTime = 0; currentHoverAudio.play().catch(function () {}); return; } stopHoverPreview(); var audio = new Audio(audioPath); audio.preload = 'auto'; audio.volume = 0.65; audio.currentTime = 0; audio.play().then(function () { currentHoverAudio = audio; currentHoverCard = card; }).catch(function () {}); }
-  function stopAllSectionAudio() { stopHoverPreview(); stopCurrentAudio(); clearSelectedFamilyAudio(); stopMediaPlayback(); }
+  function stopAllSectionAudio() { stopHoverPreview(); stopCurrentAudio(); clearSelectedFamilyAudio(); stopMediaPlayback(); stopTunePreview(); }
   function setActiveMedia(card, shouldAutoplay) { if (!card || !mediaPlayer) return; var videoId = card.dataset.videoId; if (!videoId) return; stopHoverPreview(); stopCurrentAudio(); var embedUrl = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0&enablejsapi=1' + (shouldAutoplay ? '&autoplay=1' : ''); mediaPlayer.src = embedUrl; mediaPlayer.title = (card.dataset.videoTitle || 'Poway Symphony Orchestra video') + ' video player'; if (mediaTitle) mediaTitle.textContent = card.dataset.videoTitle || ''; if (mediaComposer) mediaComposer.textContent = card.dataset.videoComposer || ''; if (mediaCopy) mediaCopy.textContent = card.dataset.videoCopy || ''; if (mediaExternal) mediaExternal.href = card.dataset.videoUrl || 'https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ'; mediaCards.forEach(function (entry) { entry.classList.toggle('is-selected', entry === card); entry.setAttribute('aria-pressed', entry === card ? 'true' : 'false'); }); }
   function createHeroSparkles() { if (!heroSparkleLayer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; var sparkleCount = window.innerWidth < 700 ? 10 : 18; heroSparkleLayer.innerHTML = ''; for (var i = 0; i < sparkleCount; i++) { var sparkle = document.createElement('span'); sparkle.className = 'hero-sparkle'; sparkle.style.left = (Math.random() * 100) + '%'; sparkle.style.top = (15 + Math.random() * 70) + '%'; sparkle.style.animationDuration = (4.5 + Math.random() * 4.5) + 's'; sparkle.style.animationDelay = (Math.random() * 6) + 's'; sparkle.style.opacity = (0.35 + Math.random() * 0.4).toFixed(2); var size = 4 + Math.random() * 5; sparkle.style.width = size + 'px'; sparkle.style.height = size + 'px'; heroSparkleLayer.appendChild(sparkle); } }
   function getBuilderZone(slotKey) {
@@ -1628,8 +1840,29 @@
   window.addEventListener('resize', createHeroSparkles);
   mediaCards.forEach(function (card, index) { card.setAttribute('aria-pressed', index === 0 ? 'true' : 'false'); card.addEventListener('click', function () { setActiveMedia(card, true); }); });
   if (mediaCards.length) setActiveMedia(mediaCards[0], false);
+  initTuneGame();
   var hash = window.location.hash ? window.location.hash.replace('#', '') : '';
-  if (hash) { var direct = root.querySelector('#' + hash); if (direct && direct.classList.contains('reveal-topic')) { showTopics([hash]); return; } var matchBtn = root.querySelector('.cta-reveal[href="#' + hash + '"]'); if (matchBtn) showTopics((matchBtn.dataset.reveal || '').split(',').filter(Boolean)); else if (direct) showHomeAndScrollTo(direct); else if (initialSections.length) showTopics(initialSections); else showHome(); }
+  if (hash) {
+    var direct = root.querySelector('#' + hash);
+    if (direct && direct.classList.contains('reveal-topic')) {
+      showTopics([hash]);
+      return;
+    }
+    var matchBtn = root.querySelector('.cta-reveal[href="#' + hash + '"]');
+    if (matchBtn) {
+      showTopics((matchBtn.dataset.reveal || '').split(',').filter(Boolean));
+    } else if (direct) {
+      var directTopic = direct.closest('.reveal-topic');
+      var directDetails = direct.closest('details');
+      if (directTopic && directTopic.id) {
+        showTopics([directTopic.id]);
+        if (directDetails) directDetails.open = true;
+        direct.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        if (directDetails) directDetails.open = true;
+        showHomeAndScrollTo(direct);
+      }
+    } else if (initialSections.length) showTopics(initialSections); else showHome(); }
   else if (initialSections.length) { showTopics(initialSections); }
   else { showHome(); }
 })();

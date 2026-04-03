@@ -142,6 +142,49 @@
       linear-gradient(180deg, rgba(34,29,33,0.92), rgba(22,18,20,0.98));
   }
 
+  .games-preview-media-tuning {
+    background:
+      radial-gradient(circle at 24% 24%, rgba(124,200,180,0.18), transparent 28%),
+      radial-gradient(circle at 76% 76%, rgba(216,177,98,0.16), transparent 30%),
+      linear-gradient(180deg, rgba(25,35,34,0.96), rgba(19,24,28,0.98));
+  }
+
+  .games-preview-tuning-line {
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 50%;
+    height: 4px;
+    border-radius: 999px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, rgba(99,168,148,0.95), rgba(238,228,192,0.95), rgba(173,120,80,0.95));
+    box-shadow: 0 0 0 8px rgba(255,255,255,0.03);
+  }
+
+  .games-preview-tuning-knob {
+    position: absolute;
+    top: 50%;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(250,246,239,0.88);
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.78), rgba(226,201,122,0.22) 55%, rgba(74,45,30,0.9));
+    box-shadow: 0 10px 22px rgba(0,0,0,0.28);
+  }
+
+  .games-preview-tuning-knob.is-left {
+    left: 26%;
+  }
+
+  .games-preview-tuning-knob.is-center {
+    left: 50%;
+  }
+
+  .games-preview-tuning-knob.is-right {
+    left: 74%;
+  }
+
   .games-preview-ring,
   .games-preview-circle,
   .games-preview-rim {
