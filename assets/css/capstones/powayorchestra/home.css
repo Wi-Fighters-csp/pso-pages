@@ -1135,6 +1135,50 @@
     padding: 2rem;
   }
 
+  .pso-conductor-dropdown-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .pso-conductor-dropdown {
+    display: grid;
+  }
+
+  .pso-conductor-dropdown summary {
+    list-style: none;
+  }
+
+  .pso-conductor-dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pso-conductor-dropdown-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 2rem;
+    cursor: pointer;
+  }
+
+  .pso-conductor-dropdown-summary h2 {
+    margin: 0;
+  }
+
+  .pso-conductor-dropdown-caret {
+    color: var(--gold-light);
+    transition: transform 0.2s ease;
+  }
+
+  .pso-conductor-dropdown[open] .pso-conductor-dropdown-caret {
+    transform: rotate(180deg);
+  }
+
+  .pso-conductor-dropdown-body {
+    padding: 0 2rem 2rem;
+    border-top: 1px solid rgba(242,166,160,0.16);
+  }
+
   .pso-conductor-statement-card {
     background:
       radial-gradient(circle at top right, rgba(242,166,160,0.12), transparent 42%),
