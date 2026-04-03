@@ -4,40 +4,52 @@
       <h2>Orchestra Games</h2>
       <div class="section-divider games-divider"></div>
       <p class="section-intro games-section-intro">
-        Open a game below to explore how the orchestra works through stage layout, listening, and guided challenge play.
-        The library is just getting started, and Orchestra Builder is the first experience available now.
+        Explore how the orchestra works through stage layout, listening, and guided challenge play.
+        Pick a preview card below to open the full game.
       </p>
 
-      <div class="games-library-shell">
-        <details class="games-dropdown">
-          <summary class="games-dropdown-summary">
-            <span class="games-dropdown-badge">Available now</span>
-            <span class="games-dropdown-text">
-              <span class="games-dropdown-title">Orchestra Builder</span>
-              <span class="games-dropdown-copy">Balance the ensemble on a real concert stage and unlock a featured performance.</span>
-            </span>
-            <span class="games-dropdown-caret" aria-hidden="true">&#9662;</span>
-          </summary>
-
-          <div class="games-dropdown-body">
-            <article class="games-feature-card">
-              <div class="games-feature-copy">
-                <p class="games-feature-eyebrow">Stage Logic</p>
-                <h3>Orchestra Builder</h3>
-                <p>
-                  Place strings across the front arc, layer woodwinds and brass behind them, and anchor the rear with
-                  percussion. When every family is balanced, the reward performance unlocks.
-                </p>
-              </div>
-
-              <div class="games-feature-facts" aria-label="Orchestra Builder highlights">
-                <span>15 sections to place</span>
-                <span>Real stage map</span>
-                <span>Performance unlock</span>
-              </div>
-            </article>
+      <div class="games-card-grid">
+        <a href="{{ '/orchestra-builder/' | relative_url }}" class="games-preview-card" data-allow-navigation="true">
+          <div class="games-preview-media games-preview-media-builder" aria-hidden="true">
+            <div class="games-preview-stage">
+              <span class="games-preview-dot is-strings"></span>
+              <span class="games-preview-dot is-strings"></span>
+              <span class="games-preview-dot is-woodwinds"></span>
+              <span class="games-preview-dot is-brass"></span>
+              <span class="games-preview-dot is-percussion"></span>
+            </div>
           </div>
-        </details>
+          <div class="games-preview-copy">
+            <p class="games-feature-eyebrow">Stage Logic</p>
+            <h3>Orchestra Builder</h3>
+            <p>Balance the ensemble on a real concert stage by placing each family in the right section before the performance unlocks.</p>
+            <div class="games-feature-facts" aria-label="Orchestra Builder highlights">
+              <span>15 sections</span>
+              <span>Stage map</span>
+              <span>Performance unlock</span>
+            </div>
+            <span class="btn btn-primary games-preview-cta">Play Full Game</span>
+          </div>
+        </a>
+
+        <a href="{{ '/conductor/' | relative_url }}" class="games-preview-card" data-allow-navigation="true">
+          <div class="games-preview-media games-preview-media-conductor" aria-hidden="true">
+            <div class="games-preview-ring"></div>
+            <div class="games-preview-circle"></div>
+            <div class="games-preview-rim"></div>
+          </div>
+          <div class="games-preview-copy">
+            <p class="games-feature-eyebrow">Tempo Lab</p>
+            <h3>Virtual Conductor</h3>
+            <p>Tap with the orchestra as live PSO recordings play, keep your stability high, and guide the ensemble through each excerpt.</p>
+            <div class="games-feature-facts" aria-label="Virtual Conductor highlights">
+              <span>Live recordings</span>
+              <span>Beat timing</span>
+              <span>5 excerpts</span>
+            </div>
+            <span class="btn btn-primary games-preview-cta">Play Full Game</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
