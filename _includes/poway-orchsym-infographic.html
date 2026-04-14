@@ -432,6 +432,9 @@
       {% if first_topic.backendLink %}
       <a href="{{ first_topic.backendLink }}" class="sip-btn" target="_blank" rel="noopener">{{ first_topic.backendButtonLabel | default: 'View Backend Site' }}</a>
       {% endif %}
+        {% if first_topic.interactiveLink %}
+        <a href="{{ first_topic.interactiveLink }}" class="sip-btn" target="_blank" rel="noopener">{{ first_topic.interactiveButtonLabel | default: 'Open Games Page' }}</a>
+        {% endif %}
     </div>
     {% endif %}
     {% if data.status or data.team %}

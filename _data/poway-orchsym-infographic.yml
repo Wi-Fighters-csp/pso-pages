@@ -1,83 +1,56 @@
-Title: "Poway Symphony Orchestra Capstone"
-Badge: "Design-Based Research Capstone"
+# Poway Symphony Orchestra Capstone Infographic
 
-Description: >
-  A design-based research capstone focused on expanding community engagement
-  through a more accessible, modern, and story-driven Poway Symphony Orchestra
-  website experience.
+Title: "Poway Symphony Orchestra"
+Description: "A design-based research capstone transforming the Poway Symphony Orchestra’s outdated Google Sites page into a modern, interactive web experience — featuring dynamic concert listings, gamified exploration, musician discovery tools, and a deployed backend system."
 
 Topics:
-  - title: "Poway Symphony Orchestra - Connecting Community Through Live Music"
-    subtitle: "Redesigned Website Experience"
+  - title: "Poway Symphony Orchestra"
+    subtitle: "Website Redesign & Interactive Community Engagement Platform"
     link: "https://pso.opencodingsociety.com/"
     buttonLabel: "View Frontend Site"
     backendLink: "http://wifighters.opencodingsociety.com"
     backendButtonLabel: "View Admin UI"
+    interactiveLink: "https://pso.opencodingsociety.com/games/"
+    interactiveButtonLabel: "Open Games Page"
+    image: "capstone/pso.png"
+    alt: "Poway Symphony Orchestra — capstone project infographic"
+    status: "Research and Testing Phase (Deployed Prototype Complete)"
 
-    description: >
-      This project redesigns the PSO's existing Google Sites-based website into a full
-      custom web experience. Where the original site is a static, text-heavy Google Sites
-      page with minimal navigation and no interactivity, the capstone site introduces
-      dynamic concert listings, interactive games, a musician directory with section
-      filtering, media playback, and gamified exploration while preserving the real
-      orchestra's content accurately.
+    team:
+      - "Wi-Fighters"
+      - "Meryl"
+      - "Kailyn"
+      - "Hope"
+      - "Laya"
+
+    description: "The Poway Symphony Orchestra originally used a static Google Sites page with dense text, minimal navigation, and no interactivity. Key content like concerts, musician rosters, and organizational storytelling were difficult to access and lacked engagement. This capstone rebuilt the entire experience as a custom web platform: dynamic concert listings with countdowns, a musician directory with filtering and audio playback, gamified exploration systems like EXP progression and interactive games, and a Flask-backed admin interface. The redesign preserves real PSO content while transforming how users explore, learn, and engage with the orchestra."
 
     keyPoints:
-      - "Home page introduces the orchestra with a cleaner layout, accurate mission content, and faster access to concerts, donations, and events, replacing the original's dense text block and image-only structure"
-      - "Concert section shows real 2025-2026 season data with a live countdown, interactive calendar, and ticket links, replacing the original's external-only event flow"
-      - "Conductor section presents John LoPiccolo's biography and PSO history in a structured, visually engaging format instead of a single text-heavy page"
-      - "Musician directory includes roster cards organized by section with instrument filters and audio playback instead of a plain text roster"
-      - "EXP bar gamifies browsing so visitors see progress as they move through the experience"
-      - "Orchestra Builder turns section placement into an interactive milestone that teaches how a symphony is structured"
-      - "Responsive layout keeps the full experience usable across phones, tablets, and desktops"
-      - "Join section consolidates rehearsal schedules, registration info, attire, and contact details in one place"
+      - "Rebuilt the PSO website from a static Google Sites page into a fully custom interactive frontend with modern layout and navigation"
+      - "Implemented a Concerts section with real 2025–2026 season data, countdown timers, calendar integration, and direct ticket access"
+      - "Designed a structured Conductor page presenting John LoPiccolo’s biography and orchestra history in a clear, engaging format"
+      - "Created a Musician Directory with section-based filtering, instrument grouping, and audio playback instead of a plain text roster"
+      - "Developed a gamified EXP system that tracks user progress as they explore different parts of the site"
+      - "Built interactive experiences including Orchestra Builder, Virtual Conductor, and Tuning the Orchestra to teach symphonic concepts"
+      - "Consolidated Join information (rehearsals, registration, attire, contact) into a single accessible section"
+      - "Ensured full responsiveness across mobile, tablet, and desktop devices"
+      - "Connected a Flask backend to support admin functionality and dynamic content delivery"
 
     tech:
       - "HTML"
       - "CSS"
-      - "JavaScript"
+      - "JavaScript (ES6+)"
+      - "Flask + Python"
       - "Responsive Design"
       - "Figma"
-      - "User research and testing"
-      - "Flask Backend Integration"
+      - "User Research and Testing"
 
-    interactiveLink: "https://pso.opencodingsociety.com/games/"
-    interactiveButtonLabel: "Open Games Page"
-    interactiveElements:
-      - title: "EXP Bar"
-        description: "Visitors earn visible progress as they move through the site, turning browsing into a guided journey"
-      - title: "Orchestra Builder"
-        description: "Users place instrument sections onto a real stage layout and unlock a featured PSO performance on completion"
-      - title: "Virtual Conductor"
-        description: "A rhythm game that puts the user in the conductor's role, keeping time the way John LoPiccolo guides the ensemble"
-      - title: "Tuning The Orchestra"
-        description: "Users experience tuning the ensemble before a performance, making the pre-concert ritual tangible and educational"
-      - title: "Musician Profiles and Audio"
-        description: "Visitors explore roster cards filtered by section or instrument and hear audio tied to each family of the orchestra"
-
-    problemsSolved:
-      - "The original site is built on Google Sites with no custom interactivity -> we rebuilt it as a fully custom site with dynamic content and user engagement features"
-      - "The original musician page is a plain text list -> we replaced it with filterable profile cards and section audio"
-      - "The site felt passive and informational only -> we introduced the EXP bar, games, and interactive milestones to reward exploration"
-
-    improvementsMade:
-      - "Rebuilt the original Google Sites experience as a custom frontend with modern layout, richer navigation, and interactive storytelling"
-      - "Integrated real concert season data, ticket links, and time-based event elements directly into the site"
-      - "Replaced passive text sections with structured content modules for the conductor, musicians, support, and join flows"
-      - "Added interactive games, progress tracking, and media elements to turn browsing into guided participation"
-
-    wowFactors:
-      - "The capstone preserves real PSO content while significantly modernizing how visitors discover and interact with it"
-      - "Concert, conductor, musician, support, and join experiences are all surfaced within one cohesive on-site journey"
-      - "EXP progression and Orchestra Builder make an arts organization website feel interactive without losing accuracy or professionalism"
-      - "Games like Virtual Conductor and Tuning the Orchestra make symphonic concepts tangible for broader community audiences"
-      - "The live deployed frontend and admin UI demonstrate that the project moves beyond mockups into a working prototype"
-
-status: "Research and Testing Phase (Deployed Prototype Complete)"
-
-team:
-  - "Wi-Fighters"
-  - "Meryl"
-  - "Kailyn"
-  - "Hope"
-  - "Laya"
+    impact:
+      - "Transforms a passive informational website into an interactive experience that actively engages visitors"
+      - "Makes concert information easier to discover and act on, increasing attendance potential"
+      - "Gamified elements encourage deeper exploration and repeat visits, especially among younger audiences"
+      - "Musician directory with audio playback helps users better understand the structure and sound of the orchestra"
+      - "Centralized Join section lowers barriers for new musicians to get involved"
+      - "Preserves and elevates real PSO content, improving credibility and storytelling for the organization"
+      - "Bridges the gap between traditional arts organizations and modern web expectations"
+      - "Demonstrates a fully deployed prototype with both frontend and backend systems, moving beyond design into implementation"
