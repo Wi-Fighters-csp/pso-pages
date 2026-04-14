@@ -1,0 +1,39 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title | default: 'Poway Symphony Orchestra' }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/capstones/powayorchestra/home-page.css' | relative_url }}">
+</head>
+<body>
+
+{% assign pso_render_sections = page.pso_render_sections | default: '' | replace: ' ', '' %}
+{% capture pso_render_section_list %},{{ pso_render_sections }},{% endcapture %}
+{% assign pso_render_full_page = false %}
+{% if pso_render_sections == '' %}
+	{% assign pso_render_full_page = true %}
+{% endif %}
+
+<div class="pso-foundation" data-initial-sections="{{ page.pso_initial_sections | default: '' }}">
+{% include powayorchestra/sections/topbar.html %}
+{% if pso_render_full_page or pso_render_section_list contains ',home,' %}{% include powayorchestra/sections/home-hero.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',about,' %}{% include powayorchestra/sections/about.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',conductor,' %}{% include powayorchestra/sections/conductor.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',foundation,' %}{% include powayorchestra/sections/foundation.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',concerts,' %}{% include powayorchestra/sections/concerts.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',tickets,' %}{% include powayorchestra/sections/tickets.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',media,' %}{% include powayorchestra/sections/media.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',donate,' %}{% include powayorchestra/sections/donate.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',join-orchestra,' %}{% include powayorchestra/sections/join.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',musician-info,' %}{% include powayorchestra/sections/musician-info.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',games,' %}{% include powayorchestra/sections/games.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',orchestra-builder,' %}{% include powayorchestra/sections/orchestra-builder.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',news,' %}{% include powayorchestra/sections/news.html %}{% endif %}
+{% if pso_render_full_page or pso_render_section_list contains ',contact,' %}{% include powayorchestra/sections/contact.html %}{% endif %}
+{% include powayorchestra/sections/footer.html %}
+</div>
+
+<script src="{{ '/assets/js/capstones/powayorchestra/progression.js' | relative_url }}"></script>
+{% include powayorchestra/powayorchestra-capstone-script.html %}
+</body>

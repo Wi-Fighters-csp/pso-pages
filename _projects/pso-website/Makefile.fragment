@@ -1,0 +1,22 @@
+PSO_WEBSITE_SRC = _projects/pso-website
+
+pso-website:
+	@$(MAKE) -C $(PSO_WEBSITE_SRC) build >/dev/null
+
+pso-website-build: pso-website-clean
+	@echo "Building pso-website..."
+	@$(MAKE) -C $(PSO_WEBSITE_SRC) build
+
+pso-website-docs:
+	@$(MAKE) -C $(PSO_WEBSITE_SRC) docs >/dev/null
+
+pso-website-clean:
+	@$(MAKE) -C $(PSO_WEBSITE_SRC) clean >/dev/null
+
+pso-website-docs-clean:
+	@$(MAKE) -C $(PSO_WEBSITE_SRC) docs-clean >/dev/null
+
+watch-pso-website:
+	@$(MAKE) -C $(PSO_WEBSITE_SRC) watch
+
+.PHONY: pso-website pso-website-build pso-website-docs pso-website-clean pso-website-docs-clean watch-pso-website

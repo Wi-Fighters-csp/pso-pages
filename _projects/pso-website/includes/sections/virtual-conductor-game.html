@@ -1,0 +1,129 @@
+<details class="games-dropdown virtual-conductor-dropdown">
+  <summary class="games-dropdown-summary">
+    <span class="games-dropdown-badge">Live Game</span>
+    <span class="games-dropdown-text">
+      <span class="games-dropdown-title">Virtual Conductor</span>
+      <span class="games-dropdown-copy">Tap or press Space to the beat while Poway Symphony Orchestra performances respond to your timing.</span>
+    </span>
+    <span class="games-dropdown-caret" aria-hidden="true">&#9662;</span>
+  </summary>
+
+  <div class="games-dropdown-body">
+    <div class="virtual-conductor-panel" data-virtual-conductor-root>
+      <div class="virtual-conductor-overview">
+        <p class="pso-conductor-section-kicker">Interactive Tempo Lab</p>
+        <h2>Conduct the orchestra live</h2>
+        <p>
+          Start a PSO performance, then guide the tempo by tapping or clicking in time. If your beat runs ahead, the performance accelerates.
+          If you lag behind, the orchestra eases back and follows you.
+        </p>
+        <div class="games-feature-facts virtual-conductor-facts">
+          <span>Uses PSO YouTube performances</span>
+          <span>Tap or press Space</span>
+          <span>Live tempo response</span>
+        </div>
+      </div>
+
+      <div class="virtual-conductor-layout">
+        <section class="virtual-conductor-controls" aria-label="Virtual conductor controls">
+          <label class="virtual-conductor-field" for="vc-track-select">Choose a performance</label>
+          <select id="vc-track-select" class="virtual-conductor-select">
+            <option value="0oaazxCPNwU" data-video-id="0oaazxCPNwU" data-video-url="https://www.youtube.com/watch?v=0oaazxCPNwU" data-bpm="76" data-start-seconds="12">Egmont Overture, Op. 84</option>
+            <option value="2c0zH9u9X8M" data-video-id="2c0zH9u9X8M" data-video-url="https://www.youtube.com/watch?v=2c0zH9u9X8M" data-bpm="84" data-start-seconds="6">Polonaise from Eugene Onegin</option>
+            <option value="ikQNFqVkNNc" data-video-id="ikQNFqVkNNc" data-video-url="https://www.youtube.com/watch?v=ikQNFqVkNNc" data-bpm="132" data-start-seconds="3">Overture to the Marriage of Figaro, K. 492</option>
+            <option value="3h9P3yZ9Q8o" data-video-id="3h9P3yZ9Q8o" data-video-url="https://www.youtube.com/watch?v=3h9P3yZ9Q8o" data-bpm="92" data-start-seconds="7">Slavonic Dance No. 8</option>
+            <option value="U9C0qK0sG9E" data-video-id="U9C0qK0sG9E" data-video-url="https://www.youtube.com/watch?v=U9C0qK0sG9E" data-bpm="148" data-start-seconds="8">Le Corsaire Overture</option>
+          </select>
+
+          <div class="virtual-conductor-track-list" aria-label="Available performances">
+            <p class="virtual-conductor-track-list-label">Performance list</p>
+            <ul class="virtual-conductor-track-list-items">
+              <li>Egmont Overture, Op. 84 · starts 0:12</li>
+              <li>Polonaise from Eugene Onegin · starts 0:06</li>
+              <li>Overture to the Marriage of Figaro, K. 492 · starts 0:03</li>
+              <li>Slavonic Dance No. 8 · starts 0:07</li>
+              <li>Le Corsaire Overture · starts 0:08</li>
+            </ul>
+          </div>
+
+          <section class="virtual-conductor-level-card" aria-label="Current level details">
+            <p class="virtual-conductor-track-list-label">Level focus</p>
+            <h3 id="vc-level-title">Egmont Overture, Op. 84</h3>
+            <p id="vc-level-copy">Control the opening pulse, then manage a gradual acceleration without letting the orchestra rush.</p>
+            <div class="virtual-conductor-level-tags" id="vc-level-tags">
+              <span>Dynamic control</span>
+              <span>Steady pulse</span>
+              <span>Tempo transition</span>
+            </div>
+          </section>
+
+          <div id="vc-youtube-player" class="virtual-conductor-youtube-player" aria-hidden="true"></div>
+
+          <div class="virtual-conductor-actions">
+            <button class="btn btn-primary" id="vc-start" type="button">Start Session</button>
+            <button class="btn btn-secondary" id="vc-stop" type="button" disabled>Stop</button>
+          </div>
+
+          <p class="virtual-conductor-countdown" id="vc-countdown">Ready window: 0:05</p>
+
+          <p class="virtual-conductor-hint">Use the tap pad below or press Space to conduct the beat. Click when the moving ring touches the rim of the circle. Known PSO start offsets are applied automatically when available.</p>
+        </section>
+
+        <section class="virtual-conductor-stage" aria-label="Virtual conductor stage">
+          <div class="virtual-conductor-pulse" id="vc-pulse" aria-hidden="true"></div>
+          <div class="virtual-conductor-target-ring" id="vc-target-ring" aria-hidden="true"></div>
+          <div class="virtual-conductor-rim-hold" id="vc-rim-hold" aria-hidden="true"></div>
+          <div class="virtual-conductor-hit-circle" id="vc-hit-circle" aria-hidden="true"></div>
+          <button class="virtual-conductor-tap" id="vc-tap" type="button" disabled>
+            <span id="vc-gesture-label">Click On Beat</span>
+            <small id="vc-gesture-copy">Click or press Space</small>
+          </button>
+          <div class="virtual-conductor-status-panel">
+            <div class="virtual-conductor-judgement" id="vc-judgement" aria-live="polite">Ready</div>
+            <div class="virtual-conductor-gesture-readout" id="vc-gesture-readout">Wait for the ring to touch the circle rim</div>
+            <p class="virtual-conductor-feedback" id="vc-feedback" role="status" aria-live="polite">
+              Select a performance and start the session to begin conducting.
+            </p>
+          </div>
+        </section>
+
+        <section class="virtual-conductor-scoreboard" aria-label="Virtual conductor stats">
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Excerpt</span>
+            <strong class="virtual-conductor-stat-value" id="vc-track-name">Egmont Overture, Op. 84</strong>
+          </div>
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Tempo</span>
+            <strong class="virtual-conductor-stat-value" id="vc-tempo">76 BPM</strong>
+          </div>
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Playback</span>
+            <strong class="virtual-conductor-stat-value" id="vc-rate">1.00x</strong>
+          </div>
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Accuracy</span>
+            <strong class="virtual-conductor-stat-value" id="vc-accuracy">--</strong>
+          </div>
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Streak</span>
+            <strong class="virtual-conductor-stat-value" id="vc-streak">0</strong>
+          </div>
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Stability</span>
+            <strong class="virtual-conductor-stat-value" id="vc-stability">100%</strong>
+            <div class="virtual-conductor-meter"><span id="vc-stability-bar"></span></div>
+          </div>
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Score</span>
+            <strong class="virtual-conductor-stat-value" id="vc-score">0</strong>
+          </div>
+          <div class="virtual-conductor-stat-card">
+            <span class="virtual-conductor-stat-label">Special</span>
+            <strong class="virtual-conductor-stat-value" id="vc-special">Build intensity</strong>
+            <div class="virtual-conductor-meter"><span id="vc-special-bar"></span></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</details>

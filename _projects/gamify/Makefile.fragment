@@ -1,0 +1,22 @@
+GAMIFY_SRC = _projects/gamify
+
+gamify:
+	@$(MAKE) -C $(GAMIFY_SRC) build >/dev/null
+
+gamify-build: gamify-clean
+	@echo "Building gamify..."
+	@$(MAKE) -C $(GAMIFY_SRC) build
+
+gamify-docs:
+	@$(MAKE) -C $(GAMIFY_SRC) docs >/dev/null
+
+gamify-clean:
+	@$(MAKE) -C $(GAMIFY_SRC) clean >/dev/null
+
+gamify-docs-clean:
+	@$(MAKE) -C $(GAMIFY_SRC) docs-clean >/dev/null
+
+watch-gamify:
+	@$(MAKE) -C $(GAMIFY_SRC) watch
+
+.PHONY: gamify gamify-build gamify-docs gamify-clean gamify-docs-clean watch-gamify

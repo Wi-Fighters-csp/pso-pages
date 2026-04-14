@@ -6,6 +6,12 @@ PYTHON := venv/bin/python3
 SHELL = /bin/bash -c
 .SHELLFLAGS = -e
 
+PROJECT_REGISTRY := $(or $(wildcard .makeprojects),$(wildcard _projects/.makeprojects))
+REGISTERED_PROJECTS := $(strip $(shell test -n "$(PROJECT_REGISTRY)" && grep -v '^\#' "$(PROJECT_REGISTRY)" | grep -v '^$$' || true))
+PROJECT_FRAGMENTS := $(patsubst %,_projects/%/Makefile.fragment,$(REGISTERED_PROJECTS))
+
+-include $(PROJECT_FRAGMENTS)
+
 NOTEBOOK_FILES := $(shell find _notebooks -name '*.ipynb')
 DESTINATION_DIRECTORY = _posts
 MARKDOWN_FILES := $(patsubst _notebooks/%.ipynb,$(DESTINATION_DIRECTORY)/%_IPYNB_2_.md,$(NOTEBOOK_FILES))
@@ -118,18 +124,16 @@ serve-yat: use-yat clean
 
 # Build all registered projects (game assets, not docs)
 build-registered-projects:
-	@if [ -f _projects/.makeprojects ]; then \
-		grep -v '^\#' _projects/.makeprojects | grep -v '^$$' | while read proj; do \
-			if [ -f "_projects/$$proj/Makefile" ]; then \
-				echo "📦 Building project: $$proj"; \
-				make -C "_projects/$$proj" build 2>/dev/null || echo "  ⚠️  Build failed for $$proj"; \
-			fi; \
+	@if [ -n "$(REGISTERED_PROJECTS)" ]; then \
+		for proj in $(REGISTERED_PROJECTS); do \
+			echo "📦 Building project: $$proj"; \
+			$(MAKE) "$$proj" 2>/dev/null || echo "  ⚠️  Build failed for $$proj"; \
 		done; \
 	fi
 
 # Convert notebooks for all registered projects (dev mode initial build)
 convert-registered-notebooks:
-	@if [ -f _projects/.makeprojects ]; then \
+	@if [ -n "$(REGISTERED_PROJECTS)" ]; then \
 		find _notebooks/projects -name '*.ipynb' 2>/dev/null | while read notebook; do \
 			echo "Converting project notebook: $$notebook"; \
 			make convert-single NOTEBOOK_FILE="$$notebook" 2>&1; \
@@ -138,34 +142,28 @@ convert-registered-notebooks:
 
 # Build documentation for all registered projects (serve mode only)
 build-registered-docs:
-	@if [ -f _projects/.makeprojects ]; then \
-		grep -v '^\#' _projects/.makeprojects | grep -v '^$$' | while read proj; do \
-			if [ -f "_projects/$$proj/Makefile" ]; then \
-				echo "📚 Building docs for: $$proj"; \
-				make -C "_projects/$$proj" docs 2>/dev/null || true; \
-			fi; \
+	@if [ -n "$(REGISTERED_PROJECTS)" ]; then \
+		for proj in $(REGISTERED_PROJECTS); do \
+			echo "📚 Building docs for: $$proj"; \
+			$(MAKE) "$$proj-docs" 2>/dev/null || true; \
 		done; \
 	fi
 
 # Watch all registered projects for changes (dev mode)
 watch-registered-projects:
-	@if [ -f _projects/.makeprojects ]; then \
-		grep -v '^\#' _projects/.makeprojects | grep -v '^$$' | while read proj; do \
-			if [ -f "_projects/$$proj/Makefile" ]; then \
-				echo "👀 Starting watcher for: $$proj"; \
-				make -C "_projects/$$proj" watch & \
-			fi; \
+	@if [ -n "$(REGISTERED_PROJECTS)" ]; then \
+		for proj in $(REGISTERED_PROJECTS); do \
+			echo "👀 Starting watcher for: $$proj"; \
+			$(MAKE) "watch-$$proj" & \
 		done; \
 	fi
 
 # Clean all registered project distributions
 clean-registered-projects:
-	@if [ -f _projects/.makeprojects ]; then \
-		grep -v '^\#' _projects/.makeprojects | grep -v '^$$' | while read proj; do \
-			if [ -f "_projects/$$proj/Makefile" ]; then \
-				make -C "_projects/$$proj" clean 2>/dev/null || true; \
-				make -C "_projects/$$proj" docs-clean 2>/dev/null || true; \
-			fi; \
+	@if [ -n "$(REGISTERED_PROJECTS)" ]; then \
+		for proj in $(REGISTERED_PROJECTS); do \
+			$(MAKE) "$$proj-clean" 2>/dev/null || true; \
+			$(MAKE) "$$proj-docs-clean" 2>/dev/null || true; \
 		done; \
 	fi
 
@@ -307,6 +305,8 @@ refresh:
 dev: stop clean
 	@echo "📦 Building registered projects..."
 	@make build-registered-projects
+	@echo "📚 Publishing registered project docs..."
+	@make build-registered-docs
 	@make convert-registered-notebooks
 	@make jekyll-serve
 	@make watch-notebooks &
@@ -449,28 +449,29 @@ convert-fix:
 # Project Auto-Registration
 ###########################################
 
-# Projects are registered in _projects/.makeprojects (one per line)
-# Each project must have: _projects/<name>/Makefile with generic targets: build, clean, docs, watch
-# Main Makefile calls projects via: make -C _projects/<name> <target>
+# Projects are registered in .makeprojects (one per line).
+# Fallback to _projects/.makeprojects is supported for compatibility.
+# Each registered project should provide: _projects/<name>/Makefile.fragment
+# Fragment targets are project-specific wrappers that delegate to the project Makefile.
 
 # List all registered projects
 list-projects:
 	@echo "📦 Registered Projects:"
-	@if [ -f _projects/.makeprojects ]; then \
-		grep -v '^\#' _projects/.makeprojects | grep -v '^$$' | while read proj; do \
-			if [ -f "_projects/$$proj/Makefile" ]; then \
+	@if [ -n "$(REGISTERED_PROJECTS)" ]; then \
+		for proj in $(REGISTERED_PROJECTS); do \
+			if [ -f "_projects/$$proj/Makefile.fragment" ]; then \
 				echo "  ✅ $$proj (active)"; \
 			else \
-				echo "  ⚠️  $$proj (missing Makefile)"; \
+				echo "  ⚠️  $$proj (missing Makefile.fragment)"; \
 			fi; \
 		done; \
 	else \
-		echo "  No _projects/.makeprojects file found"; \
+		echo "  No project registry found"; \
 	fi
 	@echo ""
 	@echo "Available projects (in _projects/ directory):"
 	@ls -d _projects/*/ 2>/dev/null | sed 's|_projects/||' | sed 's|/||' | while read proj; do \
-		if grep -q "^$$proj$$" _projects/.makeprojects 2>/dev/null; then \
+		if printf '%s\n' $(REGISTERED_PROJECTS) | grep -q "^$$proj$$" 2>/dev/null; then \
 			echo "  • $$proj (registered)"; \
 		else \
 			echo "  • $$proj (not registered)"; \

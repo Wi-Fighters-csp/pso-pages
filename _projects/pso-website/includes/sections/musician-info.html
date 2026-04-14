@@ -1,0 +1,81 @@
+  <section class="reveal-topic is-hidden" id="musician-info">
+    <div class="section musician-section">
+      <h2>Musicians</h2>
+      <p class="section-intro">
+        Search the roster or jump straight to a section to meet the players.
+      </p>
+
+      <div class="instrument-discovery" aria-label="Musician roster explorer">
+        <div class="musician-listen-section">
+          <div class="musician-listen-header">
+            <span class="musician-roster-label">Listen</span>
+            <h3 class="conductor-title" style="text-align:left; margin-bottom:0.4rem;">Hear Each Section</h3>
+            <p class="instrument-discovery-intro musician-listen-intro">
+              Click a section card to hear its sound and immediately filter the roster below.
+            </p>
+          </div>
+
+          <div class="instrument-grid" data-instrument-grid></div>
+
+          <div class="family-audio-player is-hidden" data-family-audio-player aria-live="polite">
+            <div class="family-audio-player-copy">
+              <span class="family-audio-player-label">Now Playing</span>
+              <p data-family-audio-player-title>Family audio preview</p>
+            </div>
+            <button type="button" class="family-audio-player-toggle" data-family-audio-player-toggle aria-pressed="true">Pause</button>
+          </div>
+        </div>
+
+        <div class="musician-directory-shell">
+          <aside class="musician-filter-sidebar">
+            <div class="musician-filter-sidebar-inner">
+              <div class="instrument-search-shell musician-search-shell--sidebar">
+                <label class="instrument-search-label" for="musician-search-input">Search the roster</label>
+                <input
+                  id="musician-search-input"
+                  class="instrument-search-input"
+                  type="search"
+                  placeholder="Try violin, horn, or a musician name"
+                  autocomplete="off"
+                  data-musician-search>
+                <p class="instrument-search-status" data-musician-search-status>
+                  Filter the directory by name, section, or instrument.
+                </p>
+              </div>
+
+              <div class="musician-filter-group">
+                <p class="musician-filter-label">Section Filter</p>
+                <select class="musician-filter-select" data-musician-family-filters aria-label="Filter musicians by section"></select>
+              </div>
+
+              <div class="musician-filter-group">
+                <p class="musician-filter-label">Instrument Filter</p>
+                <select class="musician-filter-select" data-musician-instrument-filters aria-label="Filter musicians by instrument"></select>
+              </div>
+            </div>
+          </aside>
+
+          <div class="musician-directory-main" data-musician-directory-main>
+            <div class="musician-directory-header">
+              <span class="musician-roster-label">Musician Directory</span>
+              <h3 class="conductor-title" style="text-align:left; margin-bottom:0.45rem;">Poway Symphony Orchestra Musicians</h3>
+              <p class="section-intro" style="margin:0 0 0.35rem;">Current musicians as of March 22, 2026</p>
+              <p class="musician-roster-label" style="margin-bottom:0.55rem;">Mendelssohn Classics</p>
+              <p class="musician-directory-status" data-musician-directory-status>
+                Showing the full roster in score order.
+              </p>
+            </div>
+
+            <div class="musician-directory-empty is-hidden" data-musician-directory-empty>
+              <p>No musicians matched the current filters.</p>
+            </div>
+
+            <div class="musician-directory-groups musician-member-groups" data-musician-member-groups></div>
+
+            <p class="musician-roster-note">An asterisk indicates the original roster notation provided for this program.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>

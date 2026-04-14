@@ -1,0 +1,221 @@
+  <section class="reveal-topic is-hidden" id="media">
+    <div class="section">
+      <h2>Choose a Performance</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro">
+        Pick one of five Poway Symphony Orchestra live performances and watch it on this page
+        or open it directly on YouTube.
+      </p>
+
+      <div class="media-tune-menu">
+        <details class="games-dropdown media-tune-dropdown" id="tune-the-orchestra">
+          <summary class="games-dropdown-summary">
+            <span class="games-dropdown-badge">Mini Game</span>
+            <span class="games-dropdown-text">
+              <span class="games-dropdown-title">Tune the Orchestra</span>
+              <span class="games-dropdown-copy">Use the drone pitches to tune by ear before you dive into the live performances.</span>
+            </span>
+            <span class="games-dropdown-caret" aria-hidden="true">&#9662;</span>
+          </summary>
+
+          <div class="games-dropdown-body">
+            <section class="media-tune-game" data-tune-game aria-labelledby="tune-the-orchestra-title">
+              <div class="media-tune-game-copy">
+                <p class="media-card-kicker">Mini Game</p>
+                <h3 id="tune-the-orchestra-title">Tune the Orchestra</h3>
+                <p>
+                  Before the concert starts, a few drone pitches are out of tune. Each file has a correct target pitch, but the current playback does not begin at that exact note.
+                  Drag the slider, listen closely, and press check when you think you have matched the target.
+                </p>
+                <div class="media-featured-actions">
+                  <button type="button" class="btn btn-primary" data-tune-game-reset>Retune the Orchestra</button>
+                </div>
+              </div>
+
+              <div class="media-tune-status" data-tune-game-status role="status" aria-live="polite">
+                Match each drone to its target pitch to get the orchestra ready for the performance.
+              </div>
+
+              <div class="media-tune-grid">
+                <article class="media-tune-card" data-tune-card data-target-label="C" data-audio-src="{{ '/assets/audio/poway-orchestra/C_drone.mp3' | relative_url }}">
+                  <div class="media-tune-card-head">
+                    <div>
+                      <p class="media-card-kicker">Drone 1</p>
+                      <h4>Concert C</h4>
+                    </div>
+                    <span class="media-tune-target-pill">Target: C</span>
+                  </div>
+                  <p class="media-tune-description">This drone should land on concert C. The file starts detuned, so move the slider until it feels centered.</p>
+                  <label class="media-tune-slider-label" for="tune-violin-slider">Pitch slider</label>
+                  <input id="tune-violin-slider" class="media-tune-slider" data-tune-slider type="range" min="-50" max="50" step="1" value="0">
+                  <div class="media-tune-readout-row">
+                    <span class="media-tune-readout" data-tune-readout>Listen and tune</span>
+                  </div>
+                  <div class="media-tune-accuracy" data-tune-accuracy>Accuracy: --</div>
+                  <div class="media-featured-actions media-tune-actions">
+                    <button type="button" class="btn btn-secondary" data-tune-play-current data-default-label="Play Current Drone" data-pause-label="Pause Current Drone">Play Current Drone</button>
+                    <button type="button" class="btn btn-secondary" data-tune-play-target data-default-label="Play Target Drone" data-pause-label="Pause Target Drone">Play Target Drone</button>
+                    <button type="button" class="btn btn-primary" data-tune-check>Check Pitch</button>
+                  </div>
+                </article>
+
+                <article class="media-tune-card" data-tune-card data-target-label="F" data-audio-src="{{ '/assets/audio/poway-orchestra/F_drone.mp3' | relative_url }}">
+                  <div class="media-tune-card-head">
+                    <div>
+                      <p class="media-card-kicker">Drone 2</p>
+                      <h4>Concert F</h4>
+                    </div>
+                    <span class="media-tune-target-pill">Target: F</span>
+                  </div>
+                  <p class="media-tune-description">This drone should settle on concert F. Use the slider to guide the pitch toward the target before you check it.</p>
+                  <label class="media-tune-slider-label" for="tune-flute-slider">Pitch slider</label>
+                  <input id="tune-flute-slider" class="media-tune-slider" data-tune-slider type="range" min="-50" max="50" step="1" value="0">
+                  <div class="media-tune-readout-row">
+                    <span class="media-tune-readout" data-tune-readout>Listen and tune</span>
+                  </div>
+                  <div class="media-tune-accuracy" data-tune-accuracy>Accuracy: --</div>
+                  <div class="media-featured-actions media-tune-actions">
+                    <button type="button" class="btn btn-secondary" data-tune-play-current data-default-label="Play Current Drone" data-pause-label="Pause Current Drone">Play Current Drone</button>
+                    <button type="button" class="btn btn-secondary" data-tune-play-target data-default-label="Play Target Drone" data-pause-label="Pause Target Drone">Play Target Drone</button>
+                    <button type="button" class="btn btn-primary" data-tune-check>Check Pitch</button>
+                  </div>
+                </article>
+
+                <article class="media-tune-card" data-tune-card data-target-label="B" data-audio-src="{{ '/assets/audio/poway-orchestra/B_drone.mp3' | relative_url }}">
+                  <div class="media-tune-card-head">
+                    <div>
+                      <p class="media-card-kicker">Drone 3</p>
+                      <h4>Concert B</h4>
+                    </div>
+                    <span class="media-tune-target-pill">Target: B</span>
+                  </div>
+                  <p class="media-tune-description">This drone belongs on concert B. Slide until the pitch feels stable, then check how accurate your tuning was.</p>
+                  <label class="media-tune-slider-label" for="tune-cello-slider">Pitch slider</label>
+                  <input id="tune-cello-slider" class="media-tune-slider" data-tune-slider type="range" min="-50" max="50" step="1" value="0">
+                  <div class="media-tune-readout-row">
+                    <span class="media-tune-readout" data-tune-readout>Listen and tune</span>
+                  </div>
+                  <div class="media-tune-accuracy" data-tune-accuracy>Accuracy: --</div>
+                  <div class="media-featured-actions media-tune-actions">
+                    <button type="button" class="btn btn-secondary" data-tune-play-current data-default-label="Play Current Drone" data-pause-label="Pause Current Drone">Play Current Drone</button>
+                    <button type="button" class="btn btn-secondary" data-tune-play-target data-default-label="Play Target Drone" data-pause-label="Pause Target Drone">Play Target Drone</button>
+                    <button type="button" class="btn btn-primary" data-tune-check>Check Pitch</button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </details>
+      </div>
+
+      <div class="media-showcase">
+        <article class="media-featured">
+          <div class="media-player-shell">
+            <iframe
+              class="media-player-frame"
+              data-media-player
+              src="https://www.youtube-nocookie.com/embed/npmu4m4iGeY?rel=0&enablejsapi=1"
+              title="Poway Symphony Orchestra video player"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="media-featured-content">
+            <p class="media-kicker">Featured Performance</p>
+            <div class="media-selected-meta">
+              <span class="media-selected-composer" data-media-composer>Beethoven</span>
+              <span class="media-featured-stat">5 live performances</span>
+            </div>
+            <h3 data-media-title>Egmont Overture, Op. 84</h3>
+            <p data-media-copy>
+              Start with Beethoven and move through a short live-performance path that shows the orchestra's range,
+              from bold overtures to lyrical and dance-driven concert moments.
+            </p>
+            <div class="media-featured-actions">
+              <a href="https://youtu.be/npmu4m4iGeY?si=4CS0KMHKSoXzJgry" class="btn btn-primary" target="_blank" rel="noopener" data-media-external>Open on YouTube</a>
+              <a href="https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ" class="btn btn-secondary" target="_blank" rel="noopener">Visit YouTube Channel</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="media-archive-panel">
+          <h3>Choose a Performance</h3>
+          <p>Select any of the five live performances below to load it in the player.</p>
+
+          <div class="media-video-grid">
+            <button type="button" class="media-video-card is-wide is-selected" data-video-id="npmu4m4iGeY" data-video-title="Egmont Overture, Op. 84" data-video-composer="Beethoven" data-video-copy="A dramatic live concert opener with strong forward motion and orchestral weight." data-video-url="https://youtu.be/npmu4m4iGeY?si=4CS0KMHKSoXzJgry">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/npmu4m4iGeY/hqdefault.jpg" alt="Egmont Overture video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Beethoven</p>
+                <h4>Egmont Overture, Op. 84</h4>
+                <p>A dramatic live concert opener with a strong sense of forward motion and orchestral weight.</p>
+                <span class="media-card-link">Choose This Performance</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="yGQPgauT7LU" data-video-title="Polonaise from Eugene Onegin" data-video-composer="Tchaikovsky" data-video-copy="A ceremonial, dance-driven live showcase with grandeur and sweep." data-video-url="https://youtu.be/yGQPgauT7LU?si=wI_dbSpl4p-oMhIL">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/yGQPgauT7LU/hqdefault.jpg" alt="Polonaise from Eugene Onegin video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Tchaikovsky</p>
+                <h4>Polonaise from Eugene Onegin</h4>
+                <p>A ceremonial, dance-driven live showcase with grandeur and sweep.</p>
+                <span class="media-card-link">Choose This Performance</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="Rgbo_O4fFbY" data-video-title="Overture to the Marriage of Figaro, K. 492" data-video-composer="Mozart" data-video-copy="A bright, fast-moving curtain-raiser captured in live performance with crisp ensemble energy." data-video-url="https://youtu.be/Rgbo_O4fFbY?si=FjNnYTQIOeCelVCT">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/Rgbo_O4fFbY/hqdefault.jpg" alt="Overture to the Marriage of Figaro video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Mozart</p>
+                <h4>Overture to the Marriage of Figaro, K. 492</h4>
+                <p>A bright, fast-moving curtain-raiser captured in live performance with crisp ensemble energy.</p>
+                <span class="media-card-link">Choose This Performance</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="Loba21sbY9k" data-video-title="Slavonic Dance No. 8" data-video-composer="Dvorak" data-video-copy="A lively live performance with strong rhythmic drive and a full-ensemble finish." data-video-url="https://youtu.be/Loba21sbY9k?si=Mw--Pn7UYt1FiowZ">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/Loba21sbY9k/hqdefault.jpg" alt="Slavonic Dance No. 8 video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">Dvorak</p>
+                <h4>Slavonic Dance No. 8</h4>
+                <p>A lively live performance with strong rhythmic drive and a full-ensemble finish.</p>
+                <span class="media-card-link">Choose This Performance</span>
+              </div>
+            </button>
+
+            <button type="button" class="media-video-card" data-video-id="zKgv4HCshOA" data-video-title="Sarabande in D minor" data-video-composer="J.S. Bach" data-video-copy="A lyrical live selection that highlights phrasing, balance, and texture." data-video-url="https://youtu.be/zKgv4HCshOA?si=OrwoPc0ei2tz1d8l">
+              <div class="media-thumb-wrap">
+                <img src="https://i.ytimg.com/vi/zKgv4HCshOA/hqdefault.jpg" alt="Sarabande in D minor video thumbnail" class="media-thumb">
+              </div>
+              <div class="media-card-body">
+                <p class="media-card-kicker">J.S. Bach</p>
+                <h4>Sarabande in D minor</h4>
+                <p>A lyrical live selection that highlights phrasing, balance, and texture.</p>
+                <span class="media-card-link">Choose This Performance</span>
+              </div>
+            </button>
+          </div>
+
+          <div class="media-external-archive">
+            <p class="media-card-kicker">More Performances</p>
+            <h4>Poway Symphony Orchestra on YouTube</h4>
+            <p>
+              Explore the orchestra's full YouTube channel for more live concert performances, featured pieces, and additional program highlights.
+            </p>
+            <a href="https://youtube.com/channel/UCiqC2aUbjfNbMcLIr-oFifQ" class="btn btn-secondary" target="_blank" rel="noopener">Open YouTube Channel</a>
+          </div>
+        </aside>
+      </div>
+
+    </div>
+  </section>

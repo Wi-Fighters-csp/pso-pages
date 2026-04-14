@@ -1,0 +1,22 @@
+CS_PATHWAY_GAME_SRC = _projects/cs-pathway-game
+
+cs-pathway-game:
+	@$(MAKE) -C $(CS_PATHWAY_GAME_SRC) build >/dev/null
+
+cs-pathway-game-build: cs-pathway-game-clean
+	@echo "Building cs-pathway-game..."
+	@$(MAKE) -C $(CS_PATHWAY_GAME_SRC) build
+
+cs-pathway-game-docs:
+	@$(MAKE) -C $(CS_PATHWAY_GAME_SRC) docs >/dev/null
+
+cs-pathway-game-clean:
+	@$(MAKE) -C $(CS_PATHWAY_GAME_SRC) clean >/dev/null
+
+cs-pathway-game-docs-clean:
+	@$(MAKE) -C $(CS_PATHWAY_GAME_SRC) docs-clean >/dev/null
+
+watch-cs-pathway-game:
+	@$(MAKE) -C $(CS_PATHWAY_GAME_SRC) watch
+
+.PHONY: cs-pathway-game cs-pathway-game-build cs-pathway-game-docs cs-pathway-game-clean cs-pathway-game-docs-clean watch-cs-pathway-game

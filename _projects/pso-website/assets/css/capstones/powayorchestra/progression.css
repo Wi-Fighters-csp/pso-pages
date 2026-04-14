@@ -1,0 +1,308 @@
+.pso-gamify-shell {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 140;
+  width: min(360px, calc(100vw - 1.5rem));
+}
+
+.pso-gamify-shell.is-collapsed {
+  width: auto;
+  max-width: calc(100vw - 1.5rem);
+}
+
+.pso-gamify-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border-radius: 22px;
+  border: 1px solid rgba(242,166,160,0.24);
+  background:
+    radial-gradient(circle at top right, rgba(242,166,160,0.12), transparent 34%),
+    linear-gradient(180deg, rgba(125, 51, 47, 0.95), rgba(88, 54, 48, 0.97));
+  color: rgba(243,235,220,0.88);
+  box-shadow: 0 22px 44px rgba(28,28,28,0.24);
+  backdrop-filter: blur(12px);
+}
+
+.pso-gamify-card.is-locked {
+  background:
+    radial-gradient(circle at top right, rgba(242,166,160,0.08), transparent 36%),
+    linear-gradient(180deg, rgba(105, 58, 53, 0.94), rgba(86, 48, 44, 0.96));
+}
+
+.pso-gamify-head,
+.pso-gamify-head-actions,
+.pso-gamify-row,
+.pso-gamify-quest-head,
+.pso-gamify-locked-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pso-gamify-kicker {
+  display: inline-block;
+  margin-bottom: 0.22rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.pso-gamify-card h3 {
+  margin: 0;
+  color: var(--white);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+}
+
+.pso-gamify-xp,
+.pso-gamify-badge,
+.pso-gamify-link,
+.pso-gamify-toggle,
+.pso-gamify-reopen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-family: 'Jost', sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pso-gamify-xp {
+  padding: 0.4rem 0.72rem;
+  border: 1px solid rgba(242,166,160,0.24);
+  background: rgba(242,166,160,0.14);
+  color: var(--white);
+  font-size: 0.7rem;
+}
+
+.pso-gamify-head-actions {
+  flex-wrap: wrap;
+}
+
+.pso-gamify-toggle,
+.pso-gamify-reopen {
+  padding: 0.45rem 0.78rem;
+  border: 1px solid rgba(242,166,160,0.24);
+  background: rgba(250,243,224,0.14);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 0.64rem;
+}
+
+.pso-gamify-toggle:hover,
+.pso-gamify-toggle:focus-visible,
+.pso-gamify-reopen:hover,
+.pso-gamify-reopen:focus-visible {
+  outline: none;
+  background: rgba(250,243,224,0.22);
+}
+
+.pso-gamify-reopen {
+  gap: 0.55rem;
+  background:
+    radial-gradient(circle at top right, rgba(242,166,160,0.12), transparent 42%),
+    linear-gradient(180deg, rgba(125, 51, 47, 0.95), rgba(88, 54, 48, 0.97));
+  box-shadow: 0 16px 34px rgba(28,28,28,0.2);
+}
+
+.pso-gamify-reopen strong {
+  color: var(--gold-pale);
+  font-size: 0.72rem;
+}
+
+.pso-gamify-copy,
+.pso-gamify-quest p {
+  margin: 0;
+  color: rgba(243,235,220,0.8);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.pso-gamify-group,
+.pso-gamify-quest-sections,
+.pso-gamify-quest-list,
+.pso-gamify-completed-body {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.pso-gamify-quest-sections {
+  gap: 0.7rem;
+}
+
+.pso-gamify-quest-list,
+.pso-gamify-completed-body {
+  max-height: 17rem;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+}
+
+.pso-gamify-completed-body {
+  max-height: 12rem;
+  margin-top: 0.55rem;
+}
+
+.pso-gamify-row {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(243,235,220,0.72);
+}
+
+.pso-gamify-track,
+.pso-gamify-mini-track {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(250,243,224,0.14);
+}
+
+.pso-gamify-track {
+  height: 10px;
+}
+
+.pso-gamify-mini-track {
+  height: 8px;
+}
+
+.pso-gamify-track span,
+.pso-gamify-mini-track span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold-light), var(--gold-pale));
+}
+
+.pso-gamify-track.is-secondary span {
+  background: linear-gradient(90deg, rgba(242,166,160,0.92), rgba(234,143,40,0.95));
+}
+
+.pso-gamify-track.is-muted span {
+  background: rgba(243,235,220,0.2);
+}
+
+.pso-gamify-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.pso-gamify-badge {
+  padding: 0.32rem 0.64rem;
+  font-size: 0.64rem;
+  border: 1px solid rgba(242,166,160,0.24);
+  background: rgba(242,166,160,0.14);
+  color: var(--white);
+}
+
+.pso-gamify-badge.is-muted {
+  color: rgba(243,235,220,0.68);
+}
+
+.pso-gamify-quest {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.72rem 0.78rem;
+  border-radius: 16px;
+  border: 1px solid rgba(242,166,160,0.2);
+  background: rgba(86, 48, 44, 0.72);
+}
+
+.pso-gamify-quest.is-complete {
+  background: rgba(105, 58, 53, 0.8);
+}
+
+.pso-gamify-quest.is-compact {
+  gap: 0.32rem;
+}
+
+.pso-gamify-quest-head strong {
+  color: var(--white);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+}
+
+.pso-gamify-quest-head span {
+  color: rgba(243,235,220,0.7);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pso-gamify-link {
+  padding: 0.55rem 0.9rem;
+  background: rgba(250,243,224,0.92);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.68rem;
+}
+
+.pso-gamify-link:hover,
+.pso-gamify-link:focus-visible {
+  outline: none;
+  background: rgba(250,243,224,0.98);
+}
+
+.pso-gamify-completed {
+  border: 1px solid rgba(242,166,160,0.2);
+  border-radius: 16px;
+  background: rgba(70, 42, 39, 0.52);
+  padding: 0.72rem 0.78rem;
+}
+
+.pso-gamify-completed summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  cursor: pointer;
+  list-style: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(243,235,220,0.78);
+}
+
+.pso-gamify-completed summary::-webkit-details-marker {
+  display: none;
+}
+
+.pso-gamify-completed[open] summary {
+  color: var(--white);
+}
+
+.pso-gamify-empty {
+  margin: 0;
+  padding: 0.8rem;
+  border-radius: 14px;
+  background: rgba(250,243,224,0.08);
+  color: rgba(243,235,220,0.74);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 860px) {
+  .pso-gamify-shell {
+    position: static;
+    width: auto;
+    margin: 1rem;
+  }
+
+  .pso-gamify-shell.is-collapsed {
+    margin-top: 0.75rem;
+  }
+
+  .pso-gamify-card {
+    box-shadow: 0 16px 34px rgba(28,28,28,0.16);
+  }
+}

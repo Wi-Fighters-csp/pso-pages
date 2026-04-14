@@ -1,0 +1,30 @@
+  /* ── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 700px) {
+    .pso-foundation {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .pso-topbar { padding: 0 1rem; }
+    .pso-topbar-nav { gap: 0.35rem; }
+    .top-nav-actions {
+      width: 100%;
+      justify-content: flex-end;
+      margin-left: 0;
+    }
+    .top-nav-link { padding: 0.4rem 0.5rem; font-size: 0.7rem; }
+    .hero { padding: 3.5rem 1.2rem 3rem; }
+    .section { padding: 3rem 1.2rem; }
+    .section-full { padding: 3rem 1.2rem; }
+    .concert-grid { grid-template-columns: 1fr; }
+    .instrument-detail-panel { grid-template-columns: 1fr; }
+    .media-showcase { grid-template-columns: 1fr; }
+    .media-featured { min-height: 360px; }
+    .media-video-grid { grid-template-columns: 1fr; }
+    .media-video-card.is-wide { grid-template-columns: 1fr; }
+    .instrument-card {
+      min-height: 220px;
+      padding-right: 5.6rem;
+    }
+  }
